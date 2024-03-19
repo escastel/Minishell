@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/18 14:54:44 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:18:29 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,66 +35,52 @@ static int	cd_error(char *str)
 	return (0);
 }
 
-static void	cd_built_util(char *str, int flag)
+static void	cd_built_util(t_data *data, char *str, int flag)
 {
 	char	*buff;
-	char	*pwd;    //Estructura t_data
-	char	*oldpwd; //Estructura t_data
 	char	*tmp;
 
 	buff = NULL;
 	if (!flag)
 	{
-		oldpwd = getcwd(buff, 500);
+		data->oldpwd = getcwd(buff, 500);
 		chdir("/Users/escastel");
 	}
 	if (flag == 1)
 	{
 		tmp = getcwd(buff, 500);
-		chdir(oldpwd);
-		printf("%s\n", oldpwd);
-		oldpwd = tmp;
+		chdir(data->oldpwd);
+		printf("%s\n", data->oldpwd);
+		data->oldpwd = tmp;
 	}
 	else if (flag == 2)
 	{
-		oldpwd = getcwd(buff, 500);
+		data->oldpwd = getcwd(buff, 500);
 		chdir(str);
 	}
-	pwd = getcwd(buff, 500);
 }
 
-void	cd_built(char *str)
+void	cd_built(t_data *data, char **cmd)
 {
-	char	*buff;
-	char	*oldpwd; //Estructura t_data
-
-	buff = NULL;
-	oldpwd = NULL;
-	if (!str || (str && str[0] == '~' && !str[1]))
+	if (!cmd[0] || (cmd[0][0] == '~' && !cmd[0][1] && !cmd[1]))
 	{
-		cd_built_util(str, 0);
+		cd_built_util(data, cmd[0], 0);
+		return ;
 	}
-	if (str && str[0] == '-' && !str[1])
+	if (cmd[0][0] == '-' && !cmd[0][1] && !cmd[1])
 	{
-		if (!oldpwd)
+		if (!data->oldpwd)
 		{
 			printf("michishell: cd: OLDPWD not set\n");
 			return ;
 		}
 		else
-			cd_built_util(str, 1);
+			cd_built_util(data, cmd[0], 1);
 	}
-	else
+	else if (!cmd[1])
 	{
-		if (cd_error(str))
+		if (cd_error(cmd[0]))
 			return ;
-		cd_built_util(str, 2);
+		cd_built_util(data, cmd[0], 2);
 	}
 }
-
-/* int	main(int argc, char **argv)
-{
-	(void)argc;
-	cd_built(argv[1]);
-	return (0);
-} */

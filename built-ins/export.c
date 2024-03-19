@@ -6,11 +6,35 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/18 20:10:54 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:42:41 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	export_error(char *str)
+{
+	int	flag;
+	int	i;
+
+	flag = open(str, O_DIRECTORY);
+	if (flag == 3)
+	{
+		printf("michishell: export: `%s': not a valid identifier\n", str);
+		return (flag);
+	}
+	i = 0;
+	while (str[i])
+	{
+		if ((str[0] >= '0' && str[0] <= '9') || str[i] == '.')
+		{
+			printf("michishell: export: `%s': not a valid identifier\n", str);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 static void	export_print(t_data *data)
 {
@@ -29,7 +53,7 @@ static void	export_print(t_data *data)
 			{
 				printf("declare -x %s", listenv[j].name);
 				if (listenv[j].value + 1)
-				printf("=\"%s\"\n", listenv[j].value + 1);
+					printf("=\"%s\"\n", listenv[j].value + 1);
 				n++;
 			}
 			j++;
@@ -59,7 +83,7 @@ static void	order_export(t_data *data)
 				n = ft_strlen(listenv[i].name);
 			if (ft_strncmp(listenv[j].name, listenv[i].name, n) > 0)
 				listenv[j].index += 1;
-			i++;    
+			i++;
 		}
 		j++;
 	}
@@ -83,39 +107,26 @@ static void	export_var(t_data *data, char **str)
 		i++;
 	}
 	env[j] = NULL;
-	env_built(data, env, 1);
+	env_initialize(data, env);
 }
 
-void	export_built(t_data *data, char **str)
+void	export_built(t_data *data, char **cmd)
 {
-	if (!str[0])
+	int	i;
+
+	i = 0;
+	if (!cmd[0])
 	{
 		order_export(data);
 		export_print(data);
 	}
 	else
 	{
-		export_var(data, str);
-		order_export(data);
+		while (cmd[i])
+		{
+			if (!export_error(cmd[i]))
+				export_var(data, cmd);
+			i++;
+		}
 	}
-}
-
-int	main(int argc, char **argv, char **env)
-{
-	t_data	*data;
-	/* int		i; */
-
-	(void)argc;
-	data = (t_data *)malloc(sizeof(t_data));
-	if (!data)
-		return (1);
-	env_built(data, env, 1);
-	export_built(data, argv + 1);
-	/* i = 0;
-	while (data->env[i])
-	{
-		printf("%s%s\n", data->listenv[i].name, data->listenv[i].value);
-		i++;
-	} */
-	export_print(data);
 }

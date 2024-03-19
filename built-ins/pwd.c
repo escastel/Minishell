@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 13:53:09 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/15 13:10:28 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:19:11 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,9 @@
 void	pwd_built(void)
 {
 	char	*buf;
-	char	*storage;
+	char	*pwd;
 
 	buf = NULL;
-	storage = getcwd(buf, 500);
-	printf("%s\n", storage);
+	pwd = getcwd(buf, 500);
+	printf("%s\n", pwd);
 }
-
-/* int	main(void)
-{
-	pwd_built();
-} */
