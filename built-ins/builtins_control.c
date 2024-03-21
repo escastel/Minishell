@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:02:19 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/19 17:45:51 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:22:44 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	builtins_control(t_data *data, char **env)
 {
 	int	n;
 
-	if (!data->env)
-		env_initialize(data, env);
 	n = ft_strlen(data->cmd[0]);
 	if (!ft_strncmp(data->cmd[0], "cd", n))
 		cd_built(data, data->cmd + 1);
