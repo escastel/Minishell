@@ -6,25 +6,20 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 17:09:09 by escastel          #+#    #+#             */
-/*   Updated: 2024/01/09 15:42:03 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:25:12 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_stack	*ft_lstnew(int value)
+t_list	*ft_lstnew(void *content)
 {
-	t_stack	*new_node;
+	t_list	*new;
 
-	new_node = (t_stack *)malloc(sizeof(t_stack));
-	if (!new_node)
+	new = malloc(sizeof(t_list));
+	if (!new)
 		return (0);
-	new_node->value = value;
-	new_node->index = 1;
-	new_node->pos = 0;
-	new_node->target_pos = 0;
-	new_node->cost_a = 0;
-	new_node->cost_b = 0;
-	new_node->next = NULL;
-	return (new_node);
+	new->next = NULL;
+	new->content = content;
+	return (new);
 }

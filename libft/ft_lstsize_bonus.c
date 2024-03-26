@@ -6,13 +6,13 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 13:41:05 by escastel          #+#    #+#             */
-/*   Updated: 2024/01/08 18:30:15 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:25:28 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_lstsize(t_stack *lst)
+int	ft_lstsize(t_list *lst)
 {
 	int	c;
 

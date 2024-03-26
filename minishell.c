@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/21 16:27:16 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:33:55 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ int	main(int argc, char **argv, char **env)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);
-	init_struct(data);
+	init_struct(data, env);
 	minishell_print(0);
 	while (1)
 	{
 		line = readline("michishell$");
+		lexer(data, line);
 	}
 	return (0);
 }

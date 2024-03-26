@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:21:55 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/15 15:22:35 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:38:35 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
+
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
 
 int			ft_isalpha(int c);
 int			ft_isdigit(int c);
@@ -73,33 +79,13 @@ int			ft_putptr(unsigned long long ptr);
 int			ft_abs(int nb);
 int			ft_strcmp(char *s1, char *s2);
 int			ft_strrlen(char **s);
-
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}	t_list;
-
-typedef struct s_stack
-{
-	int				value;
-	int				index;
-	int				pos;
-	int				target_pos;
-	int				cost_a;
-	int				cost_b;
-	struct s_stack	*next;
-
-}	t_stack;
-
-t_stack		*ft_lstnew(int value);
-void		ft_lstadd_front(t_stack **lst, t_stack *new);
-int			ft_lstsize(t_stack *lst);
-t_stack		*ft_lstlast(t_stack *lst);
-void		ft_lstadd_back(t_stack **lst, t_stack *new);
-void		ft_lstdelone(t_list *lst, void (*del)(void *));
+void		ft_lstadd_back(t_list **lst, t_list *new);
+void		ft_lstadd_front(t_list **lst, t_list *new);
 void		ft_lstclear(t_list **lst, void (*del)(void *));
+void		ft_lstdelone(t_list *lst, void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
-t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list		*ft_lstlast(t_list *lst);
+t_list		*ft_lstnew(void *content);
+int			ft_lstsize(t_list *lst);
 
 #endif

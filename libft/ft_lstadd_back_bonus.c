@@ -6,15 +6,15 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:37:46 by escastel          #+#    #+#             */
-/*   Updated: 2024/01/08 18:28:57 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:23:17 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_stack **lst, t_stack *new)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_stack	*back;
+	t_list	*back;
 
 	back = *lst;
 	if (!back)

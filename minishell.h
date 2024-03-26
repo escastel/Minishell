@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/21 16:27:41 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:33:49 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,24 @@ typedef struct s_data
 {
 	t_cmds		**cmd;
 	char		**env;
+	char		*oldpwd;
 	t_listenv	*listenv;
 }	t_data;
 
 void	minishell_print(int flag);
 int		init_struct(t_data *data, char **env);
+void	lexer(t_data *data, char *line);
 
 // BUILT-INS
 
-void	builtins_control(t_data *data, char **env);
+void	builtins_control(t_data *data, char **full_cmd);
 void	cd_built(t_data *data, char **cmd);
 void	echo_built(char **cmd);
 void	env_built(t_data *data, char **cmd);
 int		env_initialize(t_data *data, char **old_env);
 void	exit_built(void);
 void	export_built(t_data *data, char **cmd);
+void	export_var(t_data *data, char *str);
 void	pwd_built(void);
 void	unset_built(t_data *data, char **cmd);
 
