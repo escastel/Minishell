@@ -3,7 +3,9 @@ NAME = minishell
 MINISHELL = minishell.a
 
 FILES = minishell.c \
-minishell_print.c
+minishell_print.c \
+init_structs.c \
+lexer.c
 
 FILES_BUILT = built-ins/builtins_control.c built-ins/cd.c \
 built-ins/echo.c \

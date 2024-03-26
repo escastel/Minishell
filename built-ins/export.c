@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/19 17:42:41 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:24:25 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,23 +89,17 @@ static void	order_export(t_data *data)
 	}
 }
 
-static void	export_var(t_data *data, char **str)
+void	export_var(t_data *data, char *str)
 {
 	char		**env;
-	int			i;
 	int			j;
 
 	env = data->env;
 	j = 0;
 	while (env[j] != NULL)
 		j++;
-	i = 0;
-	while (str[i] != NULL)
-	{
-		env[j] = str[i];
-		j++;
-		i++;
-	}
+	env[j] = str;
+	j++;
 	env[j] = NULL;
 	env_initialize(data, env);
 }
@@ -125,7 +119,7 @@ void	export_built(t_data *data, char **cmd)
 		while (cmd[i])
 		{
 			if (!export_error(cmd[i]))
-				export_var(data, cmd);
+				export_var(data, cmd[i]);
 			i++;
 		}
 	}

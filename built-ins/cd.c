@@ -6,15 +6,11 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/19 16:18:29 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/26 12:23:45 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// OLDPWD DEBERIA DE ESTAR GUARDADO EN LA ESTRUCTURA, 
-//	ESTOY SUPONIENDO QUE DEBERIA DE ESTAR DE ANTES EN "-"
-// RECIBE LA LINEA DE COMANDOS COMO CADENA
 
 static int	cd_error(char *str)
 {

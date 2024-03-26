@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:56:23 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/21 16:22:37 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/26 12:21:07 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	env_print(t_data *data)
 	i = 0;
 	while (data->env[i])
 	{
-		if (data->listenv[i].value)
-			printf("%s\n", data->env[i]);
+		if (data->listenv[i].value + 1)
+			printf("=%s\n", data->env[i]);
 		i++;
 	}
 }
