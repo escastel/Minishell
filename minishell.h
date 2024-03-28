@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/26 17:33:49 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/27 12:49:40 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_cmds
 {
 	char	**full_cmd;
 	char	**cmd_path;
+	char	*exc_path;
 	int		infile;
 	int		outfile;
 }	t_cmds;
@@ -61,6 +62,8 @@ typedef struct s_data
 void	minishell_print(int flag);
 int		init_struct(t_data *data, char **env);
 void	lexer(t_data *data, char *line);
+void	expander(t_data *data);
+void	parser(t_data *data);
 
 // BUILT-INS
 
