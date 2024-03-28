@@ -5,7 +5,9 @@ MINISHELL = minishell.a
 FILES = minishell.c \
 minishell_print.c \
 init_structs.c \
-lexer.c
+lexer.c \
+expander.c \
+parser.c
 
 FILES_BUILT = built-ins/builtins_control.c built-ins/cd.c \
 built-ins/echo.c \
@@ -29,9 +31,9 @@ LIBFT = ./libft/libft.a
 
 LIBFT_PATH = ./libft 
 
-INCLUDE = -I ./include -I /Users/escastel/.brew/opt/readline/include
+INCLUDE = -I ./include -I /Users/lcuevas-/.brew/opt/readline/include
 
-READLINE = -L /Users/escastel/.brew/opt/readline/lib -lreadline
+READLINE = -L /Users/lcuevas-/.brew/opt/readline/lib -lreadline
 
 all: 				$(LIBFT) $(NAME)
 
