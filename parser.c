@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/03/28 12:45:23 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:30:31 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	ft_path(t_data *data)
 		}
 		i++;
 	}
-//	if (!envp_path)
-//		ft_error();
+	if (!envp_path)
+		exit (EXIT_FAILURE); //ft_error();
 	data->cmd[0]->cmd_path = ft_split (envp_path, ':');
 }
 
@@ -57,30 +57,29 @@ void	parser(t_data *data)
 {
 	int		i;
 	pid_t	pid;
-//	int	pipe[2];
 
 	i = 0;
-	while (data->cmd[i])
+	while (data->cmd[i] != 0)
 	{
-		pid = fork();
+		ft_path(data);
+		builtins_control(data, data->cmd[i]->full_cmd); // convertir en boolean?
+		if (ft_command_filter(data) == 0)
+		{
+			pid = fork();
 //		if (p->pid == -1)
 //			ft_error();
-		if (pid == 0)
-		{
-			builtins_control(data, data->cmd[i]->full_cmd);
-			ft_path(data);
-			if (ft_command_filter(data) == 1)
-				printf("%s\n", "COMANDO NO EJECUTABLE");
+			if (pid == 0)
+			{
+//				printf("%s\n", "CHILD");
+				if (execve(data->cmd[i]->exc_path, data->cmd[i]->full_cmd, data->env) == -1)
+					exit(EXIT_FAILURE);
+			}
 			else
-				printf("%s\n", "COMANDO SI EJECUTABLE");
-			execve(data->cmd[i]->exc_path, data->cmd[i]->full_cmd, data->env);
+			{
+				waitpid(pid, NULL, 0);
+//				printf("%s\n", "PARENT");
+			}
 		}
-		waitpid(pid, NULL, 0);
-		if (pid > 0)
-		{
-			waitpid(pid, NULL, 0);
-			i += 1;
-			printf("%s\n", "PARENT");
-		}
+		i += 1;
 	}
 }
