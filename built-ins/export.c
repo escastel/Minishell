@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/26 17:24:25 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:44:49 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,54 +38,54 @@ static int	export_error(char *str)
 
 static void	export_print(t_data *data)
 {
+	t_list			*aux;
 	t_listenv		*listenv;
-	int				j;
-	int				n;
+	int				index;
 
-	listenv = data->listenv;
-	n = 1;
-	while (n < ft_strrlen(data->env))
+	index = 1;
+	while (index < ft_strrlen(data->env))
 	{
-		j = 0;
-		while (listenv[j].name)
+		aux = data->listenv;
+		while (aux)
 		{
-			if (listenv[j].index == n)
+			listenv = ((t_listenv *)aux->content);
+			if (listenv->index == index)
 			{
-				printf("declare -x %s", listenv[j].name);
-				if (listenv[j].value + 1)
-					printf("=\"%s\"\n", listenv[j].value + 1);
-				n++;
+				printf("declare -x %s", listenv->name);
+				if (listenv->value + 1)
+					printf("=\"%s\"\n", listenv->value + 1);
+				index++;
 			}
-			j++;
+			aux = aux->next;
 		}
 	}
 }
 
 static void	order_export(t_data *data)
 {
+	t_list			*aux;
+	t_list			*tmp;
 	t_listenv		*listenv;
-	char			**env;
-	int				i;
-	int				j;
-	int				n;
+	t_listenv		*listenv_next;
+	int				index;
 
-	listenv = data->listenv;
-	env = data->env;
-	j = 0;
-	while (listenv[j].name)
+	aux = data->listenv;
+	while (aux)
 	{
-		i = 0;
-		while (listenv[i].name)
+		listenv = ((t_listenv *)aux->content);
+		tmp = data->listenv;
+		while (tmp)
 		{
-			if (ft_strlen(listenv[j].name) > ft_strlen(listenv[i].name))
-				n = ft_strlen(listenv[j].name);
-			if (ft_strlen(listenv[j].name) < ft_strlen(listenv[i].name))
-				n = ft_strlen(listenv[i].name);
-			if (ft_strncmp(listenv[j].name, listenv[i].name, n) > 0)
-				listenv[j].index += 1;
-			i++;
+			listenv_next = ((t_listenv *)tmp->content);
+			if (ft_strlen(listenv->name) > ft_strlen(listenv_next->name))
+				index = ft_strlen(listenv->name);
+			if (ft_strlen(listenv->name) < ft_strlen(listenv_next->name))
+				index = ft_strlen(listenv_next->name);
+			if (ft_strncmp(listenv->name, listenv_next->name, index) > 0)
+				listenv->index += 1;
+			tmp = tmp->next;
 		}
-		j++;
+		aux = aux->next;
 	}
 }
 

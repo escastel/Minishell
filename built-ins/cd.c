@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/26 12:23:45 by escastel         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:53:51 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ static int	cd_error(char *str)
 
 static void	cd_built_util(t_data *data, char *str, int flag)
 {
-	char	*buff;
+	char	buff[500];
 	char	*tmp;
 
-	buff = NULL;
 	if (!flag)
 	{
 		data->oldpwd = getcwd(buff, 500);
@@ -54,6 +53,7 @@ static void	cd_built_util(t_data *data, char *str, int flag)
 		data->oldpwd = getcwd(buff, 500);
 		chdir(str);
 	}
+	data->pwd = getcwd(buff, 500);
 }
 
 void	cd_built(t_data *data, char **cmd)
