@@ -6,25 +6,25 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/03/29 12:30:31 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:15:41 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_command_filter(t_data *data)
+/* int	ft_command_filter(t_data *data)
 {
 	int		i;
 	char	*cmd_slash;
 	char	*tmp;
 
 	i = 0;
-	cmd_slash = ft_strjoin("/", data->cmd[0]->full_cmd[0]);
-	while (data->cmd[0]->cmd_path[i])
+	cmd_slash = ft_strjoin("/", (char *)data->cmd->content->full_cmd[0]);
+	while (data->cmd->content->cmd_path[i])
 	{
-		tmp = ft_strjoin(data->cmd[0]->cmd_path[i], cmd_slash);
-		data->cmd[0]->exc_path = tmp;
-		if (access(data->cmd[0]->exc_path, X_OK) == 0)
+		tmp = ft_strjoin(data->cmd->content->cmd_path[i], cmd_slash);
+		data->cmd->content->exc_path = tmp;
+		if (access(data->cmd->content->exc_path, X_OK) == 0)
 			return (0);
 		free(tmp);
 		i += 1;
@@ -36,7 +36,7 @@ void	ft_path(t_data *data)
 {
 	char	*envp_path;
 	int		i;
-
+	
 	i = 0;
 	envp_path = 0;
 	while (data->env[i])
@@ -50,36 +50,95 @@ void	ft_path(t_data *data)
 	}
 	if (!envp_path)
 		exit (EXIT_FAILURE); //ft_error();
-	data->cmd[0]->cmd_path = ft_split (envp_path, ':');
+	data->cmd->content->cmd_path = ft_split (envp_path, ':');
+}
+
+void	ft_execute(t_data *data, int i)
+{
+	pid_t	pid;
+
+	close (data->pipe[0]);
+//	if (dup2(data->pipe[1], STDOUT_FILENO) == -1)
+//		exit (EXIT_FAILURE); // ft_error();	
+	pid = fork();
+	if (pid == -1)
+		exit (EXIT_FAILURE);//	ft_error();
+	if (pid == 0)
+	{
+		printf("%s\n", "CHILD");
+		if (execve(data->cmd[i]->exc_path, data->cmd[i]->full_cmd, data->env) == -1)
+			exit(EXIT_FAILURE);
+	}
+	else
+	{
+		waitpid(pid, NULL, 0);
+		printf("%s\n", "PARENT");
+		close (data->pipe[1]);
+//		if (dup2(data->pipe[0], STDIN_FILENO) == -1)
+//			exit (EXIT_FAILURE); // ft_error();
+	}
+}
+
+void	printeator(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->cmd->content->full_cmd[i])
+	{
+		printf("%s\n", data->cmd->content->full_cmd[i]);
+		i += 1;
+	}
+}
+
+void	ft_execute_last(t_data *data, int i)
+{
+	pid_t	pid;
+
+	close (data->pipe[0]);
+//	data->cmd[i]->outfile = open("outfile", O_WRONLY | O_CREAT | O_TRUNC, 00644);
+	if (!(data->cmd[i]->outfile))
+		data->cmd[i]->outfile = STDOUT_FILENO;
+	if (dup2(data->cmd[i]->outfile, STDOUT_FILENO) == -1)
+		exit (EXIT_FAILURE); // ft_error();		
+	pid = fork();
+	if (pid == -1)
+		exit (EXIT_FAILURE);//	ft_error();
+	if (pid == 0)
+	{
+		printf("%s\n", "CHILD");
+		printeator(data);
+		if (execve(data->cmd[i]->exc_path, data->cmd[i]->full_cmd, data->env) == -1)
+			exit(EXIT_FAILURE);
+	}
+	else
+	{
+		waitpid(pid, NULL, 0);
+		printf("%s\n", "PARENT");
+		close (data->pipe[1]);
+//		if (dup2(data->pipe[0], STDIN_FILENO) == -1)wc 
+//			exit (EXIT_FAILURE); // ft_error();
+	}
 }
 
 void	parser(t_data *data)
 {
 	int		i;
-	pid_t	pid;
 
 	i = 0;
-	while (data->cmd[i] != 0)
+	ft_path(data);
+	while (data->cmd[i + 1] != 0)
 	{
-		ft_path(data);
+		printf("%s\n", "primer bucle");
 		builtins_control(data, data->cmd[i]->full_cmd); // convertir en boolean?
 		if (ft_command_filter(data) == 0)
 		{
-			pid = fork();
-//		if (p->pid == -1)
-//			ft_error();
-			if (pid == 0)
-			{
-//				printf("%s\n", "CHILD");
-				if (execve(data->cmd[i]->exc_path, data->cmd[i]->full_cmd, data->env) == -1)
-					exit(EXIT_FAILURE);
-			}
-			else
-			{
-				waitpid(pid, NULL, 0);
-//				printf("%s\n", "PARENT");
-			}
+			ft_execute(data, i);
 		}
 		i += 1;
 	}
+	builtins_control(data, data->cmd[i]->full_cmd); // convertir en boolean?
+	if (ft_command_filter(data) == 0)
+		ft_execute_last(data, i);
 }
+ */

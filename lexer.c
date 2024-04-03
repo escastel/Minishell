@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/28 09:47:30 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:15:46 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,13 @@ void	lexer(t_data *data, char *line)
 	while (ft_strlen(line) != 0)
 	{
 		aux = ft_take_first_word(&line);
-		command->full_cmd[i] = ft_calloc(1, ft_strlen(aux));
-		command->full_cmd[i] = aux;
-		i += 1;
+		if (ft_strlen(aux) != 0)
+		{
+			command->full_cmd[i] = ft_calloc(1, ft_strlen(aux));
+			command->full_cmd[i] = aux;
+			i += 1;
+		}
 	}
-	data->cmd[0] = command;
+	data->cmd->content = command;
 }
 // el segmentation lo da con el printf, es decir, rellena pero mete mierda al final

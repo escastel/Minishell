@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_initialize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/03 12:54:37 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:38:09 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,7 @@ static int	fill_env(t_data *data, char **new_env)
 	return (0);
 }
 
-static	int	listenv_initialize(t_data *data, char **new_env)
-{
-	int	i;
-
-	i = 0;
-	if (data->listenv)
-	{
-		ft_lstclear(&data->listenv, del_listenv);
-		free(data->listenv);
-	}
-	i = 0;
-	while (new_env[i])
-		i++;
-	data->listenv = (t_list *)malloc(sizeof(t_list) * i + 1);
-	if (!data->listenv)
-		return (1);
-	return (0);
-}
-
-static int	fill_listenv(t_list *list, char **env)
+int	fill_listenv(t_data *data, char **env)
 {
 	t_listenv	*listenv;
 	t_list		*new;
@@ -89,8 +70,8 @@ static int	fill_listenv(t_list *list, char **env)
 		listenv->name = ft_substr(env[i], 0, j);
 		listenv->value = ft_substr(env[i], j, n - j);
 		listenv->index = 1;
-		new = ft_lstnew(&listenv);
-		ft_lstadd_back(&list, new);
+		new = ft_lstnew(listenv);
+		ft_lstadd_back(&data->listenv, new);
 		i++;
 	}
 	return (0);
@@ -99,10 +80,6 @@ static int	fill_listenv(t_list *list, char **env)
 int	env_initialize(t_data *data, char **new_env)
 {
 	if (fill_env(data, new_env))
-		return (1);
-	if (listenv_initialize(data, new_env))
-		return (1);
-	if (fill_listenv(data->listenv, data->env))
 		return (1);
 	return (0);
 }
