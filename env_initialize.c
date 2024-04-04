@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_initialize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/03 17:38:09 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:49:43 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	fill_env(t_data *data, char **new_env)
 	return (0);
 }
 
-int	fill_listenv(t_data *data, char **env)
+static int	fill_listenv(t_data *data, char **env)
 {
 	t_listenv	*listenv;
 	t_list		*new;
@@ -80,6 +80,8 @@ int	fill_listenv(t_data *data, char **env)
 int	env_initialize(t_data *data, char **new_env)
 {
 	if (fill_env(data, new_env))
+		return (1);
+	if (fill_listenv(data, data->env))
 		return (1);
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:56:23 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/03 12:26:23 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:49:22 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	env_print(t_data *data)
+void	env_print(t_data *data)
 {
 	t_list		*aux;
 	t_listenv	*listenv;

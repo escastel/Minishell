@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/03 17:05:19 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:56:19 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_data
 
 void	minishell_print(int flag);
 int		init_struct(t_data *data, char **env);
-int		fill_listenv(t_data *data, char **env);
+int		env_initialize(t_data *data, char **new_env);
 void	lexer(t_data *data, char *line);
 void	expander(t_data *data);
 void	parser(t_data *data);
@@ -72,7 +72,6 @@ void	builtins_control(t_data *data, char **full_cmd);
 void	cd_built(t_data *data, char **cmd);
 void	echo_built(char **cmd);
 void	env_built(t_data *data, char **cmd);
-int		env_initialize(t_data *data, char **new_env);
 void	exit_built(void);
 void	export_built(t_data *data, char **cmd);
 void	export_var(t_data *data, char *str);
@@ -83,5 +82,12 @@ void	unset_util(t_data *data, char *cmd);
 // UTILS LISTAS
 
 void	del_listenv(void *content);
+
+// BORRAR
+
+void	env_print(t_data *data);
+void	export_print(t_data *data);
+void	order_export(t_data *data);
+void	export_var(t_data *data, char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/03 12:44:49 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/04 13:09:54 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,16 @@ static int	export_error(char *str)
 	return (0);
 }
 
-static void	export_print(t_data *data)
+void	export_print(t_data *data)
 {
 	t_list			*aux;
 	t_listenv		*listenv;
 	int				index;
+	int				len;
 
 	index = 1;
-	while (index < ft_strrlen(data->env))
+	len = ft_strrlen(data->env);
+	while (index < len)
 	{
 		aux = data->listenv;
 		while (aux)
@@ -61,28 +63,28 @@ static void	export_print(t_data *data)
 	}
 }
 
-static void	order_export(t_data *data)
+void	order_export(t_data *data)
 {
 	t_list			*aux;
 	t_list			*tmp;
-	t_listenv		*listenv;
-	t_listenv		*listenv_next;
+	t_listenv		*listenv_aux;
+	t_listenv		*listenv_tmp;
 	int				index;
 
 	aux = data->listenv;
 	while (aux)
 	{
-		listenv = ((t_listenv *)aux->content);
+		listenv_aux = ((t_listenv *)aux->content);
 		tmp = data->listenv;
 		while (tmp)
 		{
-			listenv_next = ((t_listenv *)tmp->content);
-			if (ft_strlen(listenv->name) > ft_strlen(listenv_next->name))
-				index = ft_strlen(listenv->name);
-			if (ft_strlen(listenv->name) < ft_strlen(listenv_next->name))
-				index = ft_strlen(listenv_next->name);
-			if (ft_strncmp(listenv->name, listenv_next->name, index) > 0)
-				listenv->index += 1;
+			listenv_tmp = ((t_listenv *)tmp->content);
+			if (ft_strlen(listenv_aux->name) > ft_strlen(listenv_tmp->name))
+				index = ft_strlen(listenv_aux->name);
+			if (ft_strlen(listenv_aux->name) < ft_strlen(listenv_tmp->name))
+				index = ft_strlen(listenv_tmp->name);
+			if (ft_strncmp(listenv_aux->name, listenv_tmp->name, index) > 0)
+				listenv_aux->index += 1;
 			tmp = tmp->next;
 		}
 		aux = aux->next;
@@ -91,17 +93,25 @@ static void	order_export(t_data *data)
 
 void	export_var(t_data *data, char *str)
 {
-	char		**env;
-	int			j;
+	char		**new_env;
+	int			len;
+	int			i;
 
-	env = data->env;
-	j = 0;
-	while (env[j] != NULL)
-		j++;
-	env[j] = str;
-	j++;
-	env[j] = NULL;
-	env_initialize(data, env);
+	len = ft_strrlen(data->env);
+	new_env = (char **)malloc(sizeof(char *) * len + 2);
+	if (!new_env)
+		return ;
+	i = 0;
+	while (data->env[i])
+	{
+		new_env[i] = ft_strdup(data->env[i]);
+		i++;
+	}
+	new_env[i] = ft_strdup(str);
+	new_env[++i] = NULL;
+	ft_lstclear(&data->listenv, del_listenv);
+	free (data->listenv);
+	env_initialize(data, new_env);
 }
 
 void	export_built(t_data *data, char **cmd)
