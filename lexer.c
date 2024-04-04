@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/03 14:15:46 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:41:45 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,29 @@ char	*ft_take_first_word(char **argv)
 	return (str);
 }
 
+t_cmds	*ft_new_cmd_node(void)
+{
+	t_cmds		*command;
+
+	command = (t_cmds *)malloc(sizeof(t_cmds));
+	command->full_cmd = (char **)malloc(sizeof(char **));
+	command->cmd_path = (char **)malloc(sizeof(char **));
+	command->exc_path = (char *)malloc(sizeof(char *));
+	command->infile = (int )malloc(sizeof(int));
+	command->outfile = (int )malloc(sizeof(int));
+
+	return (command); // casteo?
+}
+
 void	lexer(t_data *data, char *line)
 {
 	int		i;
 	char	*aux;
 	t_cmds	*command;
 
+	command = ft_new_cmd_node();
 	i = 0;
-	command = ft_calloc(1, sizeof(t_cmds));
+	data->cmd = ft_lstnew(command); // casteo?
 	command->full_cmd = ft_calloc(1, 10*(sizeof(char **))); // problema del tamano de esto
 	while (ft_strlen(line) != 0)
 	{
@@ -103,6 +118,5 @@ void	lexer(t_data *data, char *line)
 			i += 1;
 		}
 	}
-	data->cmd->content = command;
 }
 // el segmentation lo da con el printf, es decir, rellena pero mete mierda al final
