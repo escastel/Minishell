@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/05 13:19:32 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:30:39 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,20 @@ static void	update_var(t_data *data, t_listenv *list, char *env)
 {
 	if (!ft_strcmp(env, "OLDPWD", 6))
 	{
+		list->name = ft_strdup("OLDPWD");
 		if (data->oldpwd)
-		{
 			list->value = ft_strdup(data->oldpwd);
-		}
-		if(!data->oldpwd)
+		if (!data->oldpwd)
 			list->value = NULL;
 	}
 	if (!ft_strcmp(env, "PWD", 3))
-		list->value = ft_strdup(data->pwd);
+	{
+		list->name = ft_strdup("PWD");
+		if (data->pwd)
+			list->value = ft_strdup(data->pwd);
+		if (!data->pwd)
+			list->value = NULL;
+	}
 }
 
 static int	fill_listenv(t_data *data, char **env)
@@ -75,7 +80,7 @@ static int	fill_listenv(t_data *data, char **env)
 	while (env[++i])
 	{
 		j = 0;
-		while (env[i][j] != '=')
+		while (env[i][j] != '=' && env[i][j])
 			j++;
 		listenv = (t_listenv *)malloc(sizeof(t_listenv));
 		if (!listenv)
@@ -84,7 +89,8 @@ static int	fill_listenv(t_data *data, char **env)
 			update_var(data, listenv, env[i]);
 		else
 			listenv->value = ft_substr(env[i], j, ft_strlen(env[i]) - j);
-		listenv->name = ft_substr(env[i], 0, j);
+		if (!listenv->name)
+			listenv->name = ft_substr(env[i], 0, j);
 		listenv->index = 1;
 		new = ft_lstnew(listenv);
 		ft_lstadd_back(&data->listenv, new);

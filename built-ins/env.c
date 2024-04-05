@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:56:23 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/05 13:20:04 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:33:26 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ void	env_print(t_data *data)
 		listenv = ((t_listenv *)aux->content);
 		if (listenv->value)
 		{
-			printf("%s", listenv->name);
-			printf("=%s\n", listenv->value + 1);
+			if (!ft_strcmp(listenv->name, "PWD", 3)
+				|| !ft_strcmp(listenv->name, "OLDWD", 3))
+				printf("%s=%s\n", listenv->name, listenv->value);
+			else
+				printf("%s=%s\n", listenv->name, listenv->value + 1);
 		}
 		aux = aux->next;
 		i++;
