@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/05 17:44:28 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:06:30 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,44 +57,36 @@ void	ft_execute(t_data *data)
 {
 	pid_t	pid;
 
-//	if (dup2(data->pipe[1], STDOUT_FILENO) == -1)
-//		exit (EXIT_FAILURE); // ft_error();	
+	if ((((t_cmds *)data->cmd->content)->infile) != 0)
+		if (dup2((((t_cmds *)data->cmd->content)->infile), STDIN_FILENO) == -1)
+			exit (EXIT_FAILURE); // ft_error();	
+	if (dup2((((t_cmds *)data->cmd->next->content)->infile), STDOUT_FILENO) == -1)
+			exit (EXIT_FAILURE); // ft_error();
 	pid = fork();
 	if (pid == -1)
 		exit (EXIT_FAILURE);//	ft_error();
 	if (pid == 0)
 	{
-		printf("%s\n", "CHILD");
+//		printf("%s\n", "CHILD");
 		if (execve(((t_cmds *)data->cmd->content)->exc_path, ((t_cmds *)data->cmd->content)->full_cmd, data->env) == -1)
 			exit(EXIT_FAILURE);
 	}
 	else
 	{
 		waitpid(pid, NULL, 0);
-		printf("%s\n", "PARENT");
-//		if (dup2(data->pipe[0], STDIN_FILENO) == -1)
-//			exit (EXIT_FAILURE); // ft_error();
+//		printf("%s\n", "PARENT");
 	}
 }
-
-/* void	printeator(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (data->cmd->content->full_cmd[i])
-	{
-		printf("%s\n", data->cmd->content->full_cmd[i]);
-		i += 1;
-	}
-}*/
 
 void	ft_execute_last(t_data *data)
 {
 	pid_t	pid;
 //	data->cmd[i]->outfile = open("outfile", O_WRONLY | O_CREAT | O_TRUNC, 00644);
-	if (!(((t_cmds *)data->cmd->content)->outfile))
-		((t_cmds *)data->cmd->content)->outfile = STDOUT_FILENO;
+	if ((((t_cmds *)data->cmd->content)->infile) != 0)
+		if (dup2((((t_cmds *)data->cmd->content)->infile), STDIN_FILENO) == -1)
+			exit (EXIT_FAILURE); // ft_error();
+	if (dup2(STDOUT_FILENO, STDOUT_FILENO) == -1)
+		exit (EXIT_FAILURE); // ft_error();	
 //	if (dup2(((t_cmds *)data->cmd->content)->outfile, STDOUT_FILENO) == -1)
 //		exit (EXIT_FAILURE); // ft_error();		
 	pid = fork();
@@ -102,15 +94,14 @@ void	ft_execute_last(t_data *data)
 		exit (EXIT_FAILURE);//	ft_error();
 	if (pid == 0)
 	{
-		printf("%s\n", "CHILD");
-//		printeator(data);
+//		printf("%s\n", "CHILD");
 		if (execve(((t_cmds *)data->cmd->content)->exc_path, ((t_cmds *)data->cmd->content)->full_cmd, data->env) == -1)
 			exit(EXIT_FAILURE);
 	}
 	else
 	{
 		waitpid(pid, NULL, 0);
-		printf("%s\n", "PARENT");
+//		printf("%s\n", "PARENT");
 //		close (data->pipe[1]);
 //		if (dup2(data->pipe[0], STDIN_FILENO) == -1)wc 
 //			exit (EXIT_FAILURE); // ft_error();
