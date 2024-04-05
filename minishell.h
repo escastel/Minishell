@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/04 12:56:19 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:38:51 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_listenv
 typedef struct s_cmds
 {
 	char	**full_cmd;
-	char	**cmd_path;
 	char	*exc_path;
 	int		infile;
 	int		outfile;
@@ -57,6 +56,7 @@ typedef struct s_data
 	char		*pwd;
 	char		*oldpwd;
 	t_list		*listenv;
+	char		**cmd_path;
 }	t_data;
 
 void	minishell_print(int flag);

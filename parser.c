@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/04 17:54:22 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:44:28 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	ft_command_filter(t_data *data)
 
 	i = 0;
 	cmd_slash = ft_strjoin("/", ((t_cmds *)data->cmd->content)->full_cmd[0]);
-	while (((t_cmds *)data->cmd->content)->cmd_path[i])
+	while (data->cmd_path[i])
 	{
-		tmp = ft_strjoin(((t_cmds *)data->cmd->content)->cmd_path[i], cmd_slash);
+		tmp = ft_strjoin(data->cmd_path[i], cmd_slash);
 		((t_cmds *)data->cmd->content)->exc_path = tmp;
 		if (access(((t_cmds *)data->cmd->content)->exc_path, X_OK) == 0)
 			return (0);
@@ -50,7 +50,7 @@ void	ft_path(t_data *data)
 	}
 	if (!envp_path)
 		exit (EXIT_FAILURE); //ft_error();
-	((t_cmds *)data->cmd->content)->cmd_path = ft_split (envp_path, ':');
+	data->cmd_path = ft_split (envp_path, ':');
 }
 
 void	ft_execute(t_data *data)
@@ -130,7 +130,7 @@ void	parser(t_data *data)
 		{
 			ft_execute(data);
 		}
-		i += 1;
+		data->cmd = data->cmd->next;
 	}
 	builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd); // convertir en boolean?
 	if (ft_command_filter(data) == 0)
