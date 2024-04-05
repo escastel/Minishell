@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 20:33:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/04 12:45:36 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:46:14 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,18 @@ void	unset_util(t_data *data, char *cmd)
 
 	if (!cmd)
 		return ;
-	i = 0;
+	i = -1;
 	j = 0;
 	len = ft_strlen(cmd) - 1;
-	while (data->env[i])
-	{
+	while (data->env[++i])
 		if (!ft_strncmp(data->env[i], cmd, len))
 			j++;
-		i++;
-	}
-	if (!j)
-		return ;
+	if (!ft_strncmp(cmd, "PWD", 3))
+		if (data->pwd)
+			free(data->pwd);
+	if (!ft_strncmp(cmd, "OLDPWD", 6))
+		if (data->oldpwd)
+			free(data->oldpwd);
 	new_env = (char **)malloc(sizeof(char *) * i - j + 1);
 	if (!new_env)
 		return ;
