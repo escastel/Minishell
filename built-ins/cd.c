@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/29 15:53:51 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:55:59 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,36 +31,54 @@ static int	cd_error(char *str)
 	return (0);
 }
 
-static void	cd_built_util(t_data *data, char *str, int flag)
+static void	cd_built_path(t_data *data, char *str)
+{
+	char	buff[500];
+
+	if (data->oldpwd)
+		free (data->oldpwd);
+	data->oldpwd = ft_strdup(getcwd(buff, 500));
+	chdir(str);
+	if (data->pwd)
+		free (data->pwd);
+	data->pwd = ft_strdup(getcwd(buff, 500));
+}
+
+static void	cd_built_oldpwd(t_data *data)
 {
 	char	buff[500];
 	char	*tmp;
 
-	if (!flag)
-	{
-		data->oldpwd = getcwd(buff, 500);
-		chdir("/Users/escastel");
-	}
-	if (flag == 1)
-	{
-		tmp = getcwd(buff, 500);
-		chdir(data->oldpwd);
-		printf("%s\n", data->oldpwd);
-		data->oldpwd = tmp;
-	}
-	else if (flag == 2)
-	{
-		data->oldpwd = getcwd(buff, 500);
-		chdir(str);
-	}
-	data->pwd = getcwd(buff, 500);
+	tmp = ft_strdup(getcwd(buff, 500));
+	chdir(data->oldpwd);
+	printf("%s\n", data->oldpwd);
+	if (data->oldpwd)
+		free (data->oldpwd);
+	data->oldpwd = ft_strdup(tmp);
+	free (tmp);
+	if (data->pwd)
+		free (data->pwd);
+	data->pwd = ft_strdup(getcwd(buff, 500));
+}
+
+static void	cd_built_home(t_data *data)
+{
+	char	buff[500];
+
+	if (data->oldpwd)
+		free (data->oldpwd);
+	data->oldpwd = ft_strdup(getcwd(buff, 500));
+	chdir("/Users/escastel");
+	if (data->pwd)
+		free (data->pwd);
+	data->pwd = ft_strdup(getcwd(buff, 500));
 }
 
 void	cd_built(t_data *data, char **cmd)
 {
 	if (!cmd[0] || (cmd[0][0] == '~' && !cmd[0][1] && !cmd[1]))
 	{
-		cd_built_util(data, cmd[0], 0);
+		cd_built_home(data);
 		return ;
 	}
 	if (cmd[0][0] == '-' && !cmd[0][1] && !cmd[1])
@@ -71,12 +89,16 @@ void	cd_built(t_data *data, char **cmd)
 			return ;
 		}
 		else
-			cd_built_util(data, cmd[0], 1);
+		{
+			cd_built_oldpwd(data);
+			return ;
+		}
 	}
 	else if (!cmd[1])
 	{
 		if (cd_error(cmd[0]))
 			return ;
-		cd_built_util(data, cmd[0], 2);
+		cd_built_path(data, cmd[0]);
+		return ;
 	}
 }

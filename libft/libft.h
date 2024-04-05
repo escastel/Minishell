@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:21:55 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/26 15:38:35 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:35:06 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			ft_putunsignbr(unsigned int nb);
 int			ft_puthexa(unsigned long long nb, char c);
 int			ft_putptr(unsigned long long ptr);
 int			ft_abs(int nb);
-int			ft_strcmp(char *s1, char *s2);
+int			ft_strcmp(char *s1, char *s2, int len);
 int			ft_strrlen(char **s);
 void		ft_lstadd_back(t_list **lst, t_list *new);
 void		ft_lstadd_front(t_list **lst, t_list *new);

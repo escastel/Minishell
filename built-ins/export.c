@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/04 13:09:54 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:53:14 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ void	export_var(t_data *data, char *str)
 	i = 0;
 	while (data->env[i])
 	{
+		len = ft_strlen(data->env[i]);
+		if (!ft_strncmp(data->env[i], str, len))
+			return ;
 		new_env[i] = ft_strdup(data->env[i]);
 		i++;
 	}
