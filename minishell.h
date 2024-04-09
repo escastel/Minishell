@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/05 17:38:51 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:09:00 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_cmds
 	char	*exc_path;
 	int		infile;
 	int		outfile;
+	int		builtin;
 }	t_cmds;
 
 //ESTRUCTURA GENERAL
@@ -56,6 +57,7 @@ typedef struct s_data
 	char		*pwd;
 	char		*oldpwd;
 	t_list		*listenv;
+	int			pipe[2];
 	char		**cmd_path;
 }	t_data;
 
@@ -65,6 +67,7 @@ int		env_initialize(t_data *data, char **new_env);
 void	lexer(t_data *data, char *line);
 void	expander(t_data *data);
 void	parser(t_data *data);
+void	ft_liberator(t_data *data);
 
 // BUILT-INS
 

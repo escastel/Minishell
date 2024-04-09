@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/05 18:11:11 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:40:00 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,12 @@ t_cmds	*ft_new_cmd_node(void)
 	command = (t_cmds *)malloc(sizeof(t_cmds));
 	command->full_cmd = (char **)malloc(sizeof(char **));
 	command->exc_path = (char *)malloc(sizeof(char *));
-	command->infile = (int )malloc(sizeof(int));
-	command->outfile = (int )malloc(sizeof(int));
+//	command->infile = (int )malloc(sizeof(int));
+//	command->outfile = (int )malloc(sizeof(int));
+//	command->builtin = (int )malloc(sizeof(int));
+	command->outfile = dup(STDOUT_FILENO); // por probarl o de guardar el fd desde el principio
+	command->infile = dup(STDIN_FILENO);
+	command->builtin = 0;
 	return (command);
 }
 
@@ -104,8 +108,8 @@ void	lexer(t_data *data, char *line)
 	t_list	*new;
 
 	i = 0;
-//	command = ft_new_cmd_node();
-	command = (t_cmds *)malloc(sizeof(t_cmds));
+	command = ft_new_cmd_node();
+//	command = (t_cmds *)malloc(sizeof(t_cmds));
 	new = ft_lstnew(command);
 	data->cmd = new;
 //	ft_lstadd_back(&data->cmd, new);
@@ -113,13 +117,14 @@ void	lexer(t_data *data, char *line)
 	while (ft_strlen(line) != 0)
 	{
 		aux = ft_take_first_word(&line);
-		if (aux[0] == '|')
+		if (aux[0] == '|') // habr'a que hacer funcion tokenizator
 		{
-			command = (t_cmds *)malloc(sizeof(t_cmds));
+//			command = (t_cmds *)malloc(sizeof(t_cmds));
+			command = ft_new_cmd_node();
 			new = ft_lstnew(command);
 			ft_lstadd_back(&data->cmd, new);
 			i = 0;
-			// faltaria señalizar el outfile y el infile. al parser?
+		// faltaria señalizar el outfile y el infile. al parser?
 		}
 		else if (ft_strlen(aux) != 0)
 		{

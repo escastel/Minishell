@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/05 18:06:30 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:39:59 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,54 +57,41 @@ void	ft_execute(t_data *data)
 {
 	pid_t	pid;
 
-	if ((((t_cmds *)data->cmd->content)->infile) != 0)
-		if (dup2((((t_cmds *)data->cmd->content)->infile), STDIN_FILENO) == -1)
-			exit (EXIT_FAILURE); // ft_error();	
-	if (dup2((((t_cmds *)data->cmd->next->content)->infile), STDOUT_FILENO) == -1)
-			exit (EXIT_FAILURE); // ft_error();
 	pid = fork();
 	if (pid == -1)
 		exit (EXIT_FAILURE);//	ft_error();
 	if (pid == 0)
 	{
-//		printf("%s\n", "CHILD");
+		close(data->pipe[0]);
+		dup2(data->pipe[1], STDOUT_FILENO);
 		if (execve(((t_cmds *)data->cmd->content)->exc_path, ((t_cmds *)data->cmd->content)->full_cmd, data->env) == -1)
 			exit(EXIT_FAILURE);
 	}
 	else
 	{
 		waitpid(pid, NULL, 0);
-//		printf("%s\n", "PARENT");
+		close(data->pipe[1]);
+		dup2(data->pipe[0], STDIN_FILENO); // la comprbasion de errore
 	}
 }
 
 void	ft_execute_last(t_data *data)
 {
 	pid_t	pid;
-//	data->cmd[i]->outfile = open("outfile", O_WRONLY | O_CREAT | O_TRUNC, 00644);
-	if ((((t_cmds *)data->cmd->content)->infile) != 0)
-		if (dup2((((t_cmds *)data->cmd->content)->infile), STDIN_FILENO) == -1)
-			exit (EXIT_FAILURE); // ft_error();
-	if (dup2(STDOUT_FILENO, STDOUT_FILENO) == -1)
-		exit (EXIT_FAILURE); // ft_error();	
-//	if (dup2(((t_cmds *)data->cmd->content)->outfile, STDOUT_FILENO) == -1)
-//		exit (EXIT_FAILURE); // ft_error();		
+
 	pid = fork();
 	if (pid == -1)
 		exit (EXIT_FAILURE);//	ft_error();
 	if (pid == 0)
 	{
-//		printf("%s\n", "CHILD");
+		close (data->pipe[0]);
+		dup2(((t_cmds *)data->cmd->content)->outfile, STDOUT_FILENO);
 		if (execve(((t_cmds *)data->cmd->content)->exc_path, ((t_cmds *)data->cmd->content)->full_cmd, data->env) == -1)
 			exit(EXIT_FAILURE);
 	}
 	else
 	{
 		waitpid(pid, NULL, 0);
-//		printf("%s\n", "PARENT");
-//		close (data->pipe[1]);
-//		if (dup2(data->pipe[0], STDIN_FILENO) == -1)wc 
-//			exit (EXIT_FAILURE); // ft_error();
 	}
 }
 
@@ -113,16 +100,29 @@ void	parser(t_data *data)
 	int		i;
 
 	i = 0;
+//	pipe(data->pipe); lo meti en los bucles
+	printf("%d\n", ((t_cmds *)data->cmd->content)->infile);
+	printf("%d\n", ((t_cmds *)data->cmd->content)->outfile);
 	ft_path(data);
+//	dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO); esto debería estar bien
 	while (data->cmd->next)
 	{
+		pipe(data->pipe);
+	//	dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO); esta repetida arriba
+	//	dup2(data->pipe[1], STDOUT_FILENO); ESTA ESTARIA BINE
 		builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd); //boolean?
 		if (ft_command_filter(data) == 0)
 		{
 			ft_execute(data);
 		}
+//		dup2(data->pipe[0], STDIN_FILENO);
+//		close(data->pipe[1]);
+//		((t_cmds *)data->cmd->content)->infile = dup(data->pipe[0]);
 		data->cmd = data->cmd->next;
 	}
+//	close(data->pipe[0]);
+//	dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO);
+//	dup2(((t_cmds *)data->cmd->content)->outfile, STDOUT_FILENO);
 	builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd); // convertir en boolean?
 	if (ft_command_filter(data) == 0)
 		ft_execute_last(data);
