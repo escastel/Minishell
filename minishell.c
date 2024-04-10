@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/10 10:46:07 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:01:30 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		line = readline("michishell$ ");
+		if (ft_strcmp(line, "\0", ft_strlen(line)))
+			add_history(line);
 		lexer(data, line);
 		parser(data);
 		dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO);
