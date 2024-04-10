@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/09 17:39:59 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/10 10:47:45 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,30 +100,20 @@ void	parser(t_data *data)
 	int		i;
 
 	i = 0;
-//	pipe(data->pipe); lo meti en los bucles
-	printf("%d\n", ((t_cmds *)data->cmd->content)->infile);
-	printf("%d\n", ((t_cmds *)data->cmd->content)->outfile);
 	ft_path(data);
-//	dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO); esto debería estar bien
 	while (data->cmd->next)
 	{
 		pipe(data->pipe);
-	//	dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO); esta repetida arriba
-	//	dup2(data->pipe[1], STDOUT_FILENO); ESTA ESTARIA BINE
+	//LAS REDIRECCIONES ESTAN DENTRO DEL EXECUTE NO AFECTA AL BUILTIN, SE PODRIAN sacar? o meter el builtin dentro con boolean
 		builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd); //boolean?
 		if (ft_command_filter(data) == 0)
 		{
 			ft_execute(data);
 		}
-//		dup2(data->pipe[0], STDIN_FILENO);
-//		close(data->pipe[1]);
-//		((t_cmds *)data->cmd->content)->infile = dup(data->pipe[0]);
 		data->cmd = data->cmd->next;
 	}
-//	close(data->pipe[0]);
-//	dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO);
-//	dup2(((t_cmds *)data->cmd->content)->outfile, STDOUT_FILENO);
-	builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd); // convertir en boolean?
+	builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd);
 	if (ft_command_filter(data) == 0)
 		ft_execute_last(data);
+	dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO);
 }
