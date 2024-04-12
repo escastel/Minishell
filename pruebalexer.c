@@ -63,7 +63,7 @@ char	*ft_take_first_word(char **argv)
 	char	*str;
 	char	*ret;
 
-//	str = ft_calloc(1, ft_strlen(*argv));
+	str = ft_calloc(1, ft_strlen(*argv));
 	j = 0;
 	while (**argv == 32 || (**argv >= 9 && **argv <= 13))
 		*argv += 1;
@@ -83,6 +83,7 @@ char	*ft_take_first_word(char **argv)
 	}
 	str[j] = 0;
 	ret = ft_strdup(str);
+	free (str);
 	return (ret);
 }
 
@@ -99,27 +100,6 @@ t_cmds	*ft_new_cmd_node(void)
 	return (command);
 }
 
-/* void	ft_rellenator(t_cmds *command, char *line)
-{
-	int		i;
-	char	*aux;
-
-	i = 0;
-	while (ft_strlen(line) != 0)
-	{
-		printf("%d\n", ft_strlen(line));
-		printf("%s\n", line);
-		aux = ft_take_first_word(&line);
-//		printf("%s\n", line);
-		if (ft_strlen(aux) != 0)
-		{
-			command->full_cmd[i] = ft_calloc(1, ft_strlen(aux));
-			command->full_cmd[i] = aux;
-			i += 1;
-		}
-	}
-} */
-
 void	ft_rellenator(t_cmds *command, char *line)
 {
 	int		i;
@@ -129,20 +109,15 @@ void	ft_rellenator(t_cmds *command, char *line)
 	aux = ft_take_first_word(&line);
 	while (ft_strlen(aux) != 0)
 	{
-//		printf("UNCICLORELLENATOR\n");
-//		printf("%d", ft_strlen(aux));
-//		printf("%s\n ", aux);
-//		printf("%s\n", line);
 		if (ft_strlen(aux) != 0)
 		{
-//			printf("AUX: %s\n", aux);
-			command->full_cmd[i] = aux;
-//			printf("CMD: %s\n", command->full_cmd[i]);
+			command->full_cmd[i] = ft_strdup(aux);
+			free (aux);
 			i += 1;
 		}
 		aux = ft_take_first_word(&line);
 	}
-	printf("ENDRELLENATOR\n");
+	free (aux);
 }
 
 void	ft_noduler(t_data *data, char **arr)
@@ -173,15 +148,11 @@ void	lexer(t_data *data, char *line)
 	i = 0;
 	tmp = ft_split(line, '|');
 	ft_noduler(data, tmp);
-//	printf("%s\n", tmp[0]);
-//	printf("%s\n", tmp[1]);
 	aux = data->cmd;
-	while (aux)
+	while (tmp[i])
 	{
 		ft_rellenator(aux->content, tmp[i]);
 		i += 1;
-//		printf("%s\n", ((t_cmds *)data->cmd->content)->full_cmd[0]);
-		printf("%s\n", ((t_cmds *)aux->content)->full_cmd[0]);
 		aux = aux->next;
 	}
 	i = 0;
@@ -192,34 +163,3 @@ void	lexer(t_data *data, char *line)
 	}
 	free(tmp);
 }
-
-/* void	lexer(t_data *data, char *line)
-{
-	int		i;
-	char	*aux;
-	t_cmds	*command;
-	t_list	*new;
-
-	i = 0;
-	command = ft_new_cmd_node();
-	new = ft_lstnew(command);
-	data->cmd = new;
-	command->full_cmd = ft_calloc(1, 10*(sizeof(char **))); // problema del tamano de esto
-	while (ft_strlen(line) != 0)
-	{
-		aux = ft_take_first_word(&line);
-		if (aux[0] == '|') // habr'a que hacer funcion tokenizator
-		{
-			command = ft_new_cmd_node();
-			new = ft_lstnew(command);
-			ft_lstadd_back(&data->cmd, new);
-			i = 0;
-		}
-		else if (ft_strlen(aux) != 0)
-		{
-			command->full_cmd[i] = ft_calloc(1, ft_strlen(aux));
-			command->full_cmd[i] = aux;
-			i += 1;
-		}
-	}
-} */
