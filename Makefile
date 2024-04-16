@@ -8,9 +8,11 @@ init_structs.c \
 env_initialize.c \
 lexer.c \
 expander.c \
-parser.c
+parser.c \
+liberator.c 
 
-FILES_BUILT = built-ins/builtins_control.c built-ins/cd.c \
+FILES_BUILT = built-ins/builtins_control.c \
+built-ins/cd.c \
 built-ins/echo.c \
 built-ins/env.c \
 built-ins/exit.c \
