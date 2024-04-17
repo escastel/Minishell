@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:32:47 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/17 19:07:59 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/17 19:58:23 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,16 @@ static void	expand(t_data *data, char *str, char **tmp)
 					*tmp = ft_strjoin(*tmp, get_var(data, str, i, j));
 				else
 					*tmp = get_var(data, str, i, j);
+				if (str[i] && str[i] != '\'' && str[i] != '\"')
+				{
+					j = i;
+					while (str[i] != '\0' && str[i] != '\'' && str[i] != '\"')
+						i++;
+					if (*tmp)
+						*tmp = ft_strjoin(*tmp, ft_substr(str, j, i - j));
+					else
+						*tmp = ft_substr(str, j, i - j);
+				}
 				break ;
 			}
 			i++;
@@ -107,7 +117,7 @@ static void	expand(t_data *data, char *str, char **tmp)
 						*tmp = ft_strjoin(*tmp, get_var(data, str, i, j));
 					else
 						*tmp = get_var(data, str, i, j);
-					if (str[i])
+					if (str[i] != '\"' && str[i])
 					{
 						j = i;
 						while (str[i] != '\"')
@@ -139,11 +149,11 @@ void	expander(t_data *data)
 	char	*tmp;
 	int		i;
 
-	cmd = ((t_cmds *)data->cmd->content);
 	i = 0;
+	cmd = ((t_cmds *)data->cmd->content);
+	tmp = NULL;
 	while (cmd->full_cmd[i])
 	{
-		tmp = NULL;
 		expand(data, cmd->full_cmd[i], &tmp);
 		if (cmd->full_cmd[i])
 			free(cmd->full_cmd[i]);
@@ -153,7 +163,7 @@ void	expander(t_data *data)
 			cmd->full_cmd[i] = NULL;
 		if (cmd->full_cmd[i])
 			printf("%s\n", cmd->full_cmd[i]);
+		tmp = NULL;
 		i++;
 	}
-	tmp = NULL;
 }
