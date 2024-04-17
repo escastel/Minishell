@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/10 18:16:38 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/10 19:00:00 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,6 @@ void	parser(t_data *data)
 		{
 			ft_execute(data, aux);
 		}
-		printf("%s\n", ((t_cmds *)data->cmd->content)->full_cmd[0]);
-		printf("%s\n", ((t_cmds *)aux->content)->full_cmd[0]);
 		aux = aux->next;
 	}
 	builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd);

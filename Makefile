@@ -9,7 +9,8 @@ env_initialize.c \
 lexer.c \
 expander.c \
 parser.c \
-liberator.c 
+liberator.c \
+expander_utils.c
 
 FILES_BUILT = built-ins/builtins_control.c \
 built-ins/cd.c \

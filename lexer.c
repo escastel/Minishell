@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/10 10:39:18 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/10 18:59:28 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,11 @@ void	lexer(t_data *data, char *line)
 	t_cmds	*command;
 	t_list	*new;
 
-	i = 0;
 	command = ft_new_cmd_node();
 	new = ft_lstnew(command);
 	data->cmd = new;
 	command->full_cmd = ft_calloc(1, 10*(sizeof(char **))); // problema del tamano de esto
+	i = 0;
 	while (ft_strlen(line) != 0)
 	{
 		aux = ft_take_first_word(&line);
@@ -121,8 +121,7 @@ void	lexer(t_data *data, char *line)
 		}
 		else if (ft_strlen(aux) != 0)
 		{
-			command->full_cmd[i] = ft_calloc(1, ft_strlen(aux));
-			command->full_cmd[i] = aux;
+			command->full_cmd[i] = ft_strdup(aux);
 			i += 1;
 		}
 	}

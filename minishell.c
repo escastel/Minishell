@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/10 15:01:30 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:55:29 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,15 @@ int	main(int argc, char **argv, char **env)
 		if (ft_strcmp(line, "\0", ft_strlen(line)))
 			add_history(line);
 		lexer(data, line);
+		printf("lexer\n");
+		expander(data);
+		printf("expander\n");
 		parser(data);
+		printf("parser\n");
 		dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO);
+		printf("dup\n");
 		ft_liberator(data);
+		printf("liberator\n");
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:56:23 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/05 14:33:26 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/16 12:30:38 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	env_print(t_data *data)
 		if (listenv->value)
 		{
 			if (!ft_strcmp(listenv->name, "PWD", 3)
-				|| !ft_strcmp(listenv->name, "OLDWD", 3))
+				|| !ft_strcmp(listenv->name, "OLDWD", 6))
 				printf("%s=%s\n", listenv->name, listenv->value);
 			else
 				printf("%s=%s\n", listenv->name, listenv->value + 1);

@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/10 17:02:12 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/17 19:14:14 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,26 @@ typedef struct s_data
 }	t_data;
 
 void	minishell_print(int flag);
+void	ft_liberator(t_data *data);
+
+// INITIALIZE
+
 int		init_struct(t_data *data, char **env);
 int		env_initialize(t_data *data, char **new_env);
+
+//LEXER
+
 void	lexer(t_data *data, char *line);
+
+//EXPANDER
+
 void	expander(t_data *data);
+char	*get_var(t_data *data, char *str, int i, int j);
+void	expand_tilde(t_data *data, char *str, char **tmp);
+
+// PARSER
+
 void	parser(t_data *data);
-void	ft_liberator(t_data *data);
 
 // BUILT-INS
 
