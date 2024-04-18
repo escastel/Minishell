@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/17 19:14:14 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:07:19 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,15 @@ typedef struct s_cmds
 
 typedef struct s_data
 {
-	t_list		*cmd;
 	char		**env;
 	char		*pwd;
 	char		*oldpwd;
-	t_list		*listenv;
+	int			i;
+	int			j;
 	int			pipe[2];
 	char		**cmd_path;
+	t_list		*cmd;
+	t_list		*listenv;
 }	t_data;
 
 void	minishell_print(int flag);
@@ -76,8 +78,11 @@ void	lexer(t_data *data, char *line);
 //EXPANDER
 
 void	expander(t_data *data);
-char	*get_var(t_data *data, char *str, int i, int j);
-void	expand_tilde(t_data *data, char *str, char **tmp);
+void	fill_tmp(char **tmp, char *func);
+void	dollar(char **tmp, char *str, int *i, int *j);
+void	simple_quote(char **tmp, char *str, int *i, int *j);
+char	*expand_var(t_data *data, char *str, int i, int j);
+int		expand_tilde(t_data *data, char **tmp, char *str);
 
 // PARSER
 

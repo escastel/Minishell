@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/17 19:10:16 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:11:36 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	cd_built_home(t_data *data)
 	if (data->oldpwd)
 		free (data->oldpwd);
 	data->oldpwd = ft_strdup(getcwd(buff, 500));
-	chdir(get_var(data, "HOME", -1, -1));
+	chdir(expand_var(data, "HOME", -1, -1));
 	if (data->pwd)
 		free (data->pwd);
 	data->pwd = ft_strdup(getcwd(buff, 500));
