@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/19 12:23:53 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:52:38 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	lexer(t_data *data, char *line);
 void	expander(t_data *data);
 void	fill_tmp(char **tmp, char *func);
 void	dollar(char **tmp, char *str, int *i, int *j);
-void	simple_quote(char **tmp, char *str, int *i, int *j);
+void	simple_quote(t_data *data, char **tmp, char *str);
 char	*expand_var(t_data *data, char *str, int i, int j);
 int		expand_tilde(t_data *data, char **tmp, char *str);
 

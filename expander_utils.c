@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:29:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/18 14:24:53 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:53:36 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,18 @@ int	expand_tilde(t_data *data, char **tmp, char *str)
 	return (1);
 }
 
-void	simple_quote(char **tmp, char *str, int *i, int *j)
+void	simple_quote(t_data *data, char **tmp, char *str)
 {
-	if (str[*i] == '\'')
+	if (str[data->i] == '\'')
 	{
-		*i += 1;
-		*j = *i;
-		while (str[*i] != '\'' && str[*i] != '\0')
-			*i += 1;
-		if (*i > *j)
-			fill_tmp(tmp, ft_substr(str, *j, *i - *j));
+		if (str[data->i + 1] == '\'')
+			fill_tmp(tmp, "");
+		data->i += 1;
+		data->j = data->i;
+		while (str[data->i] != '\'' && str[data->i] != '\0')
+			data->i += 1;
+		if (data->i > data->j)
+			fill_tmp(tmp, ft_substr(str, data->j, data->i - data->j));
 	}
 }
 

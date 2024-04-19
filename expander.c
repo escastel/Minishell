@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:32:47 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/19 15:38:36 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:53:48 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static void	expand_util2(t_data *data, char **tmp, char *str, int *flag)
 {
 	data->i++;
+	if (str[data->i] == '\"')
+		fill_tmp(tmp, "");
 	data->j = data->i;
 	*flag = 0;
 	while (str[data->i] != '\"' && str[data->i] != '\0')
@@ -64,7 +66,7 @@ static void	expand_util(t_data *data, char **tmp, char *str, int *flag)
 	}
 	if (data->i > data->j && !*flag)
 		fill_tmp(tmp, ft_substr(str, data->j, data->i - data->j));
-	simple_quote(tmp, str, &data->i, &data->j);
+	simple_quote(data, tmp, str);
 	if (str[data->i] == '\"')
 		expand_util2(data, tmp, str, flag);
 }
