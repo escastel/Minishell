@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/10 19:00:00 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:23:55 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,23 @@ int	ft_command_filter(t_data *data, t_list *cmd)
 		tmp = ft_strjoin(data->cmd_path[i], cmd_slash);
 		((t_cmds *)cmd->content)->exc_path = tmp;
 		if (access(((t_cmds *)cmd->content)->exc_path, X_OK) == 0)
+		{
+			free(cmd_slash);
 			return (0);
+		}
 		free(tmp);
 		i += 1;
 	}
+	if (access(((t_cmds *)cmd->content)->full_cmd[0], X_OK) == 0)
+	{
+		((t_cmds *)cmd->content)->exc_path =  ft_strdup(((t_cmds *)cmd->content)->full_cmd[0]);
+		return (0);
+	}
+	free((cmd_slash));
 	return (1);
 }
 
-void	ft_path(t_data *data)
+int	ft_path(t_data *data)
 {
 	char	*envp_path;
 	int		i;
@@ -49,11 +58,12 @@ void	ft_path(t_data *data)
 		i++;
 	}
 	if (!envp_path)
-		exit (EXIT_FAILURE); //ft_error();
+		return (1); //ft_error();
 	data->cmd_path = ft_split (envp_path, ':');
+	return (0);
 }
 
-void	ft_execute(t_data *data, t_list	*cmd)
+int	ft_execute(t_data *data, t_list	*cmd)
 {
 	pid_t	pid;
 
@@ -63,19 +73,25 @@ void	ft_execute(t_data *data, t_list	*cmd)
 	if (pid == 0)
 	{
 		close(data->pipe[0]);
-		dup2(data->pipe[1], STDOUT_FILENO);
+		if ((((t_cmds *)cmd->content)->infile) != STDIN_FILENO)
+			dup2((((t_cmds *)cmd->content)->infile), STDIN_FILENO);
+		if (dup2(data->pipe[1], STDOUT_FILENO) == -1) // habria uqe hacerlo con el infile? podria igual el infile aquí dentro
+			return (1);
 		if (execve(((t_cmds *)cmd->content)->exc_path, ((t_cmds *)cmd->content)->full_cmd, data->env) == -1)
-			exit(EXIT_FAILURE);
+			return (1); //ft error o exit failure?
 	}
 	else
 	{
 		waitpid(pid, NULL, 0);
 		close(data->pipe[1]);
-		dup2(data->pipe[0], STDIN_FILENO); // la comprbasion de errore
+		if (dup2(data->pipe[0], STDIN_FILENO) == -1)
+			return (1); // la comprbasion de errore
+		return (0);
 	}
+	return (0);
 }
 
-void	ft_execute_last(t_data *data, t_list *cmd)
+int	ft_execute_last(t_data *data, t_list *cmd)
 {
 	pid_t	pid;
 
@@ -85,37 +101,48 @@ void	ft_execute_last(t_data *data, t_list *cmd)
 	if (pid == 0)
 	{
 		close (data->pipe[0]);
-		dup2(((t_cmds *)cmd->content)->outfile, STDOUT_FILENO);
+		if ((((t_cmds *)cmd->content)->infile) != STDIN_FILENO)
+			dup2((((t_cmds *)cmd->content)->infile), STDIN_FILENO);
+		if (dup2(((t_cmds *)cmd->content)->outfile, STDOUT_FILENO) == -1)
+			return (1);
 		if (execve(((t_cmds *)cmd->content)->exc_path, ((t_cmds *)cmd->content)->full_cmd, data->env) == -1)
-			exit(EXIT_FAILURE);
+			return (1); //ft error o exit failure?
 	}
 	else
 	{
 		waitpid(pid, NULL, 0);
+		return (0);
 	}
+	return (0);
 }
 
-void	parser(t_data *data)
+int	parser(t_data *data)
 {
 	t_list	*aux;
 	int		i;
 
 	i = 0;
-	ft_path(data);
+	if (ft_path(data)) //HAY que parchear esto para las rutas absolutas cuamdpo se ace el unset PATH
+		return (1);
 	aux = data->cmd;
 	while (aux->next)
 	{
-		pipe(data->pipe);
-	//LAS REDIRECCIONES ESTAN DENTRO DEL EXECUTE NO AFECTA AL BUILTIN, SE PODRIAN sacar? o meter el builtin dentro con boolean
-		builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd); //boolean?
+		if (pipe(data->pipe) == -1)
+			return (1);
+		builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd); //boolean? y meterlo en el execute
 		if (ft_command_filter(data, aux) == 0)
 		{
-			ft_execute(data, aux);
+			if (ft_execute(data, aux))
+				return (1);
 		}
 		aux = aux->next;
 	}
 	builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd);
 	if (ft_command_filter(data, aux) == 0)
-		ft_execute_last(data, aux);
-	dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO);
+		if (ft_execute_last(data, aux))
+			return (1);
+// quite los close de aqui, pueden volver si queremos
+	if (dup2(STDIN_FILENO, STDIN_FILENO) == -1)
+		return (1);
+	return (0);
 }

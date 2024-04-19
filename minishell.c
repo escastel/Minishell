@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/16 10:55:29 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:23:51 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	main(int argc, char **argv, char **env)
 		printf("parser\n");
 		dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO);
 		printf("dup\n");
+		//igual hace falta un free line
 		ft_liberator(data);
 		printf("liberator\n");
 	}

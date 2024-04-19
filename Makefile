@@ -35,9 +35,9 @@ LIBFT = ./libft/libft.a
 
 LIBFT_PATH = ./libft 
 
-INCLUDE = -I ./include -I /Users/escastel/.brew/opt/readline/include
+INCLUDE = -I ./include -I /Users/$(USER)/.brew/opt/readline/include
 
-READLINE = -L /Users/escastel/.brew/opt/readline/lib -lreadline
+READLINE = -L /Users/$(USER)/.brew/opt/readline/lib -lreadline
 
 all: 				$(LIBFT) $(NAME)
 

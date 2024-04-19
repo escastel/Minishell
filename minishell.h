@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/18 14:07:19 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:23:53 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		env_initialize(t_data *data, char **new_env);
 
 //LEXER
 
-void	lexer(t_data *data, char *line);
+int	lexer(t_data *data, char *line);
 
 //EXPANDER
 
@@ -86,7 +86,7 @@ int		expand_tilde(t_data *data, char **tmp, char *str);
 
 // PARSER
 
-void	parser(t_data *data);
+int	parser(t_data *data);
 
 // BUILT-INS
 
