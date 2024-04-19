@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/19 12:23:55 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:59:59 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ int	ft_execute(t_data *data, t_list	*cmd)
 		close(data->pipe[0]);
 		if ((((t_cmds *)cmd->content)->infile) != STDIN_FILENO)
 			dup2((((t_cmds *)cmd->content)->infile), STDIN_FILENO);
-		if (dup2(data->pipe[1], STDOUT_FILENO) == -1) // habria uqe hacerlo con el infile? podria igual el infile aquí dentro
+		if ((((t_cmds *)cmd->content)->outfile) != STDOUT_FILENO)
+			dup2((((t_cmds *)cmd->content)->outfile), STDOUT_FILENO);
+		else if (dup2(data->pipe[1], STDOUT_FILENO) == -1) // habria uqe hacerlo con el infile? podria igual el infile aquí dentro
 			return (1);
 		if (execve(((t_cmds *)cmd->content)->exc_path, ((t_cmds *)cmd->content)->full_cmd, data->env) == -1)
 			return (1); //ft error o exit failure?
@@ -120,6 +122,7 @@ int	parser(t_data *data)
 {
 	t_list	*aux;
 	int		i;
+	int		fd = dup(STDIN_FILENO);
 
 	i = 0;
 	if (ft_path(data)) //HAY que parchear esto para las rutas absolutas cuamdpo se ace el unset PATH
@@ -142,7 +145,7 @@ int	parser(t_data *data)
 		if (ft_execute_last(data, aux))
 			return (1);
 // quite los close de aqui, pueden volver si queremos
-	if (dup2(STDIN_FILENO, STDIN_FILENO) == -1)
+	if (dup2(fd, STDIN_FILENO) == -1)
 		return (1);
 	return (0);
 }
