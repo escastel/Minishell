@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/19 12:23:51 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:13:50 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	main(int argc, char **argv, char **env)
 		printf("expander\n");
 		parser(data);
 		printf("parser\n");
-		dup2(((t_cmds *)data->cmd->content)->infile, STDIN_FILENO);
-		printf("dup\n");
 		//igual hace falta un free line
 		ft_liberator(data);
 		printf("liberator\n");
