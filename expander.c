@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:32:47 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/18 14:22:59 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:25:14 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,25 +87,31 @@ static void	expand(t_data *data, char *str, char **tmp)
 void	expander(t_data *data)
 {
 	t_cmds	*cmd;
+	t_list	*aux;
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	cmd = ((t_cmds *)data->cmd->content);
 	tmp = NULL;
-	while (cmd->full_cmd[i])
+	aux = data->cmd;
+	while (aux)
 	{
-		if (expand_tilde(data, &tmp, cmd->full_cmd[i]))
-			expand(data, cmd->full_cmd[i], &tmp);
-		if (cmd->full_cmd[i])
-			free(cmd->full_cmd[i]);
-		if (tmp)
-			cmd->full_cmd[i] = ft_strdup(tmp);
-		if (!tmp)
-			cmd->full_cmd[i] = NULL;
-		if (cmd->full_cmd[i])
-			printf("%s\n", cmd->full_cmd[i]);
-		tmp = NULL;
-		i++;
+		cmd = ((t_cmds *)aux->content);
+		while (cmd->full_cmd[i])
+		{
+			if (expand_tilde(data, &tmp, cmd->full_cmd[i]))
+				expand(data, cmd->full_cmd[i], &tmp);
+			if (cmd->full_cmd[i])
+				free(cmd->full_cmd[i]);
+			if (tmp)
+				cmd->full_cmd[i] = ft_strdup(tmp);
+			/* if (!tmp)
+				cmd->full_cmd[i] = NULL; */
+			if (cmd->full_cmd[i])
+				printf("%s\n", cmd->full_cmd[i]);
+			tmp = NULL;
+			i++;
+		}
+		aux = aux->next;
 	}
 }
