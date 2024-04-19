@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/19 12:23:47 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:54:23 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ t_cmds	*ft_new_cmd_node(void)
 	command = ft_calloc(1, ((sizeof(t_cmds))));
 	command->full_cmd = ft_calloc(1, (sizeof(char **)));
 	command->exc_path = ft_calloc(1, (sizeof(char *)));
-	command->outfile = dup(STDOUT_FILENO); // por probarlo de guardar el fd desde el principio
-	command->infile = dup(STDIN_FILENO);
+	command->outfile = 1; // por probarlo de guardar el fd desde el principio
+	command->infile = 0;
 	return (command);
 }
 
