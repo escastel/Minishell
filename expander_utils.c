@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:29:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/19 15:53:36 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:05:05 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	dollar(char **tmp, char *str, int *i, int *j)
 		fill_tmp(tmp, ft_substr(str, *j, *i - *j));
 	*i += 1;
 	*j = *i;
-	while (str[*i] != '$' && str[*i] != '\''
+	while (str[*i] != ' ' && str[*i] != '$' && str[*i] != '\''
 		&& str[*i] != '\"' && str[*i] != '\0' && str[*i] != '/')
 		*i += 1;
 }
