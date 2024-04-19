@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:32:47 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/19 15:25:14 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:38:36 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	expander(t_data *data)
 	aux = data->cmd;
 	while (aux)
 	{
+		i = 0;
 		cmd = ((t_cmds *)aux->content);
 		while (cmd->full_cmd[i])
 		{
