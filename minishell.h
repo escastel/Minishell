@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/22 14:31:02 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:52:09 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	handler(int signal);
 
 // 		BUILT-INS
 
-void	builtins_control(t_data *data, char **full_cmd);
+bool	builtins_control(t_data *data, char **full_cmd, int flag);
 
 // CD
 

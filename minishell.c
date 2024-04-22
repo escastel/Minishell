@@ -6,11 +6,17 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/22 14:39:55 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:42:33 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	error_msg(char	*str)
+{
+	printf("%s\n", str);
+	return (1);
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -19,7 +25,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argv;
 	if (argc != 1)
-		return (1);
+		return (error_msg("Error:\n This program does not need arguments\n"));
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);
