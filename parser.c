@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/19 16:59:59 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:28:26 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	parser(t_data *data)
 	{
 		if (pipe(data->pipe) == -1)
 			return (1);
-		builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd); //boolean? y meterlo en el execute
+		builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd, 1); //boolean? y meterlo en el execute
 		if (ft_command_filter(data, aux) == 0)
 		{
 			if (ft_execute(data, aux))
@@ -140,7 +140,7 @@ int	parser(t_data *data)
 		}
 		aux = aux->next;
 	}
-	builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd);
+	builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd, 0);
 	if (ft_command_filter(data, aux) == 0)
 		if (ft_execute_last(data, aux))
 			return (1);
