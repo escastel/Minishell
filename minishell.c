@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/19 13:13:50 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/22 14:33:09 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 
 	(void)argv;
-	(void)env;
 	if (argc != 1)
 		return (1);
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handler);
 	init_struct(data, env);
 	minishell_print(0);
 	while (1)
@@ -36,8 +37,8 @@ int	main(int argc, char **argv, char **env)
 		expander(data);
 		printf("expander\n");
 		parser(data);
-		printf("parser\n");
-		//igual hace falta un free line
+ 		printf("parser\n");
+		// igual hace falta un free line
 		ft_liberator(data);
 		printf("liberator\n");
 	}
