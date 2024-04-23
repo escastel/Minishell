@@ -6,20 +6,36 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/05 14:30:39 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:45:09 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	del_listenv(void *content)
+/* static void	clean_new_env(char **new_env)
 {
-	t_listenv	*cont;
+	int	i;
 
-	cont = (t_listenv *)content;
-	free(cont->name);
-	if (cont->value)
-		free(cont->value);
+	i = 0;
+	while (new_env[i])
+	{
+		new_env[i] = NULL;
+		i++;
+	}
+	new_env = NULL;
+} */
+
+static void	clear_listenv(t_listenv *list)
+{
+	free(list->name);
+	list->name = NULL;
+	if (list->value)
+	{
+		free(list->value);
+		list->value = NULL;
+	}
+	free (list);
+	list = NULL;
 }
 
 static int	fill_env(t_data *data, char **new_env)
@@ -32,9 +48,11 @@ static int	fill_env(t_data *data, char **new_env)
 		while (data->env[i])
 		{
 			free(data->env[i]);
+			/* data->env[i] = NULL; */
 			i++;
 		}
 		free(data->env);
+		/* data->env = NULL; */
 	}
 	data->env = (char **)malloc(sizeof(char *) * ft_strrlen(new_env) + 1);
 	if (!data->env)
@@ -83,8 +101,6 @@ static int	fill_listenv(t_data *data, char **env)
 		while (env[i][j] != '=' && env[i][j])
 			j++;
 		listenv = (t_listenv *)malloc(sizeof(t_listenv));
-		if (!listenv)
-			return (1);
 		if (!ft_strcmp(env[i], "PWD", 3) || !ft_strcmp(env[i], "OLDPWD", 6))
 			update_var(data, listenv, env[i]);
 		else
@@ -94,6 +110,7 @@ static int	fill_listenv(t_data *data, char **env)
 		listenv->index = 1;
 		new = ft_lstnew(listenv);
 		ft_lstadd_back(&data->listenv, new);
+		clear_listenv(listenv);
 	}
 	return (0);
 }

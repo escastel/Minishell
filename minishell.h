@@ -6,12 +6,15 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/22 17:27:37 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:31:06 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+/*				LIBRERIAS 				*/
+
 # include "./libft/libft.h"
 # include <curses.h>
 # include <dirent.h>
@@ -28,6 +31,17 @@
 # include <termios.h>
 # include <unistd.h>
 # include <stdbool.h>
+
+/* 				COLORES					 */
+
+# define BLUE    "\x1b[34m"
+# define CYAN    "\x1b[36m"
+# define GREEN   "\x1b[32m"
+# define MAGENTA "\x1b[35m"
+# define RED   	 "\x1b[31m"
+# define RESET 	 "\x1b[0m"
+# define YELLOW	 "\x1b[33m"
+
 
 //		ESTRUCTURA PARA GUARDAR LAS VARIABLES DE ENV SEPARANDO NOMBRES Y VALORES
 
@@ -54,6 +68,7 @@ typedef struct s_cmds
 typedef struct s_data
 {
 	char		**env;
+	char		*line;
 	char		*pwd;
 	char		*oldpwd;
 	int			i;
@@ -72,6 +87,7 @@ int		g_signal;
 
 void	minishell_print(int flag);
 void	ft_liberator(t_data *data);
+void	clean_program(t_data *data);
 
 // 		INITIALIZE
 
@@ -117,7 +133,7 @@ void	env_built(t_data *data, char **cmd);
 
 // EXIT
 
-void	exit_built(void);
+void	exit_built(t_data *data);
 
 // EXPORT
 
@@ -135,6 +151,7 @@ void	unset_built(t_data *data, char **cmd);
 
 // 		UTILS LISTAS
 
+void	del_cmd(void	*content);
 void	del_listenv(void *content);
 
 #endif

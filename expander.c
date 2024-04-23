@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:32:47 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/19 16:07:19 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:17:25 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,10 @@ void	expander(t_data *data)
 		{
 			if (expand_tilde(data, &tmp, cmd->full_cmd[i]))
 				expand(data, cmd->full_cmd[i], &tmp);
-			if (cmd->full_cmd[i])
-				free(cmd->full_cmd[i]);
-			if (tmp)
-				cmd->full_cmd[i] = ft_strdup(tmp);
-			/* if (!tmp)
-				cmd->full_cmd[i] = NULL; */
-			if (cmd->full_cmd[i])
-				printf("%s\n", cmd->full_cmd[i]);
+			free(cmd->full_cmd[i]);
+			cmd->full_cmd[i] = NULL;
+			cmd->full_cmd[i] = ft_strdup(tmp);
+			free(tmp);
 			tmp = NULL;
 			i++;
 		}

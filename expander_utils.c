@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:29:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/19 17:05:05 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/23 12:07:58 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	fill_tmp(char **tmp, char *func)
 {
 	if (*tmp)
-		*tmp = ft_strjoin(*tmp, func);
+		*tmp = ft_strjoin_gnl(*tmp, func);
 	else
 		*tmp = func;
 }
@@ -43,7 +43,7 @@ int	expand_tilde(t_data *data, char **tmp, char *str)
 		i++;
 		*tmp = expand_var(data, "HOME", -1, -1);
 		if (str[i] == '/' && *tmp && str[i])
-			*tmp = ft_strjoin(*tmp, ft_substr(str, i, ft_strlen(str) - i));
+			*tmp = ft_strjoin_gnl(*tmp, ft_substr(str, i, ft_strlen(str) - i));
 		return (0);
 	}
 	return (1);

@@ -6,14 +6,16 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:24:54 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/19 16:18:59 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:01:25 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	exit_built(void)
+void	exit_built(t_data *data)
 {
+	(void)data;
 	minishell_print(1);
+	clean_program(data);
 	exit(0);
 }

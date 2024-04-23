@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:02:19 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/22 16:51:54 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:27:01 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static bool	builtins_util(t_data *data, char **full_cmd, int flag, int n)
 	if (ft_strncmp(full_cmd[0], "exit", n) == 0)
 	{
 		if (!flag)
-			exit_built();
+			exit_built(data);
 		return (true);
 	}
 	if (ft_strncmp(full_cmd[0], "export", n) == 0)

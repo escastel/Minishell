@@ -11,7 +11,8 @@ expander.c \
 parser.c \
 liberator.c \
 expander_utils.c \
-signal.c
+signal.c \
+clean_program.c
 
 FILES_BUILT = built-ins/builtins_control.c \
 built-ins/cd.c \
