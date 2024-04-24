@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/24 15:05:41 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:05:00 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@
 # define RESET 	 "\x1b[0m"
 # define YELLOW	 "\x1b[33m"
 
-
 //		ESTRUCTURA PARA GUARDAR LAS VARIABLES DE ENV SEPARANDO NOMBRES Y VALORES
 
 typedef struct s_listenv
@@ -67,15 +66,16 @@ typedef struct s_cmds
 
 typedef struct s_data
 {
+	char		*pwd;
+	char		*line;
+	char		*oldpwd;
 	char		**env;
 	char		**prompt;
-	char		*line;
-	char		*pwd;
-	char		*oldpwd;
+	char		**cmd_path;
 	int			i;
 	int			j;
+	int			heredoc;
 	int			pipe[2];
-	char		**cmd_path;
 	t_list		*cmd;
 	t_list		*listenv;
 }	t_data;
@@ -115,6 +115,7 @@ int		expand_tilde(t_data *data, char **tmp, char *str);
 //		PARSER
 
 int		parser(t_data *data);
+void	heredoc(t_data *data, t_cmds *cmd);
 
 //		SIGNAL
 
