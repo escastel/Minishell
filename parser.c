@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/22 17:28:26 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/24 12:39:34 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,34 +118,83 @@ int	ft_execute_last(t_data *data, t_list *cmd)
 	return (0);
 }
 
-int	parser(t_data *data)
+int	ft_redir(t_data *data, int i)
 {
-	t_list	*aux;
+	if (data->prompt[i][0] == '<')
+	{
+		i += 1;
+		if (data->prompt[i][0] == '<')
+			return (++i);
+		else
+		{
+			((t_cmds *)data->cmd->content)->infile = open(data->prompt[i], O_RDONLY, 00444);
+			return (++i);
+		}
+	}
+	else if (data->prompt[i][0] == '>')
+	{
+		i += 1;
+		if (data->prompt[i][0] == '>')
+			return (++i);
+		else
+		{
+			((t_cmds *)data->cmd->content)->infile = open(data->prompt[i], O_WRONLY | O_CREAT | O_TRUNC, 00644);
+			return (++i);
+		}
+	}
+	return (i);
+}
+
+void	ft_noduler(t_data *data)
+{
 	int		i;
-	int		fd = dup(STDIN_FILENO);
+	int		j;
 
 	i = 0;
-	if (ft_path(data)) //HAY que parchear esto para las rutas absolutas cuamdpo se ace el unset PATH
-		return (1);
-	aux = data->cmd;
-	while (aux->next)
+	j = 0;
+	while (data->prompt[i])
 	{
-		if (pipe(data->pipe) == -1)
-			return (1);
-		builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd, 1); //boolean? y meterlo en el execute
-		if (ft_command_filter(data, aux) == 0)
+		if ((data->prompt[i][0] == '<') || (data->prompt[i][0] == '>'))
+			i = ft_redir(data, i);
+/* 		if (data->prompt[i][0] == '|')
 		{
-			if (ft_execute(data, aux))
-				return (1);
-		}
-		aux = aux->next;
+			ft_next_node(data);
+			j = 0;
+		} */
+		((t_cmds *)data->cmd->content)->full_cmd[j] = data->prompt[i];
+		printf("%s\n", ((t_cmds *)data->cmd->content)->full_cmd[j]);
+		i += 1;
+		j += 1;
 	}
-	builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd, 0);
-	if (ft_command_filter(data, aux) == 0)
-		if (ft_execute_last(data, aux))
-			return (1);
-// quite los close de aqui, pueden volver si queremos
-	if (dup2(fd, STDIN_FILENO) == -1)
-		return (1);
+	return ;
+}
+
+t_cmds	*ft_new_cmd_node(void)
+{
+	t_cmds		*command;
+
+	command = ft_calloc(1, ((sizeof(t_cmds))));
+	command->full_cmd = ft_calloc(1, (sizeof(char **)));
+	command->exc_path = ft_calloc(1, (sizeof(char *)));
+	command->outfile = 1; // por probarlo de guardar el fd desde el principio
+	command->infile = 0;
+	return (command);
+}
+
+void	ft_new_cmd(t_data *data)
+{
+	t_list	*new;
+	t_cmds	*command;
+
+	command = ft_new_cmd_node();
+	new = ft_lstnew(command);
+	data->cmd = new;
+}
+
+int	parser(t_data *data)
+{
+	ft_new_cmd(data);
+	ft_path(data);
+	ft_noduler(data);
 	return (0);
 }

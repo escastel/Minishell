@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/19 16:54:23 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/24 12:37:01 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,50 @@ int	ft_backlashes(char **argv, char **str, int j)
 	return (j);
 }
 
-char	*ft_take_first_word(char **argv)
+int	ft_quotes(char **argv, char **str, int j)
 {
-	int		j;
+	if (**argv == '\"')
+		j = ft_doublequote(&(*argv), &(*str), j);
+	if (**argv == '\'')
+		j = ft_singlequote(&(*argv), &(*str), j);
+	return (j);
+}
+
+char	*ft_take_first_word(char **line)
+{
+	int		j ;
 	char	*str;
 	char	*ret;
 
-	str = ft_calloc(1, ft_strlen(*argv));
+	str = ft_calloc(1, ft_strlen(*line));
 	j = 0;
-	while (**argv == 32 || (**argv >= 9 && **argv <= 13))
-		*argv += 1;
-	while (**argv != ' ' && **argv)
+	while (**line == 32 || (**line >= 9 && **line <= 13))
+		*line += 1;
+	if (**line == '<' || **line == '>' || **line == '|')
 	{
-		j = ft_backlashes(&(*argv), &str, j);
-		if (**argv == '\"')
-			j = ft_doublequote(&(*argv), &str, j);
-		if (**argv == '\'')
-			j = ft_singlequote(&(*argv), &str, j);
-		if (**argv != ' ')
+		str[j] = **line;
+		*line += 1;
+		j += 1;
+		if (**line == '<' || **line == '>')
 		{
-			str[j] = **argv;
-			*argv += 1;
+			str[j] = **line;
+			*line += 1;
+			j += 1;
+		}
+		ret = ft_strdup(str);
+		free (str);
+		return (ret);
+	}
+	while (**line != ' ' && **line)
+	{
+		j = ft_backlashes(&(*line), &str, j); //esta se puede ir a la revergadura
+		j = ft_quotes(&(*line), &str, j);
+		if (**line == '<' || **line == '>' || **line == '|')
+			break ;
+		if (**line != ' ')
+		{
+			str[j] = **line;
+			*line += 1;
 			j += 1;
 		}
 	}
@@ -87,158 +110,41 @@ char	*ft_take_first_word(char **argv)
 	return (ret);
 }
 
-t_cmds	*ft_new_cmd_node(void)
+char	**ft_split_words(char *line)
 {
-	t_cmds		*command;
-
-	command = ft_calloc(1, ((sizeof(t_cmds))));
-	command->full_cmd = ft_calloc(1, (sizeof(char **)));
-	command->exc_path = ft_calloc(1, (sizeof(char *)));
-	command->outfile = 1; // por probarlo de guardar el fd desde el principio
-	command->infile = 0;
-	return (command);
-}
-
-void	ft_inoutfileator(t_cmds *command, char **aux, char **line)
-{
-	printf("INTRAINOUT1: %s\n", aux[0]);
-	if (*aux[0] == '<')
-	{
-		if (ft_strlen(aux[0]) == 1)
-		{
-			*aux = ft_take_first_word(&*line);
-			printf("INTRAINOUT1: %s\n", aux[0]);
-			command->infile = open(*aux, O_RDONLY, 00444);
-			printf("IN: %d\n", command->infile);
-			*aux = ft_take_first_word(&line[0]);
-			return ;
-		}
-		else
-		{
-			*aux += 1;
-			if (*aux[0] == '<')
-			{
-				printf("HEREDOC: \n");
-			}
-			else
-			{
-				printf("INTRAINOUT1: %s\n", aux[0]);
-				command->infile = open(*aux, O_RDONLY, 00444);
-				printf("IN: %d\n", command->infile);
-				*aux = ft_take_first_word(&line[0]);
-				return ;
-			}
-		}
-	}
-	else
-	{
-		if (ft_strlen(aux[0]) == 1)
-		{
-			*aux = ft_take_first_word(&*line);
-			printf("INTRAINOUT1: %s\n", aux[0]);
-			command->outfile = open(*aux, O_WRONLY | O_CREAT | O_TRUNC, 00644);
-			printf("IN: %d\n", command->infile);
-			*aux = ft_take_first_word(&line[0]);
-			return ;
-		}
-		else
-		{
-			*aux += 1;
-			if (*aux[0] == '>')
-			{
-				printf("APEND: \n");
-			}
-			else
-			{
-				printf("INTRAINOUT1: %s\n", aux[0]);
-				command->outfile = open(*aux, O_WRONLY | O_CREAT | O_TRUNC, 00644);
-				printf("IN: %d\n", command->infile);
-				*aux = ft_take_first_word(&line[0]);
-				return ;
-			}
-		}
-	}
-}
-
-
-int	ft_rellenator(t_cmds *command, char *line)
-{
+	char	**aux;
+//	char	**ret;
+	char	*tmp;
 	int		i;
-	char	*aux;
 
 	i = 0;
-	aux = ft_take_first_word(&line);
-	if (!aux) //este igual sobra
-		return (1);
-	while (ft_strlen(aux) != 0)
+	aux = (char **)malloc(sizeof(char *) * 20 + 1); //reserva dinamica?
+	tmp = ft_take_first_word(&line);
+	while (ft_strlen(tmp) != 0)
 	{
-		while (aux[0] == '<' || aux[0] == '>')
-			ft_inoutfileator(command, &aux, &line);
-		if (ft_strlen(aux) != 0)
-		{
-
-			command->full_cmd[i] = ft_strdup(aux);
-			printf("COMMNAD: %s\n", command->full_cmd[i]);
-			free (aux);
-			i += 1;
-		}
-		aux = ft_take_first_word(&line);
-	}
-	command->full_cmd[i] = 0;
-	free (aux);
-	return (0);
-}
-
-int	ft_noduler(t_data *data, char **arr)
-{
-	int		i;
-	t_cmds	*command;
-	t_list	*new;
-
-	command = ft_new_cmd_node();
-	if (!command)
-		return (1);
-	new = ft_lstnew(command);
-	if (!new)
-		return (1);
-	data->cmd = new;
-	i = 1;
-	while (arr[i])
-	{
-		command = ft_new_cmd_node();
-		if (!command)
-			return (1);
-		new = ft_lstnew(command);
-		ft_lstadd_back(&data->cmd, new);
+		aux[i] = ft_strdup(tmp);
+		free(tmp);
 		i += 1;
+		tmp = ft_take_first_word(&(line));
 	}
-	return (0);
+	aux[i] = 0;
+/* 	ret = (char **)malloc(sizeof(char *) * 20 + 1); //reserva dinamica?
+	ret = ft_subsplit(aux); */
+	return (aux);
 }
 
 int	lexer(t_data *data, char *line)
 {
 	char	**tmp;
-	t_list	*aux;
 	int		i;
 
+
 	i = 0;
-	tmp = ft_split(line, '|'); //se le puede meter if al tmp? nu ze si merece la pena
-	if (ft_noduler(data, tmp))
-		return (1);
-	aux = data->cmd;
-	while (tmp[i])
-	{
-		if (ft_rellenator(aux->content, tmp[i]))
-			return (1);
-		i += 1;
-		aux = aux->next;
-	}
-	i = 0; // si se va de lineas se puede hacer un buclecito de liberar arrais dobles ya en general pa to las veces que haga falta
-	while (tmp[i])
-	{
-		free(tmp[i]);
-		i += 1;
-	}
-	free(tmp);
+	tmp = ft_split_words(line);
+	data->prompt = tmp;
+//	tmp = subsplit?
+// llamar expander aquu'i y despues al parse?
+/* 	expander(data);
+	printf("expander\n"); podemos meterlo aqu'i dentro*/
 	return (0);
 }
