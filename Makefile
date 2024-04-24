@@ -12,7 +12,8 @@ parser.c \
 liberator.c \
 expander_utils.c \
 signal.c \
-clean_program.c
+clean_program.c \
+lexer_utils.c
 
 FILES_BUILT = built-ins/builtins_control.c \
 built-ins/cd.c \

@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/23 17:11:46 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:06:34 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **env)
 			free(data->line);
 			expander(data);
 			parser(data);
-			ft_liberator(data);
+			/* ft_liberator(data); */
 		}
 	}
 	return (0);

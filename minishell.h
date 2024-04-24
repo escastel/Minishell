@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/24 12:32:40 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:05:41 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ int		env_initialize(t_data *data, char **new_env);
 //		LEXER
 
 int		lexer(t_data *data, char *line);
+int		ft_quotes(char **argv, char **str, int j);
+int		ft_backlashes(char **argv, char **str, int j);
+int		ft_singlequote(char **argv, char **str, int j);
+int		ft_doublequote(char **argv, char **str, int j);
 
 //		EXPANDER
 
