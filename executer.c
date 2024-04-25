@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/25 11:29:42 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/25 13:57:44 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_child(t_data *data, t_list	*cmd)
 	}
 	else
 		dup2(((t_cmds *)cmd->content)->outfile, STDOUT_FILENO);
-	if (builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd, ((t_cmds *)data->cmd->content)->builtin) == FALSE)
+	if ((builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd, 1) == 0))
 	{
 		if (execve(((t_cmds *)cmd->content)->exc_path, ((t_cmds *)cmd->content)->full_cmd, data->env) == -1)
 			return ; //ft error o exit failure?
@@ -79,7 +79,6 @@ int	ft_execute(t_data *data, t_list	*cmd)
 {
 	pid_t	pid;
 
-	printf("intraexec\n");
 	pipe(data->pipe);
 	pid = fork();
 	if (pid == -1)

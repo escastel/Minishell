@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:32:47 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/24 12:36:24 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:57:16 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	expand(t_data *data, char *str, char **tmp)
 	}
 }
 
-void	expander(t_data *data)
+/* void	expander(t_data *data)
 {
 	char	*tmp;
 	int		i;
@@ -102,4 +102,14 @@ void	expander(t_data *data)
 		tmp = NULL;
 		i++;
 	}
+} */
+
+char	*expander(t_data *data, int i)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (expand_tilde(data, &tmp, data->prompt[i]))
+		expand(data, data->prompt[i], &tmp);
+	return (tmp);
 }

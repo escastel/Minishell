@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/24 15:13:06 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/25 15:35:42 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	ft_tokens(char **line, char **tmp)
 		}
 		*tmp = ft_strdup(str);
 		free (str);
+		str = NULL;
 		return (1);
 	}
 	return (0);
@@ -82,9 +83,11 @@ int	lexer(t_data *data, char *line)
 		data->prompt[i] = NULL;
 		if (ft_strcmp(tmp, "", ft_strlen(tmp)))
 			data->prompt[i] = ft_strdup(tmp);
+		printf("%s\n", tmp);
 		free (tmp);
 		tmp = NULL;
 		i++;
 	}
+	data->prompt[i] = 0;
 	return (0);
 }

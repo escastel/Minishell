@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/25 10:54:36 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:55:56 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int		ft_doublequote(char **argv, char **str, int j);
 
 //		EXPANDER
 
-void	expander(t_data *data);
+char	*expander(t_data *data, int i);
 void	fill_tmp(char **tmp, char *func);
 void	dollar(char **tmp, char *str, int *i, int *j);
 void	simple_quote(t_data *data, char **tmp, char *str);

@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/25 10:56:08 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:56:26 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	main(int argc, char **argv, char **env)
 			add_history(data->line);
 			lexer(data, data->line);
 			free(data->line);
-			expander(data);
+//			expander(data);
 			parser(data);
 			executer(data);
-			/* ft_liberator(data); */
+			//ft_liberator(data);
 		}
 	}
 	return (0);
