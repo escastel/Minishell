@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/25 14:55:56 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:22:02 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	executer(t_data *data);
 void	minishell_print(int flag);
 void	ft_liberator(t_data *data);
 void	clean_program(t_data *data);
+int		error_msg(char	*str);
 
 // 		INITIALIZE
 
