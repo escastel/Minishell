@@ -3,40 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/25 15:35:42 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:05:44 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_tokens(char **line, char **tmp)
+static int	ft_tokens_util(char **line, char **tmp, int flag)
 {
 	char	*str;
 	int		j;
 
 	j = 0;
 	str = ft_calloc(1, ft_strlen(*line));
-	while (**line == 32 || (**line >= 9 && **line <= 13))
-		*line += 1;
-	if (**line == '<' || **line == '>' || **line == '|')
+	str[j] = **line;
+	*line += 1;
+	j += 1;
+	if (flag)
 	{
-		str[j] = **line;
-		*line += 1;
-		j += 1;
-		if (**line == '<' || **line == '>')
+		if (**line == str[j - 1])
 		{
 			str[j] = **line;
 			*line += 1;
 			j += 1;
 		}
-		*tmp = ft_strdup(str);
-		free (str);
-		str = NULL;
-		return (1);
 	}
+	str[j] = '\0';
+	*tmp = ft_strdup(str);
+	free (str);
+	str = NULL;
+	return (1);
+}
+
+static int	ft_tokens(char **line, char **tmp)
+{
+	while (**line == 32 || (**line >= 9 && **line <= 13))
+		*line += 1;
+	if (**line == '|')
+		return (ft_tokens_util(line, tmp, 0));
+	if (**line == '<')
+		return (ft_tokens_util(line, tmp, 1));
+	if (**line == '>')
+		return (ft_tokens_util(line, tmp, 2));
 	return (0);
 }
 
@@ -80,14 +91,11 @@ int	lexer(t_data *data, char *line)
 		ft_take_first_word(&line, &tmp);
 		if (data->prompt[i])
 			free (data->prompt[i]);
-		data->prompt[i] = NULL;
 		if (ft_strcmp(tmp, "", ft_strlen(tmp)))
 			data->prompt[i] = ft_strdup(tmp);
-		printf("%s\n", tmp);
 		free (tmp);
 		tmp = NULL;
 		i++;
 	}
-	data->prompt[i] = 0;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/25 15:23:14 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:38:31 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ void	ft_noduler(t_data *data)
 	int		i;
 	int		j;
 
-	aux = data->cmd;
 	i = 0;
 	j = 0;
+	aux = data->cmd;
 	while (data->prompt[i])
 	{
 		printf("PROMPT: %s\n", data->prompt[i]);

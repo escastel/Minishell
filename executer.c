@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/25 13:57:44 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:35:51 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_command_filter(t_data *data, t_list *cmd)
 	}
 	if (access(((t_cmds *)cmd->content)->full_cmd[0], X_OK) == 0)
 	{
-		((t_cmds *)cmd->content)->exc_path =  ft_strdup(((t_cmds *)cmd->content)->full_cmd[0]);
+		((t_cmds *)cmd->content)->exc_path = ft_strdup(((t_cmds *)cmd->content)->full_cmd[0]);
 		return (0);
 	}
 	free((cmd_slash));
@@ -53,7 +53,7 @@ void	ft_parent(t_data *data, t_list	*cmd)
 	return ;
 }
 
-void	ft_child(t_data *data, t_list	*cmd)
+void	ft_child(t_data *data, t_list	*cmd, int flag)
 {
 	close(data->pipe[0]);
 	if ((((t_cmds *)cmd->content)->infile) != STDIN_FILENO)
@@ -67,15 +67,15 @@ void	ft_child(t_data *data, t_list	*cmd)
 	}
 	else
 		dup2(((t_cmds *)cmd->content)->outfile, STDOUT_FILENO);
-	if ((builtins_control(data, ((t_cmds *)data->cmd->content)->full_cmd, 1) == 0))
-	{
+	if (flag == 1)
 		if (execve(((t_cmds *)cmd->content)->exc_path, ((t_cmds *)cmd->content)->full_cmd, data->env) == -1)
 			return ; //ft error o exit failure?
-	}
+	if (flag == 0)
+		builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 0);
 	exit(0); // y llamar a las liberaciones no?
 }
 
-int	ft_execute(t_data *data, t_list	*cmd)
+int	ft_execute(t_data *data, t_list	*cmd, int flag)
 {
 	pid_t	pid;
 
@@ -85,7 +85,7 @@ int	ft_execute(t_data *data, t_list	*cmd)
 		exit (EXIT_FAILURE);//	ft_error();
 	if (pid == 0)
 	{
-		ft_child(data, cmd);
+		ft_child(data, cmd, flag);
 		return (0);
 	}
 	else
@@ -106,8 +106,13 @@ void	executer(t_data *data)
 	aux = data->cmd;
 	while (aux)
 	{
-		if (ft_command_filter(data, aux) == 0)
-			ft_execute(data, aux);
+		if (builtins_control(data, ((t_cmds *)aux->content)->full_cmd, 1) == 0)
+		{
+			if (ft_command_filter(data, aux) == 0)
+				ft_execute(data, aux, 1);
+		}
+		else if (builtins_control(data, ((t_cmds *)aux->content)->full_cmd, 1) == 1)
+			ft_execute(data, aux, 0);
 		aux = aux->next;
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
