@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/25 16:38:31 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:44:47 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int	ft_redir(t_data *data,t_cmds *aux, int i)
 {
 	if (data->prompt[i][0] == '<')
 	{
-		if (ft_strlen(data->prompt[i]) == 2)
+		if (data->prompt[i][1] == '<')
 		{
 			printf("HEREDOC\n");
 			return (++i);
 		}
-		else
+		if (data->prompt[i][1])
 		{
 			aux->infile = open(data->prompt[++i], O_RDONLY, 00444);
 			return (++i);
@@ -73,18 +73,18 @@ int	ft_redir(t_data *data,t_cmds *aux, int i)
 	}
 	else if (data->prompt[i][0] == '>')
 	{
-		if (ft_strlen(data->prompt[i]) == 2)
+		if (data->prompt[i][1] == '>')
 		{
 			aux->outfile = open(data->prompt[++i], O_WRONLY | O_CREAT | O_APPEND, 00644);
 			return (++i);
 		}
-		else
+		if (data->prompt[i][1])
 		{
 			aux->outfile = open(data->prompt[++i], O_WRONLY | O_CREAT | O_TRUNC, 00644);
 			return (++i);
 		}
 	}
-	return (i); //meterle una comprobación de errores antes de los returns? cambiar esta logica creo yo
+	return (++i); //meterle una comprobación de errores antes de los returns? cambiar esta logica creo yo
 }
 
 void	ft_noduler(t_data *data)
@@ -96,6 +96,7 @@ void	ft_noduler(t_data *data)
 	i = 0;
 	j = 0;
 	aux = data->cmd;
+	((t_cmds *)aux->content)->full_cmd[j] = NULL;
 	while (data->prompt[i])
 	{
 		printf("PROMPT: %s\n", data->prompt[i]);
