@@ -14,7 +14,8 @@ expander_utils.c \
 signal.c \
 clean_program.c \
 lexer_utils.c \
-heredoc.c
+heredoc.c \
+executer.c
 
 FILES_BUILT = built-ins/builtins_control.c \
 built-ins/cd.c \
