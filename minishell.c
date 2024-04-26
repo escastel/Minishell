@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/25 18:47:57 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:11:09 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,16 @@ int	main(int argc, char **argv, char **env)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);
-	/* signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handler); */
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handler);
 	init_struct(data, env);
 	minishell_print(0);
 	while (1)
 	{
 		data->line = readline(CYAN "michishell$ " RESET);
-		if (ft_strcmp(data->line, "\0", ft_strlen(data->line)))
+		if (!data->line)
+			break ;
+		if (ft_strcmp(data->line, "", ft_strlen(data->line)))
 		{
 			add_history(data->line);
 			if (lexer(data, data->line) == 0)
@@ -50,7 +52,7 @@ int	main(int argc, char **argv, char **env)
 				parser(data);
 				executer(data);
 			}
-			//ft_liberator(data);
+			clean_cmd(data);
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/25 16:35:51 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:15:14 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	executer(t_data *data)
 
 	fd = dup(STDIN_FILENO);
 	aux = data->cmd;
+	g_signal = 0;
 	while (aux)
 	{
 		if (builtins_control(data, ((t_cmds *)aux->content)->full_cmd, 1) == 0)

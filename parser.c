@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/26 16:22:10 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:38:43 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_cmds	*ft_new_cmd_node(void)
 	command = ft_calloc(1, ((sizeof(t_cmds))));
 	command->full_cmd = ft_calloc(1, (sizeof(char **)));
 	command->exc_path = ft_calloc(1, (sizeof(char *)));
-	command->outfile = 1; // por probarlo de guardar el fd desde el principio
+	command->outfile = 1;
 	command->infile = 0;
 	return (command);
 }
@@ -84,7 +84,7 @@ int	ft_redir(t_data *data,t_cmds *aux, int i)
 			return (++i);
 		}
 	}
-	return (i); //meterle una comprobación de errores antes de los returns? cambiar esta logica creo yo
+	return (i);
 }
 
 void	ft_noduler(t_data *data)

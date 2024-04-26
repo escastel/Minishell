@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/26 13:07:25 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:40:06 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		g_signal;
 void	executer(t_data *data);
 
 void	minishell_print(int flag);
-void	ft_liberator(t_data *data);
+void	clean_cmd(t_data *data);
 void	clean_program(t_data *data);
 int		error_msg(char	*str);
 

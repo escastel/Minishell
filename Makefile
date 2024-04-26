@@ -9,7 +9,7 @@ env_initialize.c \
 lexer.c \
 expander.c \
 parser.c \
-liberator.c \
+clean_cmd.c \
 expander_utils.c \
 signal.c \
 clean_program.c \

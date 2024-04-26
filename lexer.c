@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/26 16:21:42 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:15:59 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	lexer(t_data *data, char *line)
 		}
 		if (tmp && ft_strncmp(tmp, "", ft_strlen(tmp)))
 			data->prompt[i] = ft_strdup(tmp);
-		printf("%s\n", data->prompt[i]);
 		free (tmp);
 		tmp = NULL;
 		i++;

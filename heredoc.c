@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:39:00 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/26 14:47:06 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:00:01 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ void	heredoc(t_data *data, t_cmds *cmd, int i)
 	if (data->prompt[i])
 	{
 		data->heredoc = 1;
+		g_signal = 2;
 		heredoc_control(cmd, data->prompt[i]);
+		g_signal = 1;
 	}
 	else
 		return ;
