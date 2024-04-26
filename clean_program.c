@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 17:30:44 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/23 17:19:42 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:35:15 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	del_cmd(void	*content)
 		cmd->full_cmd[i] = NULL;
 		i++;
 	}
-	free (cmd->exc_path);
+	free (cmd->full_cmd);
+	if (cmd->exc_path)
+		free (cmd->exc_path);
 	cmd->exc_path = NULL;
 }
 
@@ -42,15 +44,14 @@ static void	clean_util(t_data *data)
 {
 	ft_lstclear(&data->listenv, del_listenv);
 	ft_lstclear(&data->cmd, del_cmd);
-	free (data->listenv);
-	free (data->cmd);
+	if (data->listenv)
+		free (data->listenv);
+	if (data->cmd)
+		free (data->cmd);
 	if (data->oldpwd)
 		free (data->oldpwd);
 	if (data->pwd)
-	{
 		free (data->pwd);
-		data->pwd = NULL;
-	}
 	free (data);
 }
 
@@ -65,7 +66,8 @@ void	clean_program(t_data *data)
 		data->env[i] = NULL;
 		i++;
 	}
-	free (data->env);
+	if (data->env)
+		free (data->env);
 	data->env = NULL;
 	i = 0;
 	if (data->cmd_path[i])
@@ -77,6 +79,7 @@ void	clean_program(t_data *data)
 			i++;
 		}
 	}
-	free (data->cmd_path);
+	if (data->cmd_path)
+		free (data->cmd_path);
 	clean_util(data);
 }

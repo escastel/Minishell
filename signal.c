@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:00:15 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/26 17:23:52 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:29:42 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,18 @@ void	handler(int signal)
 		handler_backslash();
 		return ;
 	}
-	if (!g_signal)          //COMANDOS
+	if (!g_signal)
 	{
 		write(1, "\033[K\n", 5);
 		rl_replace_line("", 0);
 		g_signal = 1;
 	}
-	else if (g_signal == 2) //HEREDOC
+	else if (g_signal == 2)
 	{
 		write(1, "\033[K\n", 5);
 		close (0);
 		g_signal = 1;
 	}
-	else                  //SIN COMANDOS
+	else
 		handler_util();
 }

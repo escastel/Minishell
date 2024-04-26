@@ -6,30 +6,33 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 11:43:40 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/26 16:39:56 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:35:35 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_delete_cmd(void *cmd)
+static void	ft_delete_cmd(void *content)
 {
-	int	i;
+	t_cmds	*cmd;
+	int		i;
 
+	cmd = (t_cmds *)content;
 	i = 0;
-	if (((t_cmds *)cmd)->exc_path)
-		free (((t_cmds *)cmd)->exc_path); // hay que ahcer la revisi'on ejor
-	if (((t_cmds *)cmd)->infile != 0)
-		close(((t_cmds *)cmd)->infile);
-	if (((t_cmds *)cmd)->outfile != 1)
-		close(((t_cmds *)cmd)->outfile);
- 	while (((t_cmds *)cmd)->full_cmd[i])
+	while (cmd->full_cmd[i])
 	{
-		free (((t_cmds *)cmd)->full_cmd[i]);
-		i += 1;
-	} 
-	free (((t_cmds *)cmd)->full_cmd);
-	free (cmd);
+		free (cmd->full_cmd[i]);
+		cmd->full_cmd[i] = NULL;
+		i++;
+	}
+	free (cmd->full_cmd);
+	if (cmd->exc_path)
+		free (cmd->exc_path);
+	cmd->exc_path = NULL;
+	if (cmd->infile != 0)
+		close(cmd->infile);
+	if (cmd->outfile != 1)
+		close(cmd->outfile);
 }
 
 void	clean_cmd(t_data *data)
@@ -43,5 +46,6 @@ void	clean_cmd(t_data *data)
 		i += 1;
 	}
 	ft_lstclear(&data->cmd, &ft_delete_cmd);
+	free (data->cmd);
 
 }
