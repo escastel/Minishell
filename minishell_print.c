@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:05:10 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/23 17:06:52 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:28:29 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	print2(void)
 static void	print3(void)
 {
 	printf(GREEN);
+	printf("exit\n");
 	printf("      |\\      _,,,---,,_\n");
 	printf("Zzz   /,`.-'`'    -.  ;-;;,_\n");
 	printf("     |,4-  ) )-,_. ,\\ (  `'-'\n");

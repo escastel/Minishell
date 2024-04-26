@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:00:15 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/26 17:14:52 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:23:52 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,29 @@
 
 static void	handler_backslash(void)
 {
-	printf("Quit: 3\n");
+	write(1, "Quit: 3\n", 9);
 	rl_on_new_line();
+	rl_replace_line("", 0);
+}
+
+static void	handler_util(void)
+{
+	rl_on_new_line();
+	rl_redisplay();
+	rl_replace_line("", 0);
+	write(1, "\033[K\n", 5);
+	rl_on_new_line();
+	rl_redisplay();
 	rl_replace_line("", 0);
 }
 
 void	handler(int signal)
 {
 	if (signal == SIGQUIT)
+	{
 		handler_backslash();
+		return ;
+	}
 	if (!g_signal)          //COMANDOS
 	{
 		write(1, "\033[K\n", 5);
@@ -36,13 +50,5 @@ void	handler(int signal)
 		g_signal = 1;
 	}
 	else                  //SIN COMANDOS
-	{
-		rl_on_new_line();
-		rl_redisplay();
-		rl_replace_line("", 0);
-		write(1, "\033[K\n", 5);
-		rl_on_new_line();
-		rl_redisplay();
-		rl_replace_line("", 0);
-	}
+		handler_util();
 }
