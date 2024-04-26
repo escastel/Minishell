@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:26:08 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/23 12:06:53 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 12:02:33 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 		j++;
 	}
 	ptr[i + j] = '\0';
-	free(s1);
-	free(s2);
+	free (s1);
+	free (s2);
 	return (ptr);
 }

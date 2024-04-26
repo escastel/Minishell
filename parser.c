@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/25 16:44:47 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:46:58 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int	ft_redir(t_data *data,t_cmds *aux, int i)
 {
 	if (data->prompt[i][0] == '<')
 	{
-		if (data->prompt[i][1] == '<')
+		if (ft_strlen(data->prompt[i]) == 2)
 		{
-			printf("HEREDOC\n");
+			heredoc(data, aux, ++i);
 			return (++i);
 		}
-		if (data->prompt[i][1])
+		else
 		{
 			aux->infile = open(data->prompt[++i], O_RDONLY, 00444);
 			return (++i);
@@ -73,18 +73,18 @@ int	ft_redir(t_data *data,t_cmds *aux, int i)
 	}
 	else if (data->prompt[i][0] == '>')
 	{
-		if (data->prompt[i][1] == '>')
+		if (ft_strlen(data->prompt[i]) == 2)
 		{
 			aux->outfile = open(data->prompt[++i], O_WRONLY | O_CREAT | O_APPEND, 00644);
 			return (++i);
 		}
-		if (data->prompt[i][1])
+		else
 		{
 			aux->outfile = open(data->prompt[++i], O_WRONLY | O_CREAT | O_TRUNC, 00644);
 			return (++i);
 		}
 	}
-	return (++i); //meterle una comprobación de errores antes de los returns? cambiar esta logica creo yo
+	return (i); //meterle una comprobación de errores antes de los returns? cambiar esta logica creo yo
 }
 
 void	ft_noduler(t_data *data)
@@ -93,13 +93,11 @@ void	ft_noduler(t_data *data)
 	int		i;
 	int		j;
 
+	aux = data->cmd;
 	i = 0;
 	j = 0;
-	aux = data->cmd;
-	((t_cmds *)aux->content)->full_cmd[j] = NULL;
 	while (data->prompt[i])
 	{
-		printf("PROMPT: %s\n", data->prompt[i]);
 		if ((data->prompt[i][0] == '<') || (data->prompt[i][0] == '>'))
 			i = ft_redir(data, aux->content, i);
  		else if (data->prompt[i][0] == '|')
@@ -112,13 +110,11 @@ void	ft_noduler(t_data *data)
 		else
 		{
 			((t_cmds *)aux->content)->full_cmd[j] = expander(data, i);
-			printf("%s\n", ((t_cmds *)aux->content)->full_cmd[j]);
 			i += 1;
 			j += 1;
 			((t_cmds *)aux->content)->full_cmd[j] = NULL;
 		}
 	}
-	printf("%d\n", ((t_cmds *)aux->content)->infile);
 	return ;
 }
 

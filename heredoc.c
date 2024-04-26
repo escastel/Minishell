@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:39:00 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/25 16:07:46 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:47:06 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	heredoc_control(t_cmds *cmd, char *limit)
 	heredoc_tmp = open("heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	while (12)
 	{
-		printf("> ");
-		line = get_next_line(0);
+		write (1, "> ", 2);
+		line = get_next_line2(0);
 		if (!line)
 			return ;
 		if (!ft_strncmp(eof, line, ft_strlen(line)))
@@ -41,13 +41,34 @@ static void	heredoc_control(t_cmds *cmd, char *limit)
 	cmd->infile = open("heredoc.tmp", O_RDONLY);
 }
 
-void	heredoc(t_data *data, t_cmds *cmd)
+void	heredoc(t_data *data, t_cmds *cmd, int i)
 {
-	if (cmd->full_cmd[1])
+	if (data->prompt[i])
 	{
 		data->heredoc = 1;
-		heredoc_control(cmd, cmd->full_cmd[1]);
+		heredoc_control(cmd, data->prompt[i]);
 	}
 	else
 		return ;
 }
+
+/* void	ft_heredoc(t_cmds *command, char *here)
+{
+	char	*here_line;
+
+	command->infile = open(".tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	while (1)
+	{
+		write(1, "> ", 2);
+		here_line = get_next_line2(0);
+		if (ft_strncmp(here_line, here, ft_strlen(here) + 1) == 10)
+		{
+			free (here_line);
+			break ;
+		}
+		write (command->infile, here_line, ft_strlen(here_line));
+		free (here_line);
+	}
+	close(command->infile);
+	command->infile = open(".tmp", O_RDONLY);
+} */

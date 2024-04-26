@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:21:55 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/05 12:35:06 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 11:15:29 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
+# include <stdbool.h>
 
 typedef struct s_list
 {
@@ -41,7 +42,7 @@ size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 void		ft_bzero(void *s, size_t n);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
-int			ft_strncmp(char *s1, char *s2, int n);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t n);
 long int	ft_atoi(const char *str);
 void		*ft_memmove(void *dst, const void *src, size_t n);
@@ -65,6 +66,11 @@ char		**ft_split(char const *s, char c);
 char		*get_next_line(int fd);
 size_t		ft_strlen_gnl(const char *s);
 int			ft_strchr_gnl(const char *s, int c);
+char		*ft_challoc(size_t count);
+bool		ft_srchnl(char *s);
+size_t		gnl_ft_strlen(const char *str);
+char		*gnl_ft_strjoin(char const *s1, char const *s2);
+char		*get_next_line2(int fd);
 void		*ft_calloc_gnl(size_t count, size_t size);
 char		*ft_strjoin_gnl(char *s1, char *s2);
 int			ft_printf(char const *str, ...);
