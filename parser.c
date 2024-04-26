@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/26 16:38:43 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:58:52 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	ft_noduler(t_data *data)
 			i = ft_redir(data, aux->content, i);
  		else if (data->prompt[i][0] == '|')
 		{
+			((t_cmds *)aux->content)->full_cmd[j] = NULL;
 			ft_next_node(data);
 			j = 0;
 			i += 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:39:00 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/26 17:00:01 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:51:30 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@ static void	heredoc_control(t_cmds *cmd, char *limit)
 {
 	char	*eof;
 	char	*line;
-	int		heredoc_tmp;
+	int		pipefd[2];
 
+	pipe(pipefd);
+	if (pipefd < 0)
+		exit(1); //ft error
+	//cosillas con la se;al pal heredoc de la se;al
 	eof = ft_strjoin(limit, "\n");
-	heredoc_tmp = open("heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	while (12)
 	{
 		write (1, "> ", 2);
@@ -34,11 +37,11 @@ static void	heredoc_control(t_cmds *cmd, char *limit)
 			free (line);
 			break ;
 		}
-		ft_putstr_fd(line, heredoc_tmp);
+		ft_putstr_fd(line, pipefd[1]);
 		free(line);
 	}
-	close(heredoc_tmp);
-	cmd->infile = open("heredoc.tmp", O_RDONLY);
+	close(pipefd[1]);
+	cmd->infile = pipefd[0];
 }
 
 void	heredoc(t_data *data, t_cmds *cmd, int i)
@@ -46,9 +49,7 @@ void	heredoc(t_data *data, t_cmds *cmd, int i)
 	if (data->prompt[i])
 	{
 		data->heredoc = 1;
-		g_signal = 2;
 		heredoc_control(cmd, data->prompt[i]);
-		g_signal = 1;
 	}
 	else
 		return ;
