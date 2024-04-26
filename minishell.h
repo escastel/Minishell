@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/25 17:22:02 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:07:25 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,12 @@ int		ft_backlashes(char **argv, char **str, int j);
 int		ft_singlequote(char **argv, char **str, int j);
 int		ft_doublequote(char **argv, char **str, int j);
 
+//		TOKENS
+
+int		ft_tokens_pipe(char **line, char **tmp);
+int		ft_tokens_minor(char **line, char **tmp);
+int		ft_tokens_mayor(char **line, char **tmp);
+
 //		EXPANDER
 
 char	*expander(t_data *data, int i);
@@ -118,7 +124,7 @@ int		expand_tilde(t_data *data, char **tmp, char *str);
 //		PARSER
 
 int		parser(t_data *data);
-void	heredoc(t_data *data, t_cmds *cmd);
+void	heredoc(t_data *data, t_cmds *cmd, int i);
 
 //		SIGNAL
 
