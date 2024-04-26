@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/26 13:21:02 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:21:42 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ int	lexer(t_data *data, char *line)
 		tmp = NULL;
 		i++;
 	}
+	data->prompt[i] = NULL;
 	return (0);
 }
