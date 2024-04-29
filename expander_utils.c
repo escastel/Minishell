@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:29:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/23 12:07:58 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/29 13:16:40 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,22 @@ void	fill_tmp(char **tmp, char *func)
 		*tmp = func;
 }
 
-void	dollar(char **tmp, char *str, int *i, int *j)
+int	dollar(char **tmp, char *str, int *i, int *j)
 {
+/* 	if (str[*i] == '$' && str[*i + 1] == '$')
+	{
+		*i += 1;
+		return (0);
+	} */
 	while (str[*i] != '$')
 		*i += 1;
+	if (str[*i] == '$' && (str[*i + 1] == '\0'
+		|| str[*i + 1] == '\"' || str[*i + 1] == '\''))
+	{
+		*i += 1;
+		fill_tmp(tmp, ft_substr(str, *j, *i - *j));
+		return (1);
+	}
 	if (*i > *j)
 		fill_tmp(tmp, ft_substr(str, *j, *i - *j));
 	*i += 1;
@@ -31,6 +43,7 @@ void	dollar(char **tmp, char *str, int *i, int *j)
 	while (str[*i] != ' ' && str[*i] != '$' && str[*i] != '\''
 		&& str[*i] != '\"' && str[*i] != '\0' && str[*i] != '/')
 		*i += 1;
+	return (0);
 }
 
 int	expand_tilde(t_data *data, char **tmp, char *str)
@@ -82,12 +95,13 @@ char	*expand_var(t_data *data, char *str, int i, int j)
 			if (((t_listenv *)aux->content)->value)
 			{
 				if (!ft_strcmp(tmp, "OLDPWD", 6) || !ft_strcmp(tmp, "PWD", 3))
-					return (((t_listenv *)aux->content)->value);
+					return (free (tmp), ((t_listenv *)aux->content)->value);
 				else
-					return (((t_listenv *)aux->content)->value + 1);
+					return (free (tmp), ((t_listenv *)aux->content)->value + 1);
 			}
 		}
 		aux = aux->next;
 	}
+	free (tmp);
 	return ("");
 }

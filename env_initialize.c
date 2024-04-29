@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/23 16:45:09 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:50:40 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 	new_env = NULL;
 } */
 
-static void	clear_listenv(t_listenv *list)
+/* static void	clear_listenv(t_listenv *list)
 {
 	free(list->name);
 	list->name = NULL;
@@ -36,7 +36,7 @@ static void	clear_listenv(t_listenv *list)
 	}
 	free (list);
 	list = NULL;
-}
+} */
 
 static int	fill_env(t_data *data, char **new_env)
 {
@@ -110,7 +110,8 @@ static int	fill_listenv(t_data *data, char **env)
 		listenv->index = 1;
 		new = ft_lstnew(listenv);
 		ft_lstadd_back(&data->listenv, new);
-		clear_listenv(listenv);
+		/* clear_listenv(listenv); */
+		printf("%s\n", ((t_listenv *)new->content)->name);
 	}
 	return (0);
 }

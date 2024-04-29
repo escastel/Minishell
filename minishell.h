@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/26 16:40:06 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:48:14 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_data
 	char		**cmd_path;
 	int			i;
 	int			j;
-	int			heredoc;
+	int			builtin;
 	int			pipe[2];
 	t_list		*cmd;
 	t_list		*listenv;
@@ -114,12 +114,12 @@ int		ft_tokens_mayor(char **line, char **tmp);
 
 //		EXPANDER
 
-char	*expander(t_data *data, int i);
+void	expander(t_data *data, int i);
 void	fill_tmp(char **tmp, char *func);
-void	dollar(char **tmp, char *str, int *i, int *j);
 void	simple_quote(t_data *data, char **tmp, char *str);
 char	*expand_var(t_data *data, char *str, int i, int j);
 int		expand_tilde(t_data *data, char **tmp, char *str);
+int		dollar(char **tmp, char *str, int *i, int *j);
 
 //		PARSER
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:32:47 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/25 14:57:16 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/29 13:03:49 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	expand_util2(t_data *data, char **tmp, char *str, int *flag)
 		{
 			data->i = data->j;
 			*flag = 1;
-			dollar(tmp, str, &data->i, &data->j);
-			fill_tmp(tmp, expand_var(data, str, data->i, data->j));
+			if (!dollar(tmp, str, &data->i, &data->j))
+				fill_tmp(tmp, expand_var(data, str, data->i, data->j));
 			if (str[data->i] != '\"' && str[data->i])
 			{
 				data->j = data->i;
@@ -48,9 +48,9 @@ static void	expand_util(t_data *data, char **tmp, char *str, int *flag)
 		{
 			data->i = data->j;
 			*flag = 1;
-			dollar(tmp, str, &data->i, &data->j);
-			fill_tmp(tmp, expand_var(data, str, data->i, data->j));
-			if (str[data->i] && str[data->i] != '\'' && str[data->i] != '\"')
+			if (!dollar(tmp, str, &data->i, &data->j))
+				fill_tmp(tmp, expand_var(data, str, data->i, data->j));
+			if (str[data->i + 1] && str[data->i] != '\'' && str[data->i] != '\"')
 			{
 				data->j = data->i;
 				while (str[data->i] != '\0' && str[data->i] != '\''
@@ -104,12 +104,17 @@ static void	expand(t_data *data, char *str, char **tmp)
 	}
 } */
 
-char	*expander(t_data *data, int i)
+void	expander(t_data *data, int i)
 {
 	char	*tmp;
 
 	tmp = NULL;
 	if (expand_tilde(data, &tmp, data->prompt[i]))
 		expand(data, data->prompt[i], &tmp);
-	return (tmp);
+	if (data->prompt[i])
+		free (data->prompt[i]);
+	/* data->prompt[i] = NULL; */
+	data->prompt[i] = ft_strdup(tmp);
+	tmp = NULL;
+	return ;
 }
