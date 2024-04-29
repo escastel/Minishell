@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/29 11:54:22 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/29 13:32:53 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_cmds	*ft_new_cmd_node(void)
 	t_cmds		*command;
 
 	command = ft_calloc(1, ((sizeof(t_cmds))));
-	command->full_cmd = malloc(1); //estos mallocs antes eran de otra manera
+	command->full_cmd = NULL; //estos mallocs antes eran de otra manera
 	command->exc_path = NULL;
 	command->outfile = 1;
 	command->infile = 0;
