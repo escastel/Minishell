@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 11:43:40 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/26 17:35:35 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/29 13:28:32 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@ static void	ft_delete_cmd(void *content)
 		close(cmd->outfile);
 }
 
+void	ft_clean_path(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->cmd_path[i])
+	{
+		free (data->cmd_path[i]);
+		data->cmd_path[i] = NULL;
+		i++;
+	}
+	free (data->cmd_path);
+}
+
 void	clean_cmd(t_data *data)
 {
 	int	i;
@@ -47,5 +61,5 @@ void	clean_cmd(t_data *data)
 	}
 	ft_lstclear(&data->cmd, &ft_delete_cmd);
 	free (data->cmd);
-
+	ft_clean_path(data);
 }
