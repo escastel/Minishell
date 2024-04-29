@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/29 13:32:12 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:41:21 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_parent(t_data *data, t_list	*cmd)
 	return ;
 }
 
-void	ft_child(t_data *data, t_list	*cmd, int flag)
+void	ft_child_builtin(t_data *data, t_list *cmd)
 {
 	close(data->pipe[0]);
 	if ((((t_cmds *)cmd->content)->infile) != STDIN_FILENO)
@@ -67,15 +67,42 @@ void	ft_child(t_data *data, t_list	*cmd, int flag)
 	}
 	else
 		dup2(((t_cmds *)cmd->content)->outfile, STDOUT_FILENO);
-	if (flag == 1)
-		if (execve(((t_cmds *)cmd->content)->exc_path, ((t_cmds *)cmd->content)->full_cmd, data->env) == -1)
-			return ; //ft error o exit failure?
-	if (flag == 0)
-		builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 0);
+	builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 0);
 	exit(0); // y llamar a las liberaciones no?
 }
 
-int	ft_execute(t_data *data, t_list	*cmd, int flag)
+void	ft_child(t_data *data, t_list *cmd)
+{
+	close(data->pipe[0]);
+	if ((((t_cmds *)cmd->content)->infile) != STDIN_FILENO)
+		dup2((((t_cmds *)cmd->content)->infile), STDIN_FILENO);
+	if (cmd->next)
+	{
+		if ((((t_cmds *)cmd->content)->outfile) != STDOUT_FILENO)
+			dup2((((t_cmds *)cmd->content)->outfile), STDOUT_FILENO);
+		else if (dup2(data->pipe[1], STDOUT_FILENO) == -1) // habria uqe hacerlo con el infile? podria igual el infile aquí dentro
+			return ;
+	}
+	else
+		dup2(((t_cmds *)cmd->content)->outfile, STDOUT_FILENO);
+	if (execve(((t_cmds *)cmd->content)->exc_path, ((t_cmds *)cmd->content)->full_cmd, data->env) == -1)
+			return ; //ft error o exit failure?
+	exit(0); // y llamar a las liberaciones no? NO DEBERIA LLEGAR AQUI
+}
+
+int	ft_execute_builtin(t_data *data, t_list	*cmd)
+{
+	pipe(data->pipe);
+	builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 0);
+	if (data->builtin == 1) //esto es l oañadido, la flag se añade en exit builtin
+	{
+		exit (0); //llamar liberaciones?
+		clean_program(data);
+	}
+	return (0);
+}
+
+int	ft_execute(t_data *data, t_list	*cmd)
 {
 	pid_t	pid;
 
@@ -85,18 +112,13 @@ int	ft_execute(t_data *data, t_list	*cmd, int flag)
 		exit (EXIT_FAILURE);//	ft_error();
 	if (pid == 0)
 	{
-		ft_child(data, cmd, flag);
+		ft_child(data, cmd);
 		return (0);
 	}
 	else
 	{
 		waitpid(pid, NULL, 0);
 		ft_parent(data, cmd);
-		if (data->builtin == 1) //esto es l oañadido, la flag se añade en exit builtin
-		{
-			exit (0); //llamar liberaciones?
-			clean_program(data);
-		}
 		return (0);
 	}
 	return (0);
@@ -113,14 +135,13 @@ void	executer(t_data *data)
 	g_signal = 0;
 	while (aux)
 	{
-		builtins_control(data, ((t_cmds *)aux->content)->full_cmd, 1);
 		if (builtins_control(data, ((t_cmds *)aux->content)->full_cmd, 1) == 0)
 		{
 			if (ft_command_filter(data, aux) == 0)
-				ft_execute(data, aux, 1);
+				ft_execute(data, aux);
 		}
 		else if (builtins_control(data, ((t_cmds *)aux->content)->full_cmd, 1) == 1)
-			ft_execute(data, aux, 0);
+			ft_execute_builtin(data, aux);
 		aux = aux->next;
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
