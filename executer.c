@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/28 17:56:19 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:42:04 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	ft_execute(t_data *data, t_list	*cmd, int flag)
 	{
 		waitpid(pid, NULL, 0);
 		ft_parent(data, cmd);
-		if (data->heredoc == 1) //esto es l oañadido, la flag se añade en exit builtin
+		if (data->builtin == 1) //esto es l oañadido, la flag se añade en exit builtin
 			exit (0); //llamar liberaciones?
 		return (0);
 	}

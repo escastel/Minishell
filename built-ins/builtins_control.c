@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_control.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:02:19 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/28 15:03:27 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:41:56 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	builtins_util(t_data *data, char **full_cmd, int flag, int n)
 {
 	if (ft_strncmp(full_cmd[0], "exit", n) == 0)
 	{
-		data->heredoc = 1;
+		data->builtin = 1;
 		if (!flag)
 			exit_built(data);
 		return (true);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/28 18:52:53 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:54:22 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ void	ft_noduler_pipe(t_data *data, t_list **aux, int *j, int *i)
 
 void	ft_nodule_2(t_data *data, t_list *aux, int *i, int *j)
 {
-	((t_cmds *)aux->content)->full_cmd[*j] = expander(data, *i); //se podria usar un strdup si hay problemas con als reseervas
+	expander(data, *i);
+	((t_cmds *)aux->content)->full_cmd[*j] = data->prompt[*i]; //se podria usar un strdup si hay problemas con als reseervas
 	*i += 1;
 	*j += 1;
 	((t_cmds *)aux->content)->full_cmd[*j] = NULL;
