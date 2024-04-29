@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_program.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 17:30:44 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/29 14:48:33 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:01:50 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	clean_program(t_data *data)
 			i++;
 		}
 	}
-	if (data->cmd_path)
-		free (data->cmd_path);
+	data->cmd_path = NULL;
 	clean_util(data);
 }

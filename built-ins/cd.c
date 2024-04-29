@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/18 12:11:36 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:22:42 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	cd_built_path(t_data *data, char *str)
 	if (data->pwd)
 		free (data->pwd);
 	data->pwd = ft_strdup(getcwd(buff, 500));
+	env_initialize(data, data->env);
 }
 
 static void	cd_built_oldpwd(t_data *data)
@@ -59,28 +60,11 @@ static void	cd_built_oldpwd(t_data *data)
 	if (data->pwd)
 		free (data->pwd);
 	data->pwd = ft_strdup(getcwd(buff, 500));
-}
-
-static void	cd_built_home(t_data *data)
-{
-	char	buff[500];
-
-	if (data->oldpwd)
-		free (data->oldpwd);
-	data->oldpwd = ft_strdup(getcwd(buff, 500));
-	chdir(expand_var(data, "HOME", -1, -1));
-	if (data->pwd)
-		free (data->pwd);
-	data->pwd = ft_strdup(getcwd(buff, 500));
+	env_initialize(data, data->env);
 }
 
 void	cd_built(t_data *data, char **cmd)
 {
-	if (!cmd[0] || (cmd[0][0] == '~' && !cmd[0][1] && !cmd[1]))
-	{
-		cd_built_home(data);
-		return ;
-	}
 	if (cmd[0][0] == '-' && !cmd[0][1] && !cmd[1])
 	{
 		if (!data->oldpwd)

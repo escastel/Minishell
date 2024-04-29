@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_initialize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/29 14:45:43 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:04:39 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,9 @@ static int	fill_env(t_data *data, char **new_env)
 		while (data->env[i])
 		{
 			free(data->env[i]);
-			/* data->env[i] = NULL; */
 			i++;
 		}
 		free(data->env);
-		/* data->env = NULL; */
 	}
 	data->env = (char **)malloc(sizeof(char *) * ft_strrlen(new_env) + 1);
 	if (!data->env)
@@ -111,7 +109,6 @@ static int	fill_listenv(t_data *data, char **env)
 		listenv->index = 1;
 		new = ft_lstnew(listenv);
 		ft_lstadd_back(&data->listenv, new);
-		printf("%s\n", ((t_listenv *)new->content)->name);
 	}
 	clear_listenv(listenv);
 	return (0);
@@ -119,9 +116,17 @@ static int	fill_listenv(t_data *data, char **env)
 
 int	env_initialize(t_data *data, char **new_env)
 {
+	t_list *aux;
+
 	if (fill_env(data, new_env))
 		return (1);
 	if (fill_listenv(data, data->env))
 		return (1);
+	aux = data->listenv;
+	while (aux->next)
+	{
+		printf("%s\n", ((t_listenv *)aux->content)->name);
+		aux = aux->next;
+	}
 	return (0);
 }

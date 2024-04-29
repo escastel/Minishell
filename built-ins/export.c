@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/04 17:53:14 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:17:36 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ void	export_print(t_data *data)
 	while (index < len)
 	{
 		aux = data->listenv;
-		while (aux)
+		while (aux->next)
 		{
 			listenv = ((t_listenv *)aux->content);
 			if (listenv->index == index)
 			{
 				printf("declare -x %s", listenv->name);
-				if (listenv->value + 1)
+				if (listenv->value)
 					printf("=\"%s\"\n", listenv->value + 1);
 				index++;
 			}
@@ -72,11 +72,11 @@ void	order_export(t_data *data)
 	int				index;
 
 	aux = data->listenv;
-	while (aux)
+	while (aux->next)
 	{
 		listenv_aux = ((t_listenv *)aux->content);
 		tmp = data->listenv;
-		while (tmp)
+		while (tmp->next && listenv_aux->name)
 		{
 			listenv_tmp = ((t_listenv *)tmp->content);
 			if (ft_strlen(listenv_aux->name) > ft_strlen(listenv_tmp->name))
@@ -99,16 +99,19 @@ void	export_var(t_data *data, char *str)
 
 	len = ft_strrlen(data->env);
 	new_env = (char **)malloc(sizeof(char *) * len + 2);
-	if (!new_env)
-		return ;
-	i = 0;
-	while (data->env[i])
+	i = -1;
+	while (data->env[++i])
 	{
 		len = ft_strlen(data->env[i]);
 		if (!ft_strncmp(data->env[i], str, len))
+		{
+			i = -1;
+			while (new_env[++i])
+				free (new_env[i]);
+			free (new_env);
 			return ;
+		}
 		new_env[i] = ft_strdup(data->env[i]);
-		i++;
 	}
 	new_env[i] = ft_strdup(str);
 	new_env[++i] = NULL;
