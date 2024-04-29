@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_program.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 17:30:44 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/26 17:35:15 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/29 13:34:00 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	clean_util(t_data *data)
 	if (data->listenv)
 		free (data->listenv);
 	if (data->cmd)
-		free (data->cmd);
+		clean_cmd(data);
 	if (data->oldpwd)
 		free (data->oldpwd);
 	if (data->pwd)
