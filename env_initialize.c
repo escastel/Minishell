@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/29 17:04:39 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:23:39 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 	new_env = NULL;
 } */
 
-static void	clear_listenv(t_listenv *list)
+/* static void	clear_listenv(t_listenv *list)
 {
 	if (list->name)
 		free(list->name);
@@ -37,7 +37,7 @@ static void	clear_listenv(t_listenv *list)
 	}
 	free (list);
 	list = NULL;
-}
+} */
 
 static int	fill_env(t_data *data, char **new_env)
 {
@@ -57,7 +57,7 @@ static int	fill_env(t_data *data, char **new_env)
 	if (!data->env)
 		return (1);
 	i = 0;
-	while (new_env[i])
+	while (new_env[i] && ft_strncmp(new_env[i], "", ft_strlen(new_env[i])))
 	{
 		data->env[i] = ft_strdup(new_env[i]);
 		i++;
@@ -110,23 +110,27 @@ static int	fill_listenv(t_data *data, char **env)
 		new = ft_lstnew(listenv);
 		ft_lstadd_back(&data->listenv, new);
 	}
-	clear_listenv(listenv);
+	/* clear_listenv(listenv); */
 	return (0);
 }
 
 int	env_initialize(t_data *data, char **new_env)
 {
-	t_list *aux;
+ 	/* t_list *aux; */
+	/* int		i; */
 
 	if (fill_env(data, new_env))
 		return (1);
 	if (fill_listenv(data, data->env))
-		return (1);
-	aux = data->listenv;
-	while (aux->next)
+			return (1);
+/* 	i = -1;
+	while (data->env[++i])
+		printf("%s\n", data->env[i]); */
+/*  	aux = data->listenv;
+	while (aux)
 	{
 		printf("%s\n", ((t_listenv *)aux->content)->name);
 		aux = aux->next;
-	}
+	} */
 	return (0);
 }

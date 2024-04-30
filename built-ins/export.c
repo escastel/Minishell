@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/29 17:17:36 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:21:44 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	export_error(char *str)
 	return (0);
 }
 
-void	export_print(t_data *data)
+static void	export_print(t_data *data)
 {
 	t_list			*aux;
 	t_listenv		*listenv;
@@ -48,7 +48,7 @@ void	export_print(t_data *data)
 	while (index < len)
 	{
 		aux = data->listenv;
-		while (aux->next)
+		while (aux)
 		{
 			listenv = ((t_listenv *)aux->content);
 			if (listenv->index == index)
@@ -56,6 +56,8 @@ void	export_print(t_data *data)
 				printf("declare -x %s", listenv->name);
 				if (listenv->value)
 					printf("=\"%s\"\n", listenv->value + 1);
+				else
+					printf("\n");
 				index++;
 			}
 			aux = aux->next;
@@ -63,7 +65,7 @@ void	export_print(t_data *data)
 	}
 }
 
-void	order_export(t_data *data)
+static void	order_export(t_data *data)
 {
 	t_list			*aux;
 	t_list			*tmp;
@@ -91,33 +93,20 @@ void	order_export(t_data *data)
 	}
 }
 
-void	export_var(t_data *data, char *str)
+static void	export_var(t_data *data, char *str)
 {
-	char		**new_env;
-	int			len;
-	int			i;
+	int	flag;
+/* 	t_list	*list; */
 
-	len = ft_strrlen(data->env);
-	new_env = (char **)malloc(sizeof(char *) * len + 2);
-	i = -1;
-	while (data->env[++i])
+	flag = 0;
+	check_new_var(data, str, &flag);
+	add_var_env(data, str, &flag);
+/* 	list = data->listenv;
+	while (list)
 	{
-		len = ft_strlen(data->env[i]);
-		if (!ft_strncmp(data->env[i], str, len))
-		{
-			i = -1;
-			while (new_env[++i])
-				free (new_env[i]);
-			free (new_env);
-			return ;
-		}
-		new_env[i] = ft_strdup(data->env[i]);
-	}
-	new_env[i] = ft_strdup(str);
-	new_env[++i] = NULL;
-	ft_lstclear(&data->listenv, del_listenv);
-	free (data->listenv);
-	env_initialize(data, new_env);
+		printf("%s%s\n", ((t_listenv *)list->content)->name, ((t_listenv *)list->content)->value);
+		list = list->next;
+	} */
 }
 
 void	export_built(t_data *data, char **cmd)

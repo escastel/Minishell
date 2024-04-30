@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 14:26:40 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:19:36 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ int		g_signal;
 
 //		FUNCIONES GENERALES
 
-void	executer(t_data *data);
-
 void	minishell_print(int flag);
 void	clean_cmd(t_data *data);
 void	clean_program(t_data *data);
@@ -127,6 +125,10 @@ int		dollar(char **tmp, char *str, int *i, int *j);
 int		parser(t_data *data);
 void	heredoc(t_data *data, t_cmds *cmd, int i);
 
+//		EXECUTER
+
+void	executer(t_data *data);
+
 //		SIGNAL
 
 void	handler(int signal);
@@ -153,8 +155,9 @@ void	exit_built(t_data *data);
 
 // EXPORT
 
-void	export_var(t_data *data, char *str);
 void	export_built(t_data *data, char **cmd);
+void	add_var_env(t_data *data, char *str, int *flag);
+int		check_new_var(t_data *data, char *str, int *flag);
 
 // PWD
 

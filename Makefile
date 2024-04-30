@@ -25,7 +25,8 @@ built-ins/env.c \
 built-ins/exit.c \
 built-ins/export.c \
 built-ins/pwd.c \
-built-ins/unset.c
+built-ins/unset.c \
+built-ins/export_utils.c
 
 OBJECTS = $(FILES:%.c=obj/%.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:24:54 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/26 18:46:48 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:53:48 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	exit_built(t_data *data)
 {
-	(void)data;
 	minishell_print(1);
 	clean_program(data);
 	exit(0);

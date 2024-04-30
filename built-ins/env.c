@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:56:23 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/16 12:30:38 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:53:36 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	env_print(t_data *data)
 
 	i = 0;
 	aux = data->listenv;
-	while (data->env[i] && aux)
+	while (data->env[i] && aux->next)
 	{
 		listenv = ((t_listenv *)aux->content);
 		if (listenv->value)
