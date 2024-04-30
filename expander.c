@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:32:47 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/29 13:03:49 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:01:04 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,26 +83,6 @@ static void	expand(t_data *data, char *str, char **tmp)
 		data->i++;
 	}
 }
-
-/* void	expander(t_data *data)
-{
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = NULL;
-	while (data->prompt[i])
-	{
-		if (expand_tilde(data, &tmp, data->prompt[i]))
-			expand(data, data->prompt[i], &tmp);
-		free(data->prompt[i]);
-		data->prompt[i] = NULL;
-		data->prompt[i] = ft_strdup(tmp);
-		free(tmp);
-		tmp = NULL;
-		i++;
-	}
-} */
 
 void	expander(t_data *data, int i)
 {

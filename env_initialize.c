@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 15:23:39 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:29:46 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static int	fill_listenv(t_data *data, char **env)
 		while (env[i][j] != '=' && env[i][j])
 			j++;
 		listenv = (t_listenv *)malloc(sizeof(t_listenv));
-		if (!ft_strcmp(env[i], "PWD", 3) || !ft_strcmp(env[i], "OLDPWD", 6))
+		if (!ft_strcmp(env[i], "PWD", j) || !ft_strcmp(env[i], "OLDPWD", j))
 			update_var(data, listenv, env[i]);
 		else
 			listenv->value = ft_substr(env[i], j, ft_strlen(env[i]) - j);

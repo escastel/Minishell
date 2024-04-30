@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 15:19:36 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:31:35 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,9 @@ void	exit_built(t_data *data);
 // EXPORT
 
 void	export_built(t_data *data, char **cmd);
-void	add_var_env(t_data *data, char *str, int *flag);
+void	add_var_env(t_data *data, char *str);
+void	replace_var(t_data *data, char *str);
+void	add_var_list(t_data *data, char *str);
 int		check_new_var(t_data *data, char *str, int *flag);
 
 // PWD

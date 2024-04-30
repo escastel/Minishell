@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/29 17:03:25 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/29 19:25:09 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	main(int argc, char **argv, char **env)
 			{
 				free(data->line);
 				parser(data);
-				export_built(data, ((t_cmds *)data->cmd->content)->full_cmd + 1);
 				executer(data);
 			}
 			clean_cmd(data);

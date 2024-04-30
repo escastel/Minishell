@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:29:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/29 13:16:40 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:09:02 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ char	*expand_var(t_data *data, char *str, int i, int j)
 		tmp = ft_strdup(str);
 	while (aux)
 	{
-		if (!ft_strcmp(((t_listenv *)aux->content)->name, tmp, ft_strlen(tmp)))
+		if (!ft_strncmp(((t_listenv *)aux->content)->name, tmp,
+				ft_strlen(tmp) + 1))
 		{
 			if (((t_listenv *)aux->content)->value)
 			{
@@ -102,6 +103,5 @@ char	*expand_var(t_data *data, char *str, int i, int j)
 		}
 		aux = aux->next;
 	}
-	free (tmp);
-	return ("");
+	return (free (tmp), "");
 }

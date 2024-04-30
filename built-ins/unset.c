@@ -6,28 +6,53 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 20:33:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 15:21:21 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:34:43 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	unset_util_string(t_data *data, char **new_env, char *cmd, int len)
+static int	check_var(t_data *data, char *str)
 {
-	int	i;
-	int	j;
+	t_listenv	*new;
+	t_list		*list;
+	int			len;
 
-	i = 0;
-	j = 0;
-	while (data->env[i])
+	data->i = -1;
+	list = data->listenv;
+	while (data->env[++data->i])
 	{
-		if (ft_strncmp(data->env[i], cmd, len))
+		new = (t_listenv *)list->content;
+		len = ft_strlen(new->name);
+		if (!ft_strncmp(data->env[data->i], str, len))
+			return (1);
+		list = list->next;
+	}
+	return (0);
+}
+/* 
+static void	unset_util(t_data *data, char *str)
+{
+	char		**new_env;
+	t_list		*list;
+	t_listenv	*new;
+	int			len;
+
+	data->i = 0;
+	data->j = 0;
+	list = data->listenv;
+	new_env = (char **)malloc(sizeof(char *) * ft_strrlen(data->env));
+	while (data->env[data->i])
+	{
+		new = (t_listenv *)list->content;
+		len = ft_strlen(new->name);
+		if (ft_strncmp(new->name, str, len))
 		{
 			new_env[j] = ft_strdup(data->env[i]);
 			i++;
 			j++;
 		}
-		else if (!ft_strncmp(data->env[i], cmd, len))
+		else if (!ft_strncmp(data->env[i], str, len))
 			i++;
 	}
 	new_env[j] = NULL;
@@ -39,36 +64,7 @@ static void	unset_util_string(t_data *data, char **new_env, char *cmd, int len)
 		i++;
 	}
 	free(new_env);
-}
-
-void	unset_util(t_data *data, char *cmd)
-{
-	int			i;
-	int			j;
-	int			len;
-	char		**new_env;
-
-	if (!cmd)
-		return ;
-	i = -1;
-	j = 0;
-	len = ft_strlen(cmd) - 1;
-	while (data->env[++i])
-		if (!ft_strncmp(data->env[i], cmd, len))
-			j++;
-	if (!ft_strncmp(cmd, "PWD", 3))
-		if (data->pwd)
-			free(data->pwd);
-	if (!ft_strncmp(cmd, "OLDPWD", 6))
-		if (data->oldpwd)
-			free(data->oldpwd);
-	new_env = (char **)malloc(sizeof(char *) * i - j + 1);
-	if (!new_env)
-		return ;
-	ft_lstclear(&data->listenv, del_listenv);
-	free (data->listenv);
-	unset_util_string(data, new_env, cmd, len);
-}
+} */
 
 void	unset_built(t_data *data, char **cmd)
 {
@@ -77,7 +73,8 @@ void	unset_built(t_data *data, char **cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		unset_util(data, cmd[i]);
+		if (check_var(data, cmd[i]))
+			/* unset_util(data, cmd[i]); */
 		i++;
 	}
 }
