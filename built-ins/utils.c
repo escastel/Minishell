@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 18:40:47 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 18:41:41 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:49:32 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,12 @@ void	add_var_list(t_data *data, char *str)
 	new->index = 1;
 	list = ft_lstnew(new);
 	ft_lstadd_back(&data->listenv, list);
+}
+
+void	clean_str(t_data *data)
+{
+	data->i = -1;
+	while (data->env[++data->i])
+		free (data->env[data->i]);
+	free (data->env);
 }

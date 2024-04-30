@@ -6,19 +6,11 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:31:27 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 19:24:30 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:57:44 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static void	clean_str(t_data *data)
-{
-	data->i = -1;
-	while (data->env[++data->i])
-		free (data->env[data->i]);
-	free (data->env);
-}
 
 static void	cpy_env(t_data *data, char ***new_env, char *str)
 {
@@ -41,6 +33,7 @@ static void	cpy_env(t_data *data, char ***new_env, char *str)
 		data->env[data->i] = ft_strdup(aux[data->i]);
 		free (aux[data->i]);
 	}
+	data->env[data->i] = NULL;
 	free (aux);
 }
 
@@ -93,5 +86,6 @@ void	add_var_env(t_data *data, char *str)
 		data->env[data->i] = ft_strdup(new_env[data->i]);
 		free (new_env[data->i]);
 	}
+	data->env[data->i] = NULL;
 	free (new_env);
 }

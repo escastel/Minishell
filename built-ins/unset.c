@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 20:33:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 17:34:43 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:55:34 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,41 +30,60 @@ static int	check_var(t_data *data, char *str)
 	}
 	return (0);
 }
-/* 
+
+static void	cpy_env(t_data *data, char ***new_env, char *str)
+{
+	char	**aux;
+
+	aux = *new_env;
+	while (data->env[data->i + 1])
+	{
+		aux[data->i] = ft_strdup(data->env[data->i + 1]);
+		data->i++;
+	}
+	aux[data->i] = ft_strdup(str);
+	aux[++data->i] = NULL;
+	clean_str(data);
+	data->i = ft_strrlen(data->env);
+	data->env = (char **)malloc(sizeof(char *) * data->i + 1);
+	data->i = -1;
+	while (aux[++data->i])
+	{
+		data->env[data->i] = ft_strdup(aux[data->i]);
+		free (aux[data->i]);
+	}
+	data->env[data->i] = NULL;
+	free (aux);
+}
+
 static void	unset_util(t_data *data, char *str)
 {
 	char		**new_env;
 	t_list		*list;
+	t_list		*aux;
 	t_listenv	*new;
-	int			len;
 
-	data->i = 0;
-	data->j = 0;
+	aux = NULL;
 	list = data->listenv;
-	new_env = (char **)malloc(sizeof(char *) * ft_strrlen(data->env));
-	while (data->env[data->i])
+	new_env = (char **)malloc(sizeof(char *) * ft_strrlen(data->env) + 1);
+	while (data->env[++data->i] && list)
 	{
 		new = (t_listenv *)list->content;
-		len = ft_strlen(new->name);
-		if (ft_strncmp(new->name, str, len))
+		if (!ft_strncmp(new->name, str, ft_strlen(new->name)))
 		{
-			new_env[j] = ft_strdup(data->env[i]);
-			i++;
-			j++;
+			cpy_env(data, &new_env, str);
+			if (aux)
+				aux->next = list->next;
+			else
+				data->listenv = list->next;
+			ft_lstdelone(list, del_listenv);
+			break ;
 		}
-		else if (!ft_strncmp(data->env[i], str, len))
-			i++;
+		aux = list;
+		list = list->next;
+		new_env[data->j++] = ft_strdup(data->env[data->i]);
 	}
-	new_env[j] = NULL;
-	env_initialize(data, new_env);
-	i = 0;
-	while (new_env[i])
-	{
-		free(new_env[i]);
-		i++;
-	}
-	free(new_env);
-} */
+}
 
 void	unset_built(t_data *data, char **cmd)
 {
@@ -74,7 +93,11 @@ void	unset_built(t_data *data, char **cmd)
 	while (cmd[i])
 	{
 		if (check_var(data, cmd[i]))
-			/* unset_util(data, cmd[i]); */
+		{
+			data->i = -1;
+			data->j = 0;
+			unset_util(data, cmd[i]);
+		}
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 19:28:15 by escastel         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:57:26 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ static void	order_export(t_data *data)
 static void	export_var(t_data *data, char *str)
 {
 	int	flag;
-	int i;
 
 	flag = 1;
 	if (check_new_var(data, str, &flag))
