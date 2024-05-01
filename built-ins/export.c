@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 14:59:46 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:11:12 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	export_built(t_data *data, char **cmd)
 	i = 0;
 	if (!cmd[0])
 	{
+		reset_index(data);
 		order_export(data);
 		export_print(data);
 	}
