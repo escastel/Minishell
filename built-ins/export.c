@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 15:11:12 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:03:05 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ static int	export_error(char *str)
 	if (flag == 3)
 	{
 		printf("michishell: export: `%s': not a valid identifier\n", str);
-		return (flag);
+		return (1);
 	}
 	i = 0;
 	while (str[i])
 	{
-		if ((str[0] >= '0' && str[0] <= '9') || str[i] == '.')
+		if ((str[0] >= '0' && str[0] <= '9')
+			|| (!ft_isalnum(str[i]) && str[i] != '_'))
 		{
 			printf("michishell: export: `%s': not a valid identifier\n", str);
 			return (1);
@@ -122,7 +123,8 @@ void	export_built(t_data *data, char **cmd)
 	{
 		while (cmd[i])
 		{
-			if (!export_error(cmd[i]))
+			data->status = export_error(cmd[i]);
+			if (!data->status)
 				export_var(data, cmd[i]);
 			i++;
 		}

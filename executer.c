@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/01 12:55:28 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:19:01 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	ft_no_cmd(t_data *data, char **full_cmd)
 {
 	dup2(data->fd, STDOUT_FILENO);
 	printf("%s: command not found\n", full_cmd[0]);
-	exit(0);
+	data->status = 127;
+	return ;
 }
 
 void	ft_child(t_data *data, t_list *cmd, int flag)
@@ -140,8 +141,7 @@ int	ft_execute_one(t_data *data, t_list *cmd)
 			waitpid(pid, NULL, 0);
 	}
 	else
-		printf("%s: command not found\n",
-			((t_cmds *)cmd->content)->full_cmd[0]);
+		ft_no_cmd(data, ((t_cmds *)cmd->content)->full_cmd);
 	return (0);
 }
 

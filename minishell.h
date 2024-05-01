@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 15:17:11 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:01:29 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,10 @@ typedef struct s_data
 	char		**cmd_path;
 	int			i;
 	int			j;
+	int			fd;
+	int			status;
 	int			builtin;
 	int			pipe[2];
-	int			fd;
 	t_list		*cmd;
 	t_list		*listenv;
 }	t_data;

@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 12:53:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/26 15:20:57 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:10:14 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	token_utils(char **line, char **tmp, int *i)
 			error_msg("michishell: syntax error near unexpected token");
 			free (str);
 			str = NULL;
-			return (1);
+			return (258);
 		}
 	}
 	while (**line && (**line == 32 || (**line >= 9 && **line <= 13)))
@@ -61,7 +61,7 @@ int	ft_tokens_mayor(char **line, char **tmp)
 			if (tmp)
 				free (tmp);
 			tmp = NULL;
-			return (1);
+			return (258);
 		}
 		return (2);
 	}
@@ -88,7 +88,7 @@ int	ft_tokens_minor(char **line, char **tmp)
 			if (tmp)
 				free (tmp);
 			tmp = NULL;
-			return (1);
+			return (258);
 		}
 		return (2);
 	}
@@ -113,7 +113,7 @@ int	ft_tokens_pipe(char **line, char **tmp)
 			error_msg("michishell: syntax error near unexpected token");
 			free (str);
 			str = NULL;
-			return (1);
+			return (258);
 		}
 		str[++i] = '\0';
 		*tmp = ft_strdup(str);

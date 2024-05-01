@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:56:23 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 14:56:27 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:06:15 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ void	env_built(t_data *data, char **cmd)
 	flag = open(cmd[0], O_DIRECTORY);
 	if (flag != -1)
 	{
+		data->status = 126;
 		printf("env: %s: Permission denied\n", cmd[0]);
 		return ;
 	}
 	if (cmd[0])
 	{
+		data->status = 127;
 		printf("env: %s: No such file or directory\n", cmd[0]);
 		return ;
 	}
