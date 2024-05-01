@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 20:33:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 19:55:34 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:03:47 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	cpy_env(t_data *data, char ***new_env, char *str)
 	aux[++data->i] = NULL;
 	clean_str(data);
 	data->i = ft_strrlen(data->env);
-	data->env = (char **)malloc(sizeof(char *) * data->i + 1);
+	data->env = ft_calloc(data->i + 1, sizeof(char *));
 	data->i = -1;
 	while (aux[++data->i])
 	{
@@ -65,7 +65,7 @@ static void	unset_util(t_data *data, char *str)
 
 	aux = NULL;
 	list = data->listenv;
-	new_env = (char **)malloc(sizeof(char *) * ft_strrlen(data->env) + 1);
+	new_env = ft_calloc(ft_strrlen(data->env) + 1, sizeof(char *));
 	while (data->env[++data->i] && list)
 	{
 		new = (t_listenv *)list->content;

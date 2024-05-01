@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:31:27 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 19:57:44 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 12:59:12 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static void	cpy_env(t_data *data, char ***new_env, char *str)
 	}
 	aux[data->i] = ft_strdup(str);
 	aux[++data->i] = NULL;
-	clean_str(data);
 	data->i = ft_strrlen(data->env);
-	data->env = (char **)malloc(sizeof(char *) * data->i + 1);
+	clean_str(data);
+	data->env = ft_calloc(data->i + 1, sizeof(char *));
 	data->i = -1;
 	while (aux[++data->i])
 	{
@@ -46,7 +46,7 @@ void	replace_var(t_data *data, char *str)
 	aux = NULL;
 	data->i = -1;
 	list = data->listenv;
-	new_env = (char **)malloc(sizeof(char *) * ft_strrlen(data->env) + 1);
+	new_env = ft_calloc(ft_strrlen(data->env) + 1, sizeof(char *));
 	while (data->env[++data->i] && list)
 	{
 		if (!ft_strncmp(((t_listenv *)list->content)->name,
@@ -71,15 +71,16 @@ void	add_var_env(t_data *data, char *str)
 	char	**new_env;
 
 	data->i = ft_strrlen(data->env);
-	new_env = (char **)malloc(sizeof(char *) * data->i + 2);
+	new_env = ft_calloc(data->i + 2, sizeof(char *));
 	data->i = -1;
 	while (data->env[++data->i])
 		new_env[data->i] = ft_strdup(data->env[data->i]);
 	new_env[data->i] = ft_strdup(str);
-	new_env[++data->i] = NULL;
-	clean_str(data);
+	data->i++;
+	new_env[data->i] = NULL;
 	data->i = ft_strrlen(data->env);
-	data->env = (char **)malloc(sizeof(char *) * data->i + 2);
+	clean_str(data);
+	data->env = ft_calloc(data->i + 2, sizeof(char *));
 	data->i = -1;
 	while (new_env[++data->i])
 	{

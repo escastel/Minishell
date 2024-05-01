@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 16:29:46 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:02:14 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	fill_env(t_data *data, char **new_env)
 		}
 		free(data->env);
 	}
-	data->env = (char **)malloc(sizeof(char *) * ft_strrlen(new_env) + 1);
+	data->env = ft_calloc(ft_strrlen(new_env) + 1, sizeof(char *));
 	if (!data->env)
 		return (1);
 	i = 0;
