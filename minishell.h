@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 17:01:29 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:38:06 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,10 @@ int		ft_tokens_mayor(char **line, char **tmp);
 
 void	expander(t_data *data, int i);
 void	fill_tmp(char **tmp, char *func);
-void	simple_quote(t_data *data, char **tmp, char *str);
+char	*get_status(t_data *data);
 char	*expand_var(t_data *data, char *str, int i, int j);
 int		expand_tilde(t_data *data, char **tmp, char *str);
-int		dollar(char **tmp, char *str, int *i, int *j);
+int		dollar(char **tmp, char *str, t_data *data);
 
 //		PARSER
 

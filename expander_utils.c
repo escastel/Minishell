@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:29:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 19:09:02 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:41:15 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,32 @@ void	fill_tmp(char **tmp, char *func)
 		*tmp = func;
 }
 
-int	dollar(char **tmp, char *str, int *i, int *j)
+int	dollar(char **tmp, char *str, t_data *data)
 {
-/* 	if (str[*i] == '$' && str[*i + 1] == '$')
+	while (str[data->i] != '$')
+		data->i += 1;
+	if (str[data->i] == '$' && (str[data->i + 1] == '\0'
+			|| str[data->i + 1] == '\"' || str[data->i + 1] == '\''))
 	{
-		*i += 1;
-		return (0);
-	} */
-	while (str[*i] != '$')
-		*i += 1;
-	if (str[*i] == '$' && (str[*i + 1] == '\0'
-		|| str[*i + 1] == '\"' || str[*i + 1] == '\''))
-	{
-		*i += 1;
-		fill_tmp(tmp, ft_substr(str, *j, *i - *j));
+		data->i += 1;
+		fill_tmp(tmp, ft_substr(str, data->j, data->i - data->j));
 		return (1);
 	}
-	if (*i > *j)
-		fill_tmp(tmp, ft_substr(str, *j, *i - *j));
-	*i += 1;
-	*j = *i;
-	while (str[*i] != ' ' && str[*i] != '$' && str[*i] != '\''
-		&& str[*i] != '\"' && str[*i] != '\0' && str[*i] != '/')
-		*i += 1;
+	if (str[data->i] == '$' && str[data->i + 1] == '?'
+		&& (str[data->i + 2] == '\0' || str[data->i + 2] == '\"'
+			|| str[data->i + 2] == '\''))
+	{
+		fill_tmp(tmp, get_status(data));
+		data->i += 2;
+		return (1);
+	}
+	if (data->i > data->j)
+		fill_tmp(tmp, ft_substr(str, data->j, data->i - data->j));
+	data->i += 1;
+	data->j = data->i;
+	while (str[data->i] != ' ' && str[data->i] != '$' && str[data->i] != '\''
+		&& str[data->i] != '\"' && str[data->i] != '\0' && str[data->i] != '/')
+		data->i += 1;
 	return (0);
 }
 
@@ -62,19 +65,12 @@ int	expand_tilde(t_data *data, char **tmp, char *str)
 	return (1);
 }
 
-void	simple_quote(t_data *data, char **tmp, char *str)
+char	*get_status(t_data *data)
 {
-	if (str[data->i] == '\'')
-	{
-		if (str[data->i + 1] == '\'')
-			fill_tmp(tmp, "");
-		data->i += 1;
-		data->j = data->i;
-		while (str[data->i] != '\'' && str[data->i] != '\0')
-			data->i += 1;
-		if (data->i > data->j)
-			fill_tmp(tmp, ft_substr(str, data->j, data->i - data->j));
-	}
+	char	*tmp;
+
+	tmp = ft_itoa(data->status);
+	return (tmp);
 }
 
 char	*expand_var(t_data *data, char *str, int i, int j)

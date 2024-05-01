@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:49:06 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 17:01:58 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:42:17 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	init_struct(t_data *data, char **env)
 	char	buff[500];
 
 	g_signal = 1;
-	data->status = 0;
 	data->oldpwd = NULL;
 	data->cmd = (t_list *)malloc(sizeof(t_list));
 	data->cmd_path = NULL;

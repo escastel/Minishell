@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/01 17:19:01 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:48:12 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	ft_execute_one(t_data *data, t_list *cmd)
 	}
 	else
 		ft_no_cmd(data, ((t_cmds *)cmd->content)->full_cmd);
-	return (0);
+	return (data->status);
 }
 
 void	ft_execute_pipe(t_data *data, t_list *cmd)
@@ -165,7 +165,7 @@ void	executer(t_data *data)
 	g_signal = 0;
 	if (aux->next == NULL)
 	{
-		ft_execute_one(data, aux);
+		data->status = ft_execute_one(data, aux);
 	}
 	else
 	{
