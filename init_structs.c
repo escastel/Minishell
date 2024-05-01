@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:49:06 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/30 15:19:53 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:46:18 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ int	init_struct(t_data *data, char **env)
 	data->cmd_path = NULL;
 	data->prompt = NULL;
 	data->listenv = NULL;
-	data->pwd = (char *)malloc(sizeof(char) * ft_strlen(getcwd(buff, 500) + 1));
-	if (!data->pwd)
-		return (1);
 	data->pwd = ft_strdup(getcwd(buff, 500));
 	if (env_initialize(data, env))
 		return (1);
