@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/04/30 14:40:43 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/01 12:55:28 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	ft_command_filter(t_data *data, t_list *cmd)
 			free(cmd_slash);
 			return (0);
 		}
+		((t_cmds *)cmd->content)->exc_path = NULL;
 		free(tmp);
 		i += 1;
 	}
@@ -37,7 +38,7 @@ int	ft_command_filter(t_data *data, t_list *cmd)
 		((t_cmds *)cmd->content)->exc_path = ft_strdup(((t_cmds *)cmd->content)->full_cmd[0]);
 		return (0);
 	}
-	free((cmd_slash));
+		free((cmd_slash));
 	return (1);
 }
 
