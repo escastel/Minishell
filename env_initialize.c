@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 13:02:14 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:00:00 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,6 @@ static int	fill_env(t_data *data, char **new_env)
 {
 	int		i;
 
-	if (data->env)
-	{
-		i = 0;
-		while (data->env[i])
-		{
-			free(data->env[i]);
-			i++;
-		}
-		free(data->env);
-	}
 	data->env = ft_calloc(ft_strrlen(new_env) + 1, sizeof(char *));
 	if (!data->env)
 		return (1);
@@ -71,18 +61,13 @@ static void	update_var(t_data *data, t_listenv *list, char *env)
 	if (!ft_strcmp(env, "OLDPWD", 6))
 	{
 		list->name = ft_strdup("OLDPWD");
-		if (data->oldpwd)
-			list->value = ft_strdup(data->oldpwd);
-		if (!data->oldpwd)
-			list->value = NULL;
+		list->value = NULL;
 	}
 	if (!ft_strcmp(env, "PWD", 3))
 	{
 		list->name = ft_strdup("PWD");
-		if (data->pwd)
-			list->value = ft_strdup(data->pwd);
-		if (!data->pwd)
-			list->value = NULL;
+		list->value = ft_strdup("=");
+		list->value = ft_strjoin_gnl(list->value, data->pwd);
 	}
 }
 
@@ -116,21 +101,9 @@ static int	fill_listenv(t_data *data, char **env)
 
 int	env_initialize(t_data *data, char **new_env)
 {
- 	/* t_list *aux; */
-	/* int		i; */
-
 	if (fill_env(data, new_env))
 		return (1);
 	if (fill_listenv(data, data->env))
-			return (1);
-/* 	i = -1;
-	while (data->env[++i])
-		printf("%s\n", data->env[i]); */
-/*  	aux = data->listenv;
-	while (aux)
-	{
-		printf("%s\n", ((t_listenv *)aux->content)->name);
-		aux = aux->next;
-	} */
+		return (1);
 	return (0);
 }
