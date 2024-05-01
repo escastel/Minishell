@@ -6,38 +6,11 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 15:00:00 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:50:04 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* static void	clean_new_env(char **new_env)
-{
-	int	i;
-
-	i = 0;
-	while (new_env[i])
-	{
-		new_env[i] = NULL;
-		i++;
-	}
-	new_env = NULL;
-} */
-
-/* static void	clear_listenv(t_listenv *list)
-{
-	if (list->name)
-		free(list->name);
-	list->name = NULL;
-	if (list->value)
-	{
-		free(list->value);
-		list->value = NULL;
-	}
-	free (list);
-	list = NULL;
-} */
 
 static int	fill_env(t_data *data, char **new_env)
 {
@@ -95,7 +68,6 @@ static int	fill_listenv(t_data *data, char **env)
 		new = ft_lstnew(listenv);
 		ft_lstadd_back(&data->listenv, new);
 	}
-	/* clear_listenv(listenv); */
 	return (0);
 }
 
