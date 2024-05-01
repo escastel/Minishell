@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 17:43:16 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:53:31 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	main(int argc, char **argv, char **env)
 				free(data->line);
 				parser(data);
 				executer(data);
+				clean_cmd(data);
 			}
-			clean_cmd(data);
 		}
 		else
 			free(data->line);

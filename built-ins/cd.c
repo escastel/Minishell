@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 17:04:58 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:55:12 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,17 @@ static int	cd_error(char *str)
 	flag = open(str, O_EXCL);
 	if (flag == -1)
 	{
+		printf(RED);
 		printf("michishell: cd: %s: No such file or directory\n", str);
+		printf(RESET);
 		return (1);
 	}
 	flag = open(str, O_DIRECTORY);
 	if (flag == -1)
 	{
+		printf(RED);
 		printf("michishell: cd: %s: Not a directory\n", str);
+		printf(RESET);
 		return (1);
 	}
 	return (0);
@@ -95,7 +99,9 @@ void	cd_built(t_data *data, char **cmd)
 		if (!data->oldpwd)
 		{
 			data->status = 1;
+			printf(RED);
 			printf("michishell: cd: OLDPWD not set\n");
+			printf(RESET);
 			return ;
 		}
 		else

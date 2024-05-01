@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 20:33:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 13:03:47 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:10:20 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ static void	unset_util(t_data *data, char *str)
 		if (!ft_strncmp(new->name, str, ft_strlen(new->name)))
 		{
 			cpy_env(data, &new_env, str);
-			if (aux)
+			if (aux && list->next)
 				aux->next = list->next;
+			if (aux && !list->next)
+				aux->next = NULL;
 			else
 				data->listenv = list->next;
 			ft_lstdelone(list, del_listenv);

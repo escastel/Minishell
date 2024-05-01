@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/01 17:49:34 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:56:30 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ void	ft_child_redir(t_data *data, t_list *cmd)
 void	ft_no_cmd(t_data *data, char **full_cmd)
 {
 	dup2(data->fd, STDOUT_FILENO);
+	printf(RED);
 	printf("%s: command not found\n", full_cmd[0]);
+	printf(RESET);
 	data->status = 127;
 	return ;
 }
