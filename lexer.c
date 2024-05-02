@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 17:11:32 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:57:01 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,31 @@ int	lexer(t_data *data, char *line)
 	i = 0;
 	tmp = NULL;
 	prompt = ft_calloc(ft_strlen(line) + 1, sizeof(char *));
-	while (ft_strlen(line) != 0)
+	while (*line)
 	{
 		if (ft_take_first_word(&line, &tmp) == 258)
 		{
 			if (tmp)
 				free (tmp);
 			i = -1;
-			while (data->prompt[++i])
-				free (data->prompt[i]);
+			if (prompt[++i])
+			{
+				i = -1;
+				while (prompt[++i])
+					free (prompt[i]);
+				free (prompt);
+			}
 			data->status = 258;
 			return (1);
 		}
 		if (tmp && ft_strncmp(tmp, "", ft_strlen(tmp)))
 			prompt[i] = ft_strdup(tmp);
+		else
+		{
+			free (tmp);
+			tmp = NULL;
+			return (1);
+		}
 		free (tmp);
 		tmp = NULL;
 		i++;

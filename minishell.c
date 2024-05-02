@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 17:53:31 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:55:29 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **env)
 		if (ft_strcmp(data->line, "", ft_strlen(data->line)))
 		{
 			add_history(data->line);
-			if (lexer(data, data->line) == 0)
+			if (!lexer(data, data->line))
 			{
 				free(data->line);
 				parser(data);
