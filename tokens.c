@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 12:53:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 17:10:14 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:28:42 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_tokens_mayor(char **line, char **tmp)
 			if (tmp)
 				free (tmp);
 			tmp = NULL;
-			return (1);
+			return (258);
 		}
 		if (**line == '<' || **line == '|' || **line == '\0')
 		{
