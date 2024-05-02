@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 20:33:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 18:10:20 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:05:52 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	check_var(t_data *data, char *str)
 	return (0);
 }
 
-static void	cpy_env(t_data *data, char ***new_env, char *str)
+static void	cpy_env(t_data *data, char ***new_env)
 {
 	char	**aux;
 
@@ -41,7 +41,6 @@ static void	cpy_env(t_data *data, char ***new_env, char *str)
 		aux[data->i] = ft_strdup(data->env[data->i + 1]);
 		data->i++;
 	}
-	aux[data->i] = ft_strdup(str);
 	aux[++data->i] = NULL;
 	clean_str(data);
 	data->i = ft_strrlen(data->env);
@@ -71,11 +70,9 @@ static void	unset_util(t_data *data, char *str)
 		new = (t_listenv *)list->content;
 		if (!ft_strncmp(new->name, str, ft_strlen(new->name)))
 		{
-			cpy_env(data, &new_env, str);
-			if (aux && list->next)
+			cpy_env(data, &new_env);
+			if (aux)
 				aux->next = list->next;
-			if (aux && !list->next)
-				aux->next = NULL;
 			else
 				data->listenv = list->next;
 			ft_lstdelone(list, del_listenv);
