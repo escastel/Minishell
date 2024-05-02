@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 18:26:35 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:46:12 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	main(int argc, char **argv, char **env)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);
-	/* signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handler); */
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handler);
 	init_struct(data, env);
 	minishell_print(0);
 	while (1)
