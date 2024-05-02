@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/01 17:56:30 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:12:08 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ void	ft_parent(t_data *data, t_list	*cmd)
 {
 	if (cmd->next)
 	{
+		data->status = 0;
+		if (builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 1) == 0)
+		{
+			if (ft_command_filter(data, cmd) == 1)
+				data->status = 127;
+		}
 		close(data->pipe[1]);
 		if (dup2(data->pipe[0], STDIN_FILENO) == -1)
 			return ; // la comprbasion de errore
@@ -147,12 +153,13 @@ int	ft_execute_one(t_data *data, t_list *cmd)
 	return (data->status);
 }
 
-void	ft_execute_pipe(t_data *data, t_list *cmd)
+int	ft_execute_pipe(t_data *data, t_list *cmd)
 {
 	if (builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 1) == 0)
 		ft_execute(data, cmd, 1);
 	else if (builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 1) == 1)
 		ft_execute(data, cmd, 0);
+	return (data->status);
 }
 
 void	executer(t_data *data)
@@ -173,7 +180,7 @@ void	executer(t_data *data)
 	{
 		while (aux)
 		{
-			ft_execute_pipe(data, aux);
+			data->status = ft_execute_pipe(data, aux);
 			aux = aux->next;
 		}
 	}
