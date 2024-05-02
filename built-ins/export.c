@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 16:53:54 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:55:14 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,19 +112,12 @@ static void	export_var(t_data *data, char *str)
 void	export_built(t_data *data, char **cmd)
 {
 	int	i;
-	t_list	*aux;
 
 	i = 0;
 	if (!cmd[0])
 	{
 		reset_index(data);
 		order_export(data);
-		aux = data->listenv;
-		while (aux)
-		{
-			printf("%s\n", ((t_listenv *)aux->content)->name);
-			aux = aux->next;
-		}
 		export_print(data);
 	}
 	else
