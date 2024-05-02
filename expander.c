@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:32:47 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/01 17:35:23 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:13:44 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ static void	expand_util(t_data *data, char **tmp, char *str, int *flag)
 			if (!dollar(tmp, str, data))
 				fill_tmp(tmp, expand_var(data, str, data->i, data->j));
 			if (str[data->i + 1] && str[data->i] != '\''
-				&& str[data->i] != '\"')
+				&& str[data->i] != '\"' && str[data->i] != '$')
 			{
 				data->j = data->i;
 				while (str[data->i] != '\0' && str[data->i] != '\''
-					&& str[data->i] != '\"')
+					&& str[data->i] != '\"' && str[data->i] != '$')
 					data->i++;
 				fill_tmp(tmp, ft_substr(str, data->j, data->i - data->j));
 			}
@@ -96,7 +96,6 @@ static void	expand(t_data *data, char *str, char **tmp)
 		data->j = data->i;
 		expand_util(data, tmp, str, &flag);
 		simple_quote(data, tmp, str);
-		data->i++;
 	}
 }
 

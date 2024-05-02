@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:29:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 17:41:15 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:14:05 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ int	dollar(char **tmp, char *str, t_data *data)
 		fill_tmp(tmp, ft_substr(str, data->j, data->i - data->j));
 		return (1);
 	}
-	if (str[data->i] == '$' && str[data->i + 1] == '?'
-		&& (str[data->i + 2] == '\0' || str[data->i + 2] == '\"'
-			|| str[data->i + 2] == '\''))
+	if (str[data->i] == '$' && str[data->i + 1] == '?')
 	{
 		fill_tmp(tmp, get_status(data));
 		data->i += 2;
@@ -69,7 +67,7 @@ char	*get_status(t_data *data)
 {
 	char	*tmp;
 
-	tmp = ft_itoa(data->status);
+	tmp = ft_strdup(ft_itoa(data->status));
 	return (tmp);
 }
 
@@ -90,12 +88,7 @@ char	*expand_var(t_data *data, char *str, int i, int j)
 				ft_strlen(tmp) + 1))
 		{
 			if (((t_listenv *)aux->content)->value)
-			{
-				if (!ft_strcmp(tmp, "OLDPWD", 6) || !ft_strcmp(tmp, "PWD", 3))
-					return (free (tmp), ((t_listenv *)aux->content)->value);
-				else
-					return (free (tmp), ((t_listenv *)aux->content)->value + 1);
-			}
+				return (free (tmp), ((t_listenv *)aux->content)->value + 1);
 		}
 		aux = aux->next;
 	}
