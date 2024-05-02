@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 17:59:12 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:53:54 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,22 @@ static void	export_print(t_data *data)
 {
 	t_list			*aux;
 	t_listenv		*listenv;
-	int				index;
-	int				len;
 
-	index = 1;
-	len = ft_strrlen(data->env);
-	while (index < len)
+	data->i = 1;
+	while (data->i < ft_strrlen(data->env))
 	{
 		aux = data->listenv;
 		while (aux)
 		{
 			listenv = ((t_listenv *)aux->content);
-			if (listenv->index == index)
+			if (listenv->index == data->i)
 			{
 				printf("declare -x %s", listenv->name);
 				if (listenv->value)
 					printf("=\"%s\"\n", listenv->value + 1);
 				else
 					printf("\n");
-				index++;
+				data->i++;
 			}
 			aux = aux->next;
 		}
@@ -83,7 +80,7 @@ static void	order_export(t_data *data)
 	{
 		listenv_aux = ((t_listenv *)aux->content);
 		tmp = data->listenv;
-		while (tmp->next && listenv_aux->name)
+		while (tmp)
 		{
 			listenv_tmp = ((t_listenv *)tmp->content);
 			if (ft_strlen(listenv_aux->name) > ft_strlen(listenv_tmp->name))
@@ -115,12 +112,19 @@ static void	export_var(t_data *data, char *str)
 void	export_built(t_data *data, char **cmd)
 {
 	int	i;
+	t_list	*aux;
 
 	i = 0;
 	if (!cmd[0])
 	{
 		reset_index(data);
 		order_export(data);
+		aux = data->listenv;
+		while (aux)
+		{
+			printf("%s\n", ((t_listenv *)aux->content)->name);
+			aux = aux->next;
+		}
 		export_print(data);
 	}
 	else
