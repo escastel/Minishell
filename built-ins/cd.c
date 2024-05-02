@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 18:43:15 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/02 20:25:34 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,11 @@ void	cd_built(t_data *data, char **cmd)
 {
 	char	*str;
 
+	if (cmd[0])
+		str = cmd[0];
 	if (!cmd[0])
-	{
 		str = expand_var(data, "HOME", -1, -1);
-		data->status = cd_error(str);
-		if (data->status)
-			return ;
-		cd_built_path(data, str);
-		return ;
-	}
-	if (cmd[0][0] == '-' && !cmd[0][1] && !cmd[1])
+	if (str[0] == '-' && !str[1])
 	{
 		if (!data->oldpwd)
 		{
@@ -113,20 +108,15 @@ void	cd_built(t_data *data, char **cmd)
 			printf(RED);
 			printf("michishell: cd: OLDPWD not set\n");
 			printf(RESET);
-			return ;
 		}
-		else
-		{
+		if (data->oldpwd)
 			cd_built_oldpwd(data);
-			return ;
-		}
-	}
-	if (!cmd[1])
-	{
-		data->status = cd_error(cmd[0]);
-		if (data->status)
-			return ;
-		cd_built_path(data, cmd[0]);
 		return ;
 	}
+	data->status = cd_error(str);
+	if (data->status)
+		return ;
+	cd_built_path(data, str);
+	return ;
 }
+
