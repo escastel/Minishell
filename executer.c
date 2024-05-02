@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/02 16:32:40 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:59:01 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,21 +107,22 @@ void	ft_no_cmd(t_data *data, char **full_cmd)
 void	ft_child(t_data *data, t_list *cmd, int flag)
 {
 	ft_child_redir(data, cmd);
+	if (flag == 0)
+	{
+		builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 0);
+		exit(0);
+	}
+	ft_path(data);
 	if (flag == 1)
 	{
 		if (ft_command_filter(data, cmd) == 0)
 		{
-			ft_path(data);
 			if (execve(((t_cmds *)cmd->content)->exc_path,
 					((t_cmds *)cmd->content)->full_cmd, data->env) == -1)
 				exit (EXIT_FAILURE); //ft error o exit failure?
 		}
 	}
-	else if (flag == 0)
-	{
-		builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 0);
-		exit(0);
-	}
+
 	ft_no_cmd(data, ((t_cmds *)cmd->content)->full_cmd);
 	exit(0);
 }
@@ -153,9 +154,9 @@ int	ft_execute_one(t_data *data, t_list *cmd)
 	if ((builtins_control(data,
 				((t_cmds *)data->cmd->content)->full_cmd, 0)) == 1)
 		return (0);
-	else if (ft_command_filter(data, cmd) == 0)
+	ft_path(data);
+	if (ft_command_filter(data, cmd) == 0)
 	{
-		ft_path(data);
 		pid = fork();
 		if (pid == -1)
 			exit (EXIT_FAILURE);//	ft_error();
