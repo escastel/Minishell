@@ -8,3 +8,6 @@ otro leak tapado en expander, libedando tmp antes de terminar.
 peroecho $USER da free sobre free, asi que a ver si comprobando algo,
 creo que se qeuda perdido dentro dle expander, wa bucear
 
+el g status actualiaro con el execve o el waitpid?
+
+si falla por parseo algunos como cp y mv da 64 el status
