@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_program.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 17:30:44 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/29 15:01:50 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:33:47 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	clean_program(t_data *data)
 		free (data->env);
 	data->env = NULL;
 	i = 0;
-	if (data->cmd_path[i])
+/* 	if (data->cmd_path[i])
 	{
 		while (data->cmd_path[i])
 		{
@@ -80,7 +80,7 @@ void	clean_program(t_data *data)
 			data->cmd_path[i] = NULL;
 			i++;
 		}
-	}
+	} */
 	data->cmd_path = NULL;
 	clean_util(data);
 }

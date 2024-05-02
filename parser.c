@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/01 17:51:19 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:23:22 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ void	ft_new_cmd(t_data *data)
 int	parser(t_data *data)
 {
 	ft_new_cmd(data);
-	ft_path(data);
 	ft_noduler(data);
 	return (0);
 }

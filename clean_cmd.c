@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 11:43:40 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/01 12:56:13 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:20:19 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	ft_delete_cmd(void *content)
 		i++;
 	}
 	free (cmd->full_cmd);
-	if (cmd->exc_path)
-		free (cmd->exc_path);
+/* 	if (cmd->exc_path)
+		free (cmd->exc_path); */
 	cmd->exc_path = NULL;
 	if (cmd->infile != 0)
 		close(cmd->infile);
@@ -40,13 +40,14 @@ void	ft_clean_path(t_data *data)
 	int	i;
 
 	i = 0;
-	while (data->cmd_path[i])
+	(void)data;
+/* 	while (data->cmd_path[i])
 	{
 		free (data->cmd_path[i]);
 		data->cmd_path[i] = NULL;
 		i++;
 	}
-	free (data->cmd_path);
+	free (data->cmd_path); */
 }
 
 void	clean_cmd(t_data *data)

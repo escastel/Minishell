@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/02 12:52:36 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:32:40 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_command_filter(t_data *data, t_list *cmd)
 
 	i = 0;
 	cmd_slash = ft_strjoin("/", ((t_cmds *)cmd->content)->full_cmd[0]);
-	while (data->cmd_path[i])
+	while (data->cmd_path && data->cmd_path[i])
 	{
 		tmp = ft_strjoin(data->cmd_path[i], cmd_slash);
 		((t_cmds *)cmd->content)->exc_path = tmp;
@@ -111,6 +111,7 @@ void	ft_child(t_data *data, t_list *cmd, int flag)
 	{
 		if (ft_command_filter(data, cmd) == 0)
 		{
+			ft_path(data);
 			if (execve(((t_cmds *)cmd->content)->exc_path,
 					((t_cmds *)cmd->content)->full_cmd, data->env) == -1)
 				exit (EXIT_FAILURE); //ft error o exit failure?
@@ -154,6 +155,7 @@ int	ft_execute_one(t_data *data, t_list *cmd)
 		return (0);
 	else if (ft_command_filter(data, cmd) == 0)
 	{
+		ft_path(data);
 		pid = fork();
 		if (pid == -1)
 			exit (EXIT_FAILURE);//	ft_error();

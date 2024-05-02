@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 17:38:06 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:23:20 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ typedef struct s_data
 //		VARIABLE GLOBAL
 
 int		g_signal;
+
+//		EXPERIMENTOS CON GASEOSA
+int		ft_path(t_data *data);
 
 //		FUNCIONES GENERALES
 
