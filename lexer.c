@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 17:37:38 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:26:19 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 #include "minishell.h"
 
@@ -53,6 +55,8 @@ static int	ft_take_first_word(char **line, char **tmp)
 			*line += 1;
 		}
 	}
+	while (**line == 32 || (**line >= 9 && **line <= 13))
+		*line += 1;
 	str[j] = '\0';
 	*tmp = ft_strdup(str);
 	free (str);

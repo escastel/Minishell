@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 17:26:25 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:26:35 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ int	main(int argc, char **argv, char **env)
 			if (!lexer(data, data->line))
 			{
 				free(data->line);
-				parser(data);
-				executer(data);
-				clean_cmd(data);
+				if (!parser(data))
+				{
+					executer(data);
+					clean_cmd(data);
+				}
 			}
 		}
 		else

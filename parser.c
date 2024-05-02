@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/02 16:23:22 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:25:02 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,5 +163,13 @@ int	parser(t_data *data)
 {
 	ft_new_cmd(data);
 	ft_noduler(data);
+	if (((t_cmds *)data->cmd->content)->full_cmd[0] == NULL)
+	{
+		error_msg("michishell: syntax error near unexpected token");
+		//ft de liberar o algo así
+	//	str = NULL;
+		data->status = 258;
+		return (1);
+	}
 	return (0);
 }

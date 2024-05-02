@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:29:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 17:14:05 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:32:26 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	dollar(char **tmp, char *str, t_data *data)
 	}
 	if (str[data->i] == '$' && str[data->i + 1] == '?')
 	{
+		fill_tmp(tmp, ft_substr(str, data->j, data->i - data->j));
 		fill_tmp(tmp, get_status(data));
 		data->i += 2;
 		return (1);
