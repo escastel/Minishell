@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/01 17:55:12 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:43:15 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,17 @@ static int	cd_error(char *str)
 
 void	cd_built(t_data *data, char **cmd)
 {
+	char	*str;
+
+	if (!cmd[0])
+	{
+		str = expand_var(data, "HOME", -1, -1);
+		data->status = cd_error(str);
+		if (data->status)
+			return ;
+		cd_built_path(data, str);
+		return ;
+	}
 	if (cmd[0][0] == '-' && !cmd[0][1] && !cmd[1])
 	{
 		if (!data->oldpwd)
@@ -110,7 +121,7 @@ void	cd_built(t_data *data, char **cmd)
 			return ;
 		}
 	}
-	else if (!cmd[1])
+	if (!cmd[1])
 	{
 		data->status = cd_error(cmd[0]);
 		if (data->status)
