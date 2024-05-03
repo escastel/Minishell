@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 12:53:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 19:29:40 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:57:33 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	ft_tokens_mayor(char **line, char **tmp)
 		if (**line == '<' || **line == '|' || **line == '\0')
 		{
 			error_msg("michishell: syntax error near unexpected token");
-			if (tmp)
-				free (tmp);
+			/* if (tmp)
+				free (tmp); */
 			tmp = NULL;
 			return (258);
 		}
@@ -85,8 +85,8 @@ int	ft_tokens_minor(char **line, char **tmp)
 		if (**line == '>' || **line == '|' || **line == '\0')
 		{
 			error_msg("michishell: syntax error near unexpected token");
-			if (tmp)
-				free (tmp);
+			/* if (tmp)
+				free (tmp); */
 			tmp = NULL;
 			return (258);
 		}

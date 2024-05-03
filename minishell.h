@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 12:44:27 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:54:24 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,15 @@ int		dollar(char **tmp, char *str, t_data *data);
 //		PARSER
 
 int		parser(t_data *data);
+int		ft_redir(t_data *data, t_cmds *aux, int i);
 void	heredoc(t_data *data, t_cmds *cmd, int i);
+
+// CMD CREATE
+
+t_cmds	*ft_new_cmd_node(void);
+void	ft_new_cmd(t_data *data);
+void	ft_next_node(t_data *data);
+char	**ft_tmp_reservator(t_data *data);
 
 //		EXECUTER
 

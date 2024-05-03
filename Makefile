@@ -33,7 +33,9 @@ lexer/lexer_utils.c \
 lexer/tokens.c
 
 FILES_PARSER = parser/parser.c \
-parser/heredoc.c
+parser/heredoc.c \
+parser/parser_redir.c \
+parser/cmd_create.c
 
 FILES_PRINT = print/minishell_print.c
 
