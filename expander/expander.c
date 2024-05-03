@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:32:47 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/02 19:26:21 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:14:58 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	simple_quote(t_data *data, char **tmp, char *str)
 			data->i += 1;
 		if (data->i > data->j)
 			fill_tmp(tmp, ft_substr(str, data->j, data->i - data->j));
+		data->i++;
 	}
 }
 
@@ -44,7 +45,7 @@ static void	expand_util2(t_data *data, char **tmp, char *str, int *flag)
 			if (str[data->i] != '\"' && str[data->i])
 			{
 				data->j = data->i;
-				while (str[data->i] != '\"')
+				while (str[data->i] && str[data->i] != '\"')
 					data->i++;
 				fill_tmp(tmp, ft_substr(str, data->j, data->i - data->j));
 			}
@@ -53,6 +54,7 @@ static void	expand_util2(t_data *data, char **tmp, char *str, int *flag)
 	}
 	if (data->i > data->j && !*flag)
 		fill_tmp(tmp, ft_substr(str, data->j, data->i - data->j));
+	data->i++;
 }
 
 static void	expand_util(t_data *data, char **tmp, char *str, int *flag)
@@ -109,6 +111,7 @@ void	expander(t_data *data, int i)
 	if (data->prompt[i])
 		free (data->prompt[i]);
 	data->prompt[i] = ft_strdup(tmp);
-	tmp = NULL;
+	if (tmp)
+		free (tmp);
 	return ;
 }

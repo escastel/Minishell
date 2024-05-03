@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:26:08 by escastel          #+#    #+#             */
-/*   Updated: 2024/04/29 13:15:20 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:31:29 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 		j++;
 	}
 	ptr[i + j] = '\0';
-	/* free (s1); */
-	/* free (s2); */
+	free (s1);
 	return (ptr);
 }

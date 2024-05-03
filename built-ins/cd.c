@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 11:54:14 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:34:48 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	cd_built(t_data *data, char **cmd)
 	char	*str;
 
 	if (cmd[0])
-		str = cmd[0];
+		str = ft_strdup(cmd[0]);
 	if (!cmd[0])
 		str = expand_var(data, "HOME", -1, -1);
 	if (str[0] == '-' && !str[1])
@@ -114,8 +114,9 @@ void	cd_built(t_data *data, char **cmd)
 		return ;
 	}
 	data->status = cd_error(str);
-	if (data->status)
-		return ;
-	cd_built_path(data, str);
+	if (!data->status)
+		cd_built_path(data, str);
+	if (str)
+		free (str);
 	return ;
 }

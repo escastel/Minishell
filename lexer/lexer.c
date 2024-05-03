@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 12:22:15 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:01:17 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	clean_prompt_and_tmp(char ***prompt, char **tmp)
 		}
 		free (aux);
 	}
+	printf("%p\n", *tmp);
 	if (*tmp)
 		free (*tmp);
 }
@@ -103,7 +104,6 @@ int	lexer(t_data *data, char *line)
 			return (1);
 		}
 		free (tmp);
-		tmp = NULL;
 		data->i++;
 	}
 	return (0);

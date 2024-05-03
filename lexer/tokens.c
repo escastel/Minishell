@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 12:53:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 12:57:33 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:58:42 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ static int	token_utils(char **line, char **tmp, int *i)
 		if (**line == str[*i - 1] || **line == '\0')
 		{
 			error_msg("michishell: syntax error near unexpected token");
-			free (str);
-			str = NULL;
 			return (258);
 		}
 	}
 	while (**line && (**line == 32 || (**line >= 9 && **line <= 13)))
 		*line += 1;
+	str[*i] = '\0';
 	*tmp = ft_strdup(str);
+	free (str);
 	return (0);
 }
 
@@ -49,18 +49,10 @@ int	ft_tokens_mayor(char **line, char **tmp)
 	if (**line == '>')
 	{
 		if (token_utils(line, tmp, &i))
-		{
-			if (tmp)
-				free (tmp);
-			tmp = NULL;
 			return (258);
-		}
 		if (**line == '<' || **line == '|' || **line == '\0')
 		{
 			error_msg("michishell: syntax error near unexpected token");
-			/* if (tmp)
-				free (tmp); */
-			tmp = NULL;
 			return (258);
 		}
 		return (2);
@@ -76,18 +68,10 @@ int	ft_tokens_minor(char **line, char **tmp)
 	if (**line == '<')
 	{
 		if (token_utils(line, tmp, &i))
-		{
-			if (tmp)
-				free (tmp);
-			tmp = NULL;
 			return (1);
-		}
 		if (**line == '>' || **line == '|' || **line == '\0')
 		{
 			error_msg("michishell: syntax error near unexpected token");
-			/* if (tmp)
-				free (tmp); */
-			tmp = NULL;
 			return (258);
 		}
 		return (2);
@@ -101,7 +85,8 @@ int	ft_tokens_pipe(char **line, char **tmp)
 	int		i;
 
 	i = 0;
-	str = ft_calloc(1, ft_strlen(*line));
+	str = ft_calloc(1, ft_strlen(*line) + 1);
+	printf("%p\n", str);
 	if (**line == '|')
 	{
 		str[i] = **line;
@@ -111,14 +96,11 @@ int	ft_tokens_pipe(char **line, char **tmp)
 		if (**line == '\0')
 		{
 			error_msg("michishell: syntax error near unexpected token");
-			free (str);
-			str = NULL;
 			return (258);
 		}
 		str[++i] = '\0';
 		*tmp = ft_strdup(str);
 		free (str);
-		str = NULL;
 		return (2);
 	}
 	return (0);

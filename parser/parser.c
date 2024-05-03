@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/03 12:55:10 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:27:14 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	ft_noduler(t_data *data)
 		else
 			ft_nodule_2(data, aux, &i, &j);
 	}
+	free (data->prompt);
 	return ;
 }
 

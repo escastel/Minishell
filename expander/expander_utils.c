@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:29:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 19:26:31 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:33:12 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ int	expand_tilde(t_data *data, char **tmp, char *str)
 
 char	*get_status(t_data *data)
 {
-	char	*tmp;
-
-	tmp = ft_strdup(ft_itoa(data->status));
-	return (tmp);
+	return (ft_strdup(ft_itoa(data->status)));
 }
 
 char	*expand_var(t_data *data, char *str, int i, int j)
@@ -89,9 +86,13 @@ char	*expand_var(t_data *data, char *str, int i, int j)
 				ft_strlen(tmp) + 1))
 		{
 			if (((t_listenv *)aux->content)->value)
-				return (free (tmp), ((t_listenv *)aux->content)->value + 1);
+			{
+				free (tmp);
+				return (ft_strdup(((t_listenv *)aux->content)->value + 1));
+			}
 		}
 		aux = aux->next;
 	}
-	return (free (tmp), "");
+	free (tmp);
+	return (ft_strdup(""));
 }

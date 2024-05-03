@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 17:30:44 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 19:23:02 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:28:13 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@ void	del_listenv(void *content)
 	t_listenv	*cont;
 
 	cont = (t_listenv *)content;
-	cont->name = NULL;
+	if (cont->name)
+		free (cont->name);
+	if (cont->value)
+		free (cont->value);
 	cont->value = NULL;
+	if (cont)
+		free (cont);
 }
 
 void	del_cmd(void	*content)
@@ -31,13 +36,13 @@ void	del_cmd(void	*content)
 	while (cmd->full_cmd[i])
 	{
 		free (cmd->full_cmd[i]);
-		cmd->full_cmd[i] = NULL;
 		i++;
 	}
 	free (cmd->full_cmd);
 	if (cmd->exc_path)
 		free (cmd->exc_path);
-	cmd->exc_path = NULL;
+	if (cmd)
+		free (cmd);
 }
 
 static void	clean_util(t_data *data)
@@ -65,12 +70,10 @@ void	clean_program(t_data *data)
 	while (data->env[i])
 	{
 		free (data->env[i]);
-		data->env[i] = NULL;
 		i++;
 	}
 	if (data->env)
 		free (data->env);
-	data->env = NULL;
 	i = 0;
 /* 	if (data->cmd_path[i])
 	{

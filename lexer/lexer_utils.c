@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 15:03:42 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 19:28:11 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:58:21 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_doublequote(char **argv, char **str, int j)
 	(*str)[j] = **argv;
 	*argv += 1;
 	j += 1;
-	while (**argv != '\"')
+	while (**argv && **argv != '\"')
 	{
 		(*str)[j] = **argv;
 		*argv += 1;
@@ -48,7 +48,7 @@ int	ft_doublequote(char **argv, char **str, int j)
 
 int	ft_backlashes(char **argv, char **str, int j)
 {
-	while (**argv == '\\')
+	while (**argv && **argv == '\\')
 	{
 		(*str)[j] = (*(*argv + 1));
 		*argv += 2;

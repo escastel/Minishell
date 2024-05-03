@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:09:52 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 19:24:12 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:11:23 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static void	update_var(t_data *data, t_listenv *list, char *env)
 	if (!ft_strcmp(env, "PWD", 3))
 	{
 		list->name = ft_strdup("PWD");
-		list->value = ft_strdup("=");
-		list->value = ft_strjoin_gnl(list->value, data->pwd);
+		list->value = ft_strjoin_gnl(ft_strdup("="), data->pwd);
 	}
 }
 
