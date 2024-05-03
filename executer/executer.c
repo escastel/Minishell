@@ -3,151 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/03 12:18:27 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:38:15 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_command_filter_2(t_data *data, t_list *cmd, char **cmd_slash, char **tmp)
-{
-	int	i;
-
-	i = 0;
-	while (data->cmd_path && data->cmd_path[i])
-	{
-		*tmp = ft_strjoin(data->cmd_path[i], *cmd_slash);
-		((t_cmds *)cmd->content)->exc_path = *tmp;
-		if (access(((t_cmds *)cmd->content)->exc_path, X_OK) == 0)
-		{
-			free(*cmd_slash);
-			return (0);
-		}
-		((t_cmds *)cmd->content)->exc_path = NULL;
-		free(*tmp);
-		i += 1;
-	}
-	return (1);
-}
-
-int	ft_command_filter(t_data *data, t_list *cmd)
-{
-	char	*cmd_slash;
-	char	*tmp;
-
-	cmd_slash = ft_strjoin("/", ((t_cmds *)cmd->content)->full_cmd[0]);
-	if (!ft_command_filter_2(data, cmd, &cmd_slash, &tmp))
-		return (0);
-	if (access(((t_cmds *)cmd->content)->full_cmd[0], X_OK) == 0)
-	{
-		((t_cmds *)cmd->content)
-			->exc_path = ft_strdup(((t_cmds *)cmd->content)->full_cmd[0]);
-		return (0);
-	}
-	free((cmd_slash));
-	return (1);
-}
-
-void	ft_file_or_directory(t_data *data, t_list	*cmd)
-{
-	int	i;
-	int	flag;
-
-	i = 1;
-	flag = 0;
-	if (builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 1) == 0)
-	{
-		if (ft_command_filter(data, cmd) == 0)
-		{
-			while (((t_cmds *)cmd->content)->full_cmd[i])
-			{
-				flag = open(((t_cmds *)cmd->content)->full_cmd[i], O_EXCL);
-				if (flag == -1)
-					data->status = 1;
-				//quiza un close
-				i += 1;
-			}
-		}
-	}
-}
-
-void	ft_parent(t_data *data, t_list	*cmd)
-{
-	data->status = 0;
-	ft_file_or_directory(data, cmd);
-	if (builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 1) == 0)
-	{
-		if (ft_command_filter(data, cmd) == 1)
-			data->status = 127;
-	}
-	if (cmd->next)
-	{
-		close(data->pipe[1]);
-		if (dup2(data->pipe[0], STDIN_FILENO) == -1)
-			return ; // la comprbasion de errore
-		return ;
-	}
-	return ;
-}
-
-void	ft_child_redir(t_data *data, t_list *cmd)
-{
-	if ((((t_cmds *)cmd->content)->infile) != STDIN_FILENO)
-		dup2((((t_cmds *)cmd->content)->infile), STDIN_FILENO);
-	if (cmd->next)
-	{
-		if ((((t_cmds *)cmd->content)->outfile) != STDOUT_FILENO)
-			dup2((((t_cmds *)cmd->content)->outfile), STDOUT_FILENO);
-		else if (dup2(data->pipe[1], STDOUT_FILENO) == -1)
-			return ;
-	}
-	else
-		dup2(((t_cmds *)cmd->content)->outfile, STDOUT_FILENO);
-}
-
-void	ft_no_cmd(t_data *data, char **full_cmd)
-{
-	dup2(data->fd, STDOUT_FILENO);
-	printf(RED);
-	printf("%s: command not found\n", full_cmd[0]);
-	printf(RESET);
-	data->status = 127;
-	return ;
-}
-
-void	ft_child(t_data *data, t_list *cmd, int flag)
-{
-	ft_child_redir(data, cmd);
-	if (flag == 0)
-	{
-		builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 0);
-		exit(0);
-	}
-	ft_path(data);
-	if (flag == 1)
-	{
-		if (ft_command_filter(data, cmd) == 0)
-		{
-			if (execve(((t_cmds *)cmd->content)->exc_path,
-					((t_cmds *)cmd->content)->full_cmd, data->env) == -1)
-				exit (EXIT_FAILURE); //ft error o exit failure?
-		}
-	}
-	ft_no_cmd(data, ((t_cmds *)cmd->content)->full_cmd);
-	exit(0);
-}
-
-int	ft_execute(t_data *data, t_list	*cmd, int flag)
+static int	ft_execute(t_data *data, t_list	*cmd, int flag)
 {
 	pid_t	pid;
 
 	pipe(data->pipe);
 	pid = fork();
 	if (pid == -1)
-		exit (EXIT_FAILURE);//	ft_error();
+		exit (EXIT_FAILURE);
 	if (pid == 0)
 	{
 		ft_child(data, cmd, flag);
@@ -160,15 +32,7 @@ int	ft_execute(t_data *data, t_list	*cmd, int flag)
 	return (0);
 }
 
-void	ft_xone_child(t_data *data, t_list *cmd)
-{
-	ft_child_redir(data, cmd);
-	if (execve(((t_cmds *)cmd->content)->exc_path,
-			((t_cmds *)cmd->content)->full_cmd, data->env) == -1)
-		return ; //ft error o exit failure?
-}
-
-int	ft_execute_one(t_data *data, t_list *cmd)
+static int	ft_execute_one(t_data *data, t_list *cmd)
 {
 	pid_t	pid;
 
@@ -180,9 +44,9 @@ int	ft_execute_one(t_data *data, t_list *cmd)
 	{
 		pid = fork();
 		if (pid == -1)
-			exit (EXIT_FAILURE);//	ft_error();
+			exit (EXIT_FAILURE);
 		if (pid == 0)
-			ft_xone_child(data,cmd); //quiza el return 1 si sale mal el exec
+			ft_xone_child(data,cmd);
 		else
 		{
 			waitpid(pid, NULL, 0);
@@ -194,7 +58,7 @@ int	ft_execute_one(t_data *data, t_list *cmd)
 	return (data->status);
 }
 
-int	ft_execute_pipe(t_data *data, t_list *cmd)
+static int	ft_execute_pipe(t_data *data, t_list *cmd)
 {
 	if (builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 1) == 0)
 		ft_execute(data, cmd, 1);

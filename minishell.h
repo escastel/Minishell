@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 16:23:20 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:44:27 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,22 @@ void	heredoc(t_data *data, t_cmds *cmd, int i);
 
 void	executer(t_data *data);
 
+// EXECUTER UTILS
+
+void	ft_no_cmd(t_data *data, char **full_cmd);
+void	ft_file_or_directory(t_data *data, t_list *cmd);
+int		ft_path(t_data *data);
+int		ft_command_filter(t_data *data, t_list *cmd);
+int		ft_command_filter_2(t_data *data, t_list *cmd,
+			char **cmd_slash, char **tmp);
+
+// EXECUTER PROCESSS
+
+void	ft_parent(t_data *data, t_list	*cmd);
+void	ft_xone_child(t_data *data, t_list *cmd);
+void	ft_child_redir(t_data *data, t_list *cmd);
+void	ft_child(t_data *data, t_list *cmd, int flag);
+
 //		SIGNAL
 
 void	handler(int signal);
@@ -141,39 +157,44 @@ void	handler(int signal);
 
 bool	builtins_control(t_data *data, char **full_cmd, int flag);
 
-// CD
+//  CD
 
 void	cd_built(t_data *data, char **cmd);
 
-// ECHO
+//  ECHO
 
 void	echo_built(char **cmd);
 
-// ENV
+//  ENV
 
 void	env_built(t_data *data, char **cmd);
 
-// EXIT
+//  EXIT
 
 void	exit_built(t_data *data);
 
-// EXPORT
+//  EXPORT
 
 void	export_built(t_data *data, char **cmd);
+
+// EXPORT UTILS
 void	add_var_list(t_data *data, char *str);
 void	add_var_env(t_data *data, char *str);
 void	replace_var(t_data *data, char *str);
-void	reset_index(t_data *data);
-void	clean_str(t_data *data);
 int		check_new_var(t_data *data, char *str, int *flag);
 
-// PWD
+//  PWD
 
 void	pwd_built(void);
 
-// UNSET
+//  UNSET
 
 void	unset_built(t_data *data, char **cmd);
+
+//  UTILS
+
+void	reset_index(t_data *data);
+void	clean_str(t_data *data);
 
 // 		UTILS LISTAS
 

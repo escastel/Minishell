@@ -18,7 +18,9 @@ built-ins/utils.c
 FILES_CLEAN = clean/clean_cmd.c \
 clean/clean_program.c
 
-FILES_EXECUTER = executer/executer.c
+FILES_EXECUTER = executer/executer.c \
+executer/executer_utils.c \
+executer/executer_process.c
 
 FILES_EXPANDER = expander/expander.c \
 expander/expander_utils.c
