@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 16:34:48 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:36:34 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,18 +105,16 @@ void	cd_built(t_data *data, char **cmd)
 		if (!data->oldpwd)
 		{
 			data->status = 1;
-			printf(RED);
-			printf("michishell: cd: OLDPWD not set\n");
-			printf(RESET);
+			printf("%smichishell: cd: OLDPWD not set%s\n", RED, RESET);
 		}
 		if (data->oldpwd)
 			cd_built_oldpwd(data);
+		free (str);
 		return ;
 	}
 	data->status = cd_error(str);
 	if (!data->status)
 		cd_built_path(data, str);
-	if (str)
-		free (str);
+	free (str);
 	return ;
 }

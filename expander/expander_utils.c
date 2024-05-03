@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:29:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 20:28:44 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:39:45 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	expand_tilde(t_data *data, char **tmp, char *str)
 		i++;
 		*tmp = expand_var(data, "HOME", -1, -1);
 		if (str[i] == '/' && *tmp && str[i])
-			*tmp = ft_strjoin_gnl(*tmp, ft_substr(str, i, ft_strlen(str) - i));
+			fill_tmp(tmp, ft_substr(str, i, ft_strlen(str) - i));
 		return (0);
 	}
 	return (1);
