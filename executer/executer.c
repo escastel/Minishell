@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/03 12:38:15 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:18:04 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	ft_execute_one(t_data *data, t_list *cmd)
 		if (pid == -1)
 			exit (EXIT_FAILURE);
 		if (pid == 0)
-			ft_xone_child(data,cmd);
+			ft_xone_child(data, cmd);
 		else
 		{
 			waitpid(pid, NULL, 0);

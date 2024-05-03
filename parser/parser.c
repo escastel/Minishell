@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/03 17:27:14 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:57:46 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,19 @@ static void	ft_noduler(t_data *data)
 
 int	parser(t_data *data)
 {
-	ft_new_cmd(data);
-	ft_noduler(data);
-	if (((t_cmds *)data->cmd->content)->full_cmd[0] == NULL)
+	int	i;
+
+	if (data->prompt[0][0] == '|')
 	{
+		i = -1;
+		while (data->prompt[++i])
+			free(data->prompt[i]);
+		free (data->prompt);
 		error_msg("michishell: syntax error near unexpected token");
 		data->status = 258;
 		return (1);
 	}
+	ft_new_cmd(data);
+	ft_noduler(data);
 	return (0);
 }
