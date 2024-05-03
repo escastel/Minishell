@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 11:43:40 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/03 18:34:42 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:52:51 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_clean_path(t_data *data)
 			i++;
 		}
 		free (data->cmd_path);
+		data->cmd_path = NULL;
 	}
 }
 
