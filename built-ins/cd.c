@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:29:37 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 20:25:34 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:54:14 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,3 @@ void	cd_built(t_data *data, char **cmd)
 	cd_built_path(data, str);
 	return ;
 }
-
