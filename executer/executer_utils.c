@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:32:28 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 12:40:56 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:12:14 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_command_filter_2(t_data *data, t_list *cmd, char **cmd_slash, char **tmp)
 	int	i;
 
 	i = 0;
+	if (((t_cmds *)cmd->content)->exc_path)
+		free (((t_cmds *)cmd->content)->exc_path);
 	while (data->cmd_path && data->cmd_path[i])
 	{
 		*tmp = ft_strjoin(data->cmd_path[i], *cmd_slash);
@@ -24,6 +26,7 @@ int	ft_command_filter_2(t_data *data, t_list *cmd, char **cmd_slash, char **tmp)
 		if (access(((t_cmds *)cmd->content)->exc_path, X_OK) == 0)
 		{
 			free(*cmd_slash);
+			printf("PATH: %p\n", ((t_cmds *)cmd->content)->exc_path);
 			return (0);
 		}
 		((t_cmds *)cmd->content)->exc_path = NULL;
