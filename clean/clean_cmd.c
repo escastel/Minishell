@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 11:43:40 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/02 19:22:55 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:33:28 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	ft_delete_cmd(void *content)
 		i++;
 	}
 	free (cmd->full_cmd);
-/* 	if (cmd->exc_path)
-		free (cmd->exc_path); */
+	if (cmd->exc_path)
+		free (cmd->exc_path);
 	cmd->exc_path = NULL;
 	if (cmd->infile != 0)
 		close(cmd->infile);
@@ -41,13 +41,17 @@ void	ft_clean_path(t_data *data)
 
 	i = 0;
 	(void)data;
-/* 	while (data->cmd_path[i])
+	if (data->cmd_path)
 	{
-		free (data->cmd_path[i]);
-		data->cmd_path[i] = NULL;
-		i++;
+		while (data->cmd_path[i])
+		{
+			free (data->cmd_path[i]);
+			data->cmd_path[i] = NULL;
+			i++;
+		}
+		free (data->cmd_path);
 	}
-	free (data->cmd_path); */
+
 }
 
 void	clean_cmd(t_data *data)
