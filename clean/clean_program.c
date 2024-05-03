@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 17:30:44 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 18:37:50 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:00:28 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,14 @@ static void	clean_util(t_data *data)
 	if (data->listenv)
 	{
 		ft_lstclear(&data->listenv, del_listenv);
-		free (data->listenv);
+		if (data->listenv)
+			free (data->listenv);
 	}
 	if (data->cmd)
 	{
 		ft_lstclear(&data->cmd, del_cmd);
-		free (data->cmd);
+		if (data->cmd)
+			free (data->cmd);
 	}
 	if (data->oldpwd)
 		free (data->oldpwd);

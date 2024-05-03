@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/03 18:57:46 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:32:04 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	ft_noduler_pipe(t_data *data, t_list **aux, int *j, int *i)
 	((t_cmds *)(*aux)->content)->full_cmd[*j] = NULL;
 	ft_next_node(data);
 	*j = 0;
+	free (data->prompt[*i]);
 	*i += 1;
 	(*aux) = (*aux)->next;
 	((t_cmds *)(*aux)->content)->full_cmd = ft_tmp_reservator(data);
