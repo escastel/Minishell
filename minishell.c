@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 17:59:33 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:05:13 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_leaks(void)
+/* void	ft_leaks(void)
 {
 	system("leaks -q minishell");
-}
+} */
 
 int	error_msg(char	*str)
 {
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_data	*data;
 
-	atexit(ft_leaks);
+/* 	atexit(ft_leaks); */
 	(void)argv;
 	if (argc != 1)
 		return (error_msg("Error:\n This program does not need arguments\n"));

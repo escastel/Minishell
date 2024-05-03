@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 12:53:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 17:58:42 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:32:12 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	token_utils(char **line, char **tmp, int *i)
 			*line += 1;
 		if (**line == str[*i - 1] || **line == '\0')
 		{
+			free(str);
 			error_msg("michishell: syntax error near unexpected token");
 			return (258);
 		}
@@ -85,10 +86,10 @@ int	ft_tokens_pipe(char **line, char **tmp)
 	int		i;
 
 	i = 0;
-	str = ft_calloc(1, ft_strlen(*line) + 1);
-	printf("%p\n", str);
+	str = NULL;
 	if (**line == '|')
 	{
+		str = ft_calloc(1, ft_strlen(*line) + 1);
 		str[i] = **line;
 		*line += 1;
 		while (**line && (**line == 32 || (**line >= 9 && **line <= 13)))

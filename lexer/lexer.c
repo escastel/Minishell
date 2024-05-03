@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 18:01:17 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:13:38 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	clean_prompt_and_tmp(char ***prompt, char **tmp)
 		}
 		free (aux);
 	}
-	printf("%p\n", *tmp);
+	printf("TMP: %p\n", *tmp);
 	if (*tmp)
 		free (*tmp);
 }
