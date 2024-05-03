@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:48:24 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 19:43:32 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:22:14 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	**ft_tmp_reservator(t_data *data)
 	while (data->prompt[i])
 		i += 1;
 	tmp = ft_calloc(i + 1, sizeof(char *));
-	printf("%p\n", tmp);
 	return (tmp);
 }
 

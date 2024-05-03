@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 20:18:32 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:21:44 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	clean_prompt_and_tmp(char ***prompt, char **tmp)
 		}
 		free (aux);
 	}
-	printf("TMP: %p\n", *tmp);
 	if (*tmp)
 		free (*tmp);
 }
@@ -92,7 +91,6 @@ int	lexer(t_data *data, char *line)
 	{
 		if (ft_take_first_word(data, &line, &tmp) == 258)
 		{
-			printf("holi?\n");
 			clean_prompt_and_tmp(&data->prompt, &tmp);
 			data->status = 258;
 			return (1);

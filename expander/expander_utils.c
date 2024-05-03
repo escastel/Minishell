@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:29:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 16:33:12 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:28:44 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	fill_tmp(char **tmp, char *func)
 {
 	if (*tmp)
+	{
 		*tmp = ft_strjoin_gnl(*tmp, func);
+		free (func);
+	}
 	else
 		*tmp = func;
 }
@@ -66,7 +69,7 @@ int	expand_tilde(t_data *data, char **tmp, char *str)
 
 char	*get_status(t_data *data)
 {
-	return (ft_strdup(ft_itoa(data->status)));
+	return (ft_itoa(data->status));
 }
 
 char	*expand_var(t_data *data, char *str, int i, int j)
