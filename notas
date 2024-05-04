@@ -1,0 +1,13 @@
+anadido linea if para comprobar si existen palabras aparte del comando
+para comprobar si son directorios o ficheros. linea 93 executer_utills(ft_file_or_directory)
+
+anadido if al principio del filtro de comandos por si viene string vacio
+linea 43-44 de executer_utils(ft_comand_filter).
+
+Anadida llamada a ft_clean_path en linea 101 de executer (executer)
+Corresponde a llamada de ft_path en linea 19 de executer (ft_execute)
+anadido prototipo correspondiente de celan path en linea 98 de .h
+
+linea 30 de executer(ft_execute), cambiada flag del waipid a WUNTRACED.
+Esto es una gitanada y deberiamos en realidad informar el pid con un 
+WIFEXITED despues y status y blalablabla, pero creo que funciona.
