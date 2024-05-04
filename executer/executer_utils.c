@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:32:28 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 18:07:33 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:22:44 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,13 @@ int	ft_command_filter(t_data *data, t_list *cmd)
 	char	*cmd_slash;
 	char	*tmp;
 
+	if (ft_strlen(((t_cmds *)cmd->content)->full_cmd[0]) == 0)
+		return (1);
 	cmd_slash = ft_strjoin("/", ((t_cmds *)cmd->content)->full_cmd[0]);
-	if (!ft_command_filter_2(data, cmd, &cmd_slash, &tmp))
+	if (ft_command_filter_2(data, cmd, &cmd_slash, &tmp) == 0)
+	{
 		return (0);
+	}
 	if (access(((t_cmds *)cmd->content)->full_cmd[0], X_OK) == 0)
 	{
 		((t_cmds *)cmd->content)
@@ -86,12 +90,15 @@ void	ft_file_or_directory(t_data *data, t_list *cmd)
 	{
 		if (ft_command_filter(data, cmd) == 0)
 		{
-			while (((t_cmds *)cmd->content)->full_cmd[i])
+			if (((t_cmds *)cmd->content)->full_cmd[1])
 			{
-				flag = open(((t_cmds *)cmd->content)->full_cmd[i], O_EXCL);
-				if (flag == -1)
-					data->status = 1;
-				i += 1;
+				while (((t_cmds *)cmd->content)->full_cmd[i])
+				{
+					flag = open(((t_cmds *)cmd->content)->full_cmd[i], O_EXCL);
+					if (flag == -1)
+						data->status = 1;
+					i += 1;
+				}
 			}
 		}
 	}
