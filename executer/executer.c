@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/04 19:32:42 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:59:46 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_execute(t_data *data, t_list	*cmd, int flag)
 	}
 	else
 	{
-		waitpid(pid, NULL, 0);
+		waitpid(pid, NULL, WUNTRACED);
 		ft_parent(data, cmd);
 	}
 	return (0);
