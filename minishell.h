@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 20:15:46 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:33:54 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	minishell_print(int flag);
 void	clean_cmd(t_data *data);
 void	clean_program(t_data *data);
 int		error_msg(char	*str);
+void	ft_clean_path(t_data *data);
 
 // 		INITIALIZE
 
