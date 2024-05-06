@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 18:37:11 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:43:21 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static int	export_error(char *str)
 	while (str[i])
 	{
 		if ((str[0] >= '0' && str[0] <= '9') || (!ft_isalnum(str[i])
-				&& str[i] != '/' && str[i] != '_' && str[i] != '='))
+				&& str[i] != '/' && str[i] != '_' && str[i] != '='
+				&& str[i] != ':'))
 		{
 			printf(RED);
 			printf("michishell: export: `%s': not a valid identifier\n", str);
