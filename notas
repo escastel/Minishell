@@ -11,3 +11,12 @@ anadido prototipo correspondiente de celan path en linea 98 de .h
 linea 30 de executer(ft_execute), cambiada flag del waipid a WUNTRACED.
 Esto es una gitanada y deberiamos en realidad informar el pid con un 
 WIFEXITED despues y status y blalablabla, pero creo que funciona.
+
+---------05.06----------------
+
+Las redirecciones no se hacian bien con un unico comando builtin.
+Ahora se redirecciona al principio y al final de forma general
+Añadida llamada a ft_child_redir en linea 40 de executer(ft_execute_one).
+Añadido fdin y fdout a la estrucutra de data en .h
+Añadida dup y dup2 para data->fdin y data->fdout en executer.
+corregido data->fd a data->fdout en linea 109 de executer_utils(ft_no_cmd).
