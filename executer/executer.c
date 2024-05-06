@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/04 19:59:46 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:54:44 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	ft_execute(t_data *data, t_list	*cmd, int flag)
 static int	ft_execute_one(t_data *data, t_list *cmd)
 {
 	pid_t	pid;
+
 	if ((builtins_control(data,
 				((t_cmds *)data->cmd->content)->full_cmd, 0)) == 1)
 		return (0);
