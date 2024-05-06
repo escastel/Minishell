@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 13:08:05 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:03:24 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,31 @@ int	error_msg(char	*str)
 	return (1);
 }
 
+static void	minishell_loop(t_data *data)
+{
+	data->line = readline(CYAN "michishell$ " RESET);
+	if (!data->line)
+		exit_built(data, NULL);
+	if (ft_strcmp(data->line, "", ft_strlen(data->line)))
+	{
+		add_history(data->line);
+		if (!lexer(data, data->line))
+		{
+			if (!parser(data))
+			{
+				executer(data);
+				clean_cmd(data);
+			}
+		}
+	}
+	free(data->line);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data	*data;
 
- 	atexit(ft_leaks);
+	atexit(ft_leaks);
 	(void)argv;
 	if (argc != 1)
 		return (error_msg("Error:\n This program does not need arguments\n"));
@@ -39,23 +59,6 @@ int	main(int argc, char **argv, char **env)
 	init_struct(data, env);
 	minishell_print(0);
 	while (1)
-	{
-		data->line = readline(CYAN "michishell$ " RESET);
-		if (!data->line)
-			exit_built(data, NULL);
-		if (ft_strcmp(data->line, "", ft_strlen(data->line)))
-		{
-			add_history(data->line);
-			if (!lexer(data, data->line))
-			{
-				if (!parser(data))
-				{
-					executer(data);
-					clean_cmd(data);
-				}
-			}
-		}
-		free(data->line);
-	}
+		minishell_loop(data);
 	return (0);
 }

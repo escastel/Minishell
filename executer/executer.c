@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/06 14:54:51 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:03:08 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	executer(t_data *data)
 			aux = aux->next;
 		}
 	}
-	dup2(data->fdin, STDIN_FILENO); // quiradas las comprobacionesp orque es return igual guste o no
+	dup2(data->fdin, STDIN_FILENO);
 	dup2(data->fdout, STDOUT_FILENO);
 	return ;
 }
