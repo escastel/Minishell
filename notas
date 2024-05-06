@@ -20,3 +20,8 @@ Añadida llamada a ft_child_redir en linea 40 de executer(ft_execute_one).
 Añadido fdin y fdout a la estrucutra de data en .h
 Añadida dup y dup2 para data->fdin y data->fdout en executer.
 corregido data->fd a data->fdout en linea 109 de executer_utils(ft_no_cmd).
+
+REDIRECCIONES DE SALIDA SOLAS PETAN
+
+<a
+bash: a: No such file or directory
