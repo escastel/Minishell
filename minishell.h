@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/04 19:33:54 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:33:22 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,19 @@ int		env_initialize(t_data *data, char **new_env);
 //		LEXER
 
 int		lexer(t_data *data, char *line);
-int		ft_quotes(char **argv, char **str, int j);
-int		ft_backlashes(char **argv, char **str, int j);
-int		ft_singlequote(char **argv, char **str, int j);
-int		ft_doublequote(char **argv, char **str, int j);
 
-//		TOKENS
+//	QUOTES AND BACKLASHES
 
-int		ft_tokens_pipe(char **line, char **tmp);
-int		ft_tokens_minor(char **line, char **tmp);
-int		ft_tokens_mayor(char **line, char **tmp);
+int		ft_backlashes(t_data *data, char **line, char **str);
+int		ft_singlequote(t_data *data, char **line, char **str);
+int		ft_doublequote(t_data *data, char **line, char **str);
+int		ft_quotes_and_lashes(t_data *data, char **line, char **str);
+
+//	TOKENS
+
+int		ft_tokens_pipe(t_data *data, char **line, char **tmp);
+int		ft_tokens_minor(t_data *data, char **line, char **tmp);
+int		ft_tokens_mayor(t_data *data, char **line, char **tmp);
 
 //		EXPANDER
 

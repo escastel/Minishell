@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 20:21:44 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:26:45 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@ static void	clean_prompt_and_tmp(char ***prompt, char **tmp)
 		free (*tmp);
 }
 
-static int	tokens(char **line, char **tmp)
+static int	tokens(t_data *data, char **line, char **tmp)
 {
 	int	flag;
 
 	while (**line == 32 || (**line >= 9 && **line <= 13))
 		*line += 1;
-	flag = ft_tokens_mayor(line, tmp);
+	flag = ft_tokens_mayor(data, line, tmp);
 	if (flag)
 		return (flag);
-	flag = ft_tokens_minor(line, tmp);
+	flag = ft_tokens_minor(data, line, tmp);
 	if (flag)
 		return (flag);
-	flag = ft_tokens_pipe(line, tmp);
+	flag = ft_tokens_pipe(data, line, tmp);
 	if (flag)
 		return (flag);
 	return (0);
@@ -56,18 +56,18 @@ static int	ft_take_first_word(t_data *data, char **line, char **tmp)
 	char	*str;
 	int		flag;
 
-	flag = tokens(line, tmp);
+	flag = tokens(data, line, tmp);
 	if (flag)
 		return (flag);
 	data->j = 0;
 	str = ft_calloc(1, ft_strlen(*line));
 	while (**line != ' ' && **line)
 	{
-		data->j = ft_backlashes(&(*line), &str, data->j);
-		data->j = ft_quotes(&(*line), &str, data->j);
+		if (ft_quotes_and_lashes(data, &(*line), &str))
+			return (1);
 		if (**line == '<' || **line == '>' || **line == '|')
 			break ;
-		if (**line != ' ')
+		if (**line && **line != ' ' && **line != '\'' && **line != '\"')
 		{
 			str[data->j++] = **line;
 			*line += 1;
@@ -89,10 +89,9 @@ int	lexer(t_data *data, char *line)
 	data->prompt = ft_calloc(ft_strlen(line) + 1, sizeof(char *));
 	while (*line)
 	{
-		if (ft_take_first_word(data, &line, &tmp) == 258)
+		if (ft_take_first_word(data, &line, &tmp) == 1)
 		{
 			clean_prompt_and_tmp(&data->prompt, &tmp);
-			data->status = 258;
 			return (1);
 		}
 		if (tmp && ft_strncmp(tmp, "", ft_strlen(tmp)))

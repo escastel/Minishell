@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 12:53:17 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 20:20:33 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:18:39 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static int	token_utils(char **line, char **tmp, int *i)
 			*line += 1;
 		if (**line == str[*i - 1] || **line == '\0')
 		{
-			error_msg("michishell: syntax error near unexpected token");
-			return (free(str), 258);
+			free(str);
+			return (1);
 		}
 	}
 	while (**line && (**line == 32 || (**line >= 9 && **line <= 13)))
@@ -41,7 +41,7 @@ static int	token_utils(char **line, char **tmp, int *i)
 	return (0);
 }
 
-int	ft_tokens_mayor(char **line, char **tmp)
+int	ft_tokens_mayor(t_data *data, char **line, char **tmp)
 {
 	int		i;
 
@@ -49,18 +49,23 @@ int	ft_tokens_mayor(char **line, char **tmp)
 	if (**line == '>')
 	{
 		if (token_utils(line, tmp, &i))
-			return (258);
+		{
+			error_msg("michishell: syntax error near unexpected token");
+			data->status = 258;
+			return (1);
+		}
 		if (**line == '<' || **line == '|' || **line == '\0')
 		{
 			error_msg("michishell: syntax error near unexpected token");
-			return (258);
+			data->status = 258;
+			return (1);
 		}
 		return (2);
 	}
 	return (0);
 }
 
-int	ft_tokens_minor(char **line, char **tmp)
+int	ft_tokens_minor(t_data *data, char **line, char **tmp)
 {
 	int		i;
 
@@ -68,18 +73,23 @@ int	ft_tokens_minor(char **line, char **tmp)
 	if (**line == '<')
 	{
 		if (token_utils(line, tmp, &i))
+		{
+			error_msg("michishell: syntax error near unexpected token");
+			data->status = 258;
 			return (1);
+		}
 		if (**line == '>' || **line == '|' || **line == '\0')
 		{
 			error_msg("michishell: syntax error near unexpected token");
-			return (258);
+			data->status = 258;
+			return (1);
 		}
 		return (2);
 	}
 	return (0);
 }
 
-int	ft_tokens_pipe(char **line, char **tmp)
+int	ft_tokens_pipe(t_data *data, char **line, char **tmp)
 {
 	char	*str;
 	int		i;
@@ -98,8 +108,9 @@ int	ft_tokens_pipe(char **line, char **tmp)
 		if (**line == '\0')
 		{
 			error_msg("michishell: syntax error near unexpected token");
+			data->status = 258;
 			free (str);
-			return (258);
+			return (1);
 		}
 		free (str);
 		return (2);

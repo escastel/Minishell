@@ -6,62 +6,89 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 15:03:42 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 16:58:21 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:25:12 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_singlequote(char **argv, char **str, int j)
+int	ft_singlequote(t_data *data, char **line, char **str)
 {
-	(*str)[j] = **argv;
-	*argv += 1;
-	j += 1;
-	while (**argv != '\'')
+	(*str)[data->j] = **line;
+	*line += 1;
+	data->j += 1;
+	if (!**line)
 	{
-		(*str)[j] = **argv;
-		*argv += 1;
-		j += 1;
+		error_msg("michishell: missing quote");
+		data->status = 1;
+		return (1);
 	}
-	(*str)[j] = **argv;
-	*argv += 1;
-	j += 1;
-	return (j);
+	while (**line && **line != '\'')
+	{
+		(*str)[data->j] = **line;
+		*line += 1;
+		data->j += 1;
+	}
+	if (**line != '\'')
+	{
+		error_msg("michishell: missing quote");
+		data->status = 1;
+		return (1);
+	}
+	(*str)[data->j] = **line;
+	*line += 1;
+	data->j += 1;
+	return (0);
 }
 
-int	ft_doublequote(char **argv, char **str, int j)
+int	ft_doublequote(t_data *data, char **line, char **str)
 {
-	(*str)[j] = **argv;
-	*argv += 1;
-	j += 1;
-	while (**argv && **argv != '\"')
+	(*str)[data->j] = **line;
+	*line += 1;
+	data->j += 1;
+	if (!**line)
 	{
-		(*str)[j] = **argv;
-		*argv += 1;
-		j += 1;
+		error_msg("michishell: missing quote");
+		data->status = 1;
+		return (1);
 	}
-	(*str)[j] = **argv;
-	*argv += 1;
-	j += 1;
-	return (j);
+	while (**line && **line != '\"')
+	{
+		(*str)[data->j] = **line;
+		*line += 1;
+		data->j += 1;
+	}
+	if (**line != '\"')
+	{
+		error_msg("michishell: missing quote");
+		data->status = 1;
+		return (1);
+	}
+	(*str)[data->j] = **line;
+	*line += 1;
+	data->j += 1;
+	return (0);
 }
 
-int	ft_backlashes(char **argv, char **str, int j)
+int	ft_backlashes(t_data *data, char **line, char **str)
 {
-	while (**argv && **argv == '\\')
+	while (**line && **line == '\\')
 	{
-		(*str)[j] = (*(*argv + 1));
-		*argv += 2;
-		j += 1;
+		(*str)[data->j] = (*(*line + 1));
+		*line += 2;
+		data->j += 1;
 	}
-	return (j);
+	return (0);
 }
 
-int	ft_quotes(char **argv, char **str, int j)
+int	ft_quotes_and_lashes(t_data *data, char **line, char **str)
 {
-	if (**argv == '\"')
-		j = ft_doublequote(&(*argv), &(*str), j);
-	if (**argv == '\'')
-		j = ft_singlequote(&(*argv), &(*str), j);
-	return (j);
+	ft_backlashes(data, &(*line), &(*str));
+	if (**line == '\"')
+		if (ft_doublequote(data, &(*line), &(*str)))
+			return (1);
+	if (**line == '\'')
+		if (ft_singlequote(data, &(*line), &(*str)))
+			return (1);
+	return (0);
 }
