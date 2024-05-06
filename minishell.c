@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 12:49:41 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:08:05 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		data->line = readline(CYAN "michishell$ " RESET);
 		if (!data->line)
-			exit_built(data);
+			exit_built(data, NULL);
 		if (ft_strcmp(data->line, "", ft_strlen(data->line)))
 		{
 			add_history(data->line);

@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 12:33:22 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:08:11 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ void	env_built(t_data *data, char **cmd);
 
 //  EXIT
 
-void	exit_built(t_data *data);
+void	exit_built(t_data *data, char **cmd);
 
 //  EXPORT
 

@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:02:19 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 11:33:08 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:08:08 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	builtins_util(t_data *data, char **full_cmd, int flag)
 	{
 		data->builtin = 1;
 		if (!flag)
-			exit_built(data);
+			exit_built(data, full_cmd + 1);
 		return (true);
 	}
 	if (ft_strncmp(full_cmd[0], "pwd", ft_strlen("pwd") + 1) == 0)
