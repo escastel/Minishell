@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/06 18:03:08 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:07:54 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	executer(t_data *data)
 {
 	t_list	*aux;
 
+	if (!((t_cmds *)data->cmd->content)->full_cmd[0]) //este es el parche, creo que funciona
+		return ;
 	data->fdin = dup(STDIN_FILENO);
 	data->fdout = dup(STDOUT_FILENO);
 	aux = data->cmd;
