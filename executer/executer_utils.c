@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:32:28 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 14:48:28 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:08:29 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	ft_command_filter(t_data *data, t_list *cmd)
 	{
 		((t_cmds *)cmd->content)
 			->exc_path = ft_strdup(((t_cmds *)cmd->content)->full_cmd[0]);
+		if (cmd_slash)
+			free (cmd_slash);
 		return (0);
 	}
 	free((cmd_slash));

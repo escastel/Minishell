@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 13:53:09 by escastel          #+#    #+#             */
-/*   Updated: 2024/03/26 12:24:09 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:29:19 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,5 @@ void	pwd_built(void)
 	buf = NULL;
 	pwd = getcwd(buf, 500);
 	printf("%s\n", pwd);
+	free (pwd);
 }
