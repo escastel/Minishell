@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/06 12:54:44 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:54:51 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	ft_execute_one(t_data *data, t_list *cmd)
 {
 	pid_t	pid;
 
+	ft_child_redir(data, cmd);
 	if ((builtins_control(data,
 				((t_cmds *)data->cmd->content)->full_cmd, 0)) == 1)
 		return (0);
@@ -71,17 +72,14 @@ static int	ft_execute_pipe(t_data *data, t_list *cmd)
 void	executer(t_data *data)
 {
 	t_list	*aux;
-	int		fd;
 
-	fd = dup(STDIN_FILENO);
-	data->fd = dup(STDIN_FILENO);
+	data->fdin = dup(STDIN_FILENO);
+	data->fdout = dup(STDOUT_FILENO);
 	aux = data->cmd;
 	signal(SIGQUIT, handler);
 	g_signal = 0;
 	if (aux->next == NULL)
-	{
 		data->status = ft_execute_one(data, aux);
-	}
 	else
 	{
 		while (aux)
@@ -91,7 +89,7 @@ void	executer(t_data *data)
 			aux = aux->next;
 		}
 	}
-	if (dup2(fd, STDIN_FILENO) == -1)
-		return ;
+	dup2(data->fdin, STDIN_FILENO); // quiradas las comprobacionesp orque es return igual guste o no
+	dup2(data->fdout, STDOUT_FILENO);
 	return ;
 }

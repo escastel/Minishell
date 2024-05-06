@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:32:28 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/04 19:22:44 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:48:28 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	ft_file_or_directory(t_data *data, t_list *cmd)
 
 void	ft_no_cmd(t_data *data, char **full_cmd)
 {
-	dup2(data->fd, STDOUT_FILENO);
+	dup2(data->fdout, STDOUT_FILENO);
 	printf(RED);
 	printf("%s: command not found\n", full_cmd[0]);
 	printf(RESET);

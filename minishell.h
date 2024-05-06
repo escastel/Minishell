@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
+/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 13:08:11 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:45:23 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ typedef struct s_data
 	char		**cmd_path;
 	int			i;
 	int			j;
-	int			fd;
+	int			fdin;
+	int			fdout;
 	int			status;
 	int			builtin;
 	int			pipe[2];
