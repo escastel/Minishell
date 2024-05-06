@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:24:54 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 13:12:30 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:21:55 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	exit_built(t_data *data, char **cmd)
 
 	minishell_print(1);
 	if (cmd != NULL)
+	{
 		if (cmd[0])
 		{
 			i = -1;
@@ -34,6 +35,7 @@ void	exit_built(t_data *data, char **cmd)
 				}
 			}
 		}
+	}
 	clean_program(data);
 	exit(0);
 }

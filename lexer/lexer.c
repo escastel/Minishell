@@ -6,13 +6,13 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 12:26:45 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:31:15 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	clean_prompt_and_tmp(char ***prompt, char **tmp)
+static void	clean_prompt(char ***prompt)
 {
 	char	**aux;
 	int		i;
@@ -29,8 +29,6 @@ static void	clean_prompt_and_tmp(char ***prompt, char **tmp)
 		}
 		free (aux);
 	}
-	if (*tmp)
-		free (*tmp);
 }
 
 static int	tokens(t_data *data, char **line, char **tmp)
@@ -64,7 +62,7 @@ static int	ft_take_first_word(t_data *data, char **line, char **tmp)
 	while (**line != ' ' && **line)
 	{
 		if (ft_quotes_and_lashes(data, &(*line), &str))
-			return (1);
+			return (free (str), 1);
 		if (**line == '<' || **line == '>' || **line == '|')
 			break ;
 		if (**line && **line != ' ' && **line != '\'' && **line != '\"')
@@ -91,14 +89,16 @@ int	lexer(t_data *data, char *line)
 	{
 		if (ft_take_first_word(data, &line, &tmp) == 1)
 		{
-			clean_prompt_and_tmp(&data->prompt, &tmp);
+			clean_prompt(&data->prompt);
 			return (1);
 		}
 		if (tmp && ft_strncmp(tmp, "", ft_strlen(tmp)))
 			data->prompt[data->i] = ft_strdup(tmp);
 		else
 		{
-			clean_prompt_and_tmp(&data->prompt, &tmp);
+			clean_prompt(&data->prompt);
+			if (tmp)
+				free (tmp);
 			return (1);
 		}
 		free (tmp);
