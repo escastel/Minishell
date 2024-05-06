@@ -6,31 +6,37 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 18:43:21 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:40:16 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	export_error(char *str)
+static int	export_error(t_data *data, char *str)
 {
-	int	i;
+	char	*aux;
 
-	i = 0;
-	while (str[i])
+	data->i = -1;
+	while (str[++data->i] && str[data->i] != '=')
 	{
-		if ((str[0] >= '0' && str[0] <= '9') || (!ft_isalnum(str[i])
-				&& str[i] != '/' && str[i] != '_' && str[i] != '='
-				&& str[i] != ':'))
+		if ((str[0] >= '0' && str[0] <= '9')
+			|| (!ft_isalnum(str[data->i]) && str[data->i] != '_'))
 		{
 			printf(RED);
 			printf("michishell: export: `%s': not a valid identifier\n", str);
 			printf(RESET);
 			return (1);
 		}
-		i++;
 	}
-	return (0);
+	aux = ft_substr(str, 0, data->i);
+	if (open(aux, O_DIRECTORY) == 3)
+	{
+		printf(RED);
+		printf("michishell: export: `%s': not a valid identifier\n", aux);
+		printf(RESET);
+		return (free (aux), 1);
+	}
+	return (free(aux), 0);
 }
 
 static void	export_print(t_data *data)
@@ -116,7 +122,7 @@ void	export_built(t_data *data, char **cmd)
 	{
 		while (cmd[i])
 		{
-			data->status = export_error(cmd[i]);
+			data->status = export_error(data, cmd[i]);
 			if (!data->status)
 				export_var(data, cmd[i]);
 			i++;

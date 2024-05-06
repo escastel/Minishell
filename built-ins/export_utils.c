@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:31:27 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 11:54:54 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:40:34 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	check_new_var(t_data *data, char *str, int *flag)
 	{
 		new = (t_listenv *)list->content;
 		len = ft_strlen(new->name);
-		if (!ft_strncmp(new->name, str, len))
+		if (!ft_strncmp(new->name, str, len + 1))
 		{
 			data->j = 0;
 			while (str[data->j] != '=' && str[data->j])
