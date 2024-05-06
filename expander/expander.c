@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:32:47 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/03 17:14:58 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:45:28 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	simple_quote(t_data *data, char **tmp, char *str)
 	if (str[data->i] == '\'')
 	{
 		if (str[data->i + 1] == '\'')
-			fill_tmp(tmp, "");
+			fill_tmp(tmp, ft_strdup(""));
 		data->i += 1;
 		data->j = data->i;
 		while (str[data->i] != '\'' && str[data->i] != '\0')
@@ -31,7 +31,7 @@ static void	simple_quote(t_data *data, char **tmp, char *str)
 static void	expand_util2(t_data *data, char **tmp, char *str, int *flag)
 {
 	if (str[data->i + 1] == '\"')
-		fill_tmp(tmp, "");
+		fill_tmp(tmp, ft_strdup(""));
 	data->j = data->i + 1;
 	*flag = 0;
 	while (str[++data->i] != '\"' && str[data->i] != '\0')

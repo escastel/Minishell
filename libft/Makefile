@@ -56,7 +56,8 @@ ft_lstclear_bonus.c \
 ft_lstiter_bonus.c \
 ft_strcmp.c \
 ft_strrlen.c \
-get_next_line2.c
+get_next_line2.c \
+get_next_line2_utils.c
 
 OBJECTS = $(FILES:%.c=obj/%.o)
 
