@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:19:12 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 14:45:23 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:45:00 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ void	export_built(t_data *data, char **cmd);
 void	add_var_list(t_data *data, char *str);
 void	add_var_env(t_data *data, char *str);
 void	replace_var(t_data *data, char *str);
-int		check_new_var(t_data *data, char *str, int *flag);
+int		check_new_var(t_data *data, char *str, char *aux, int *flag);
 
 //  PWD
 
