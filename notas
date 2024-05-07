@@ -25,3 +25,13 @@ REDIRECCIONES DE SALIDA SOLAS PETAN
 
 <a
 bash: a: No such file or directory
+
+----------05.07------------------
+
+Redirecciones simples de entrada cuando el fichero no es accesible.
+No daba mensaje ni interrumpia el proceso con el statu adecuado.
+Cambios:
+    -Añadida condicion al if en linea 76-77 del executer para que pare el proceso si infile tiene un -1 (se podria quiza blidnar tambine outfile) y pase a limpiar.
+    -Añadida en linea 53 de parser (ft_noduler) condicion if, si el infile es -1 return para salir del parser. Va ligado al siguinete cambio.
+    -Añadida conficion extra if en lineas 59-63 de parser-redir(ft_redir_in) para lanzar funcion que cambie estado y printee en caso de que infile no sea accesible
+    -Añadida nueva función en parser redir 15.24 (ft_no_file_or_dir) que se encarga de printear mensaje, actualizar data->status y liberar prompt en caso de que la redirección halla salido mal.

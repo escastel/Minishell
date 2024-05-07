@@ -6,11 +6,22 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:53:22 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/03 20:05:27 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:33:18 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static void	ft_no_file_or_dir(t_data *data, int i)
+{
+	printf("%s: No such file or directory\n", data->prompt[i]);
+	while (data->prompt[i])
+	{
+		free (data->prompt[i]);
+		i += 1;
+	}
+	data->status = 1;
+}
 
 static int	ft_redir_out(t_data *data, t_cmds *aux, int i)
 {
@@ -45,6 +56,11 @@ static int	ft_redir_in(t_data *data, t_cmds *aux, int i)
 	{
 		aux->infile = open(data->prompt[++i], O_RDONLY, 00444);
 		free(data->prompt[i - 1]);
+		if (aux->infile == -1)
+		{
+			ft_no_file_or_dir(data, i);
+			return (i);
+		}
 		free(data->prompt[i]);
 		return (++i);
 	}
