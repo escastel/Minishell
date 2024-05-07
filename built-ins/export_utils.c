@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:31:27 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 19:40:34 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:58:11 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,16 @@ void	add_var_list(t_data *data, char *str)
 	while (str[i] != '=' && str[i])
 		i++;
 	new ->name = ft_substr(str, 0, i);
-	new->value = ft_substr(str, i, ft_strlen(str) - i);
+	if (str[i] == '=')
+		new->value = ft_substr(str, i, ft_strlen(str) - i);
+	else
+		new->value = NULL;
 	new->index = 1;
 	list = ft_lstnew(new);
 	ft_lstadd_back(&data->listenv, list);
 }
 
-int	check_new_var(t_data *data, char *str, int *flag)
+int	check_new_var(t_data *data, char *str, char *aux, int *flag)
 {
 	t_listenv	*new;
 	t_list		*list;
@@ -119,8 +122,8 @@ int	check_new_var(t_data *data, char *str, int *flag)
 	while (data->env[++data->i] && list)
 	{
 		new = (t_listenv *)list->content;
-		len = ft_strlen(new->name);
-		if (!ft_strncmp(new->name, str, len + 1))
+		len = ft_strlen(aux);
+		if (!ft_strncmp(new->name, aux, len + 1))
 		{
 			data->j = 0;
 			while (str[data->j] != '=' && str[data->j])
@@ -128,6 +131,7 @@ int	check_new_var(t_data *data, char *str, int *flag)
 			if (str[data->j] != '=')
 				return (1);
 			*flag = 0;
+			break ;
 		}
 		list = list->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:29:32 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/07 12:07:33 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:59:10 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	export_print(t_data *data)
 	t_listenv		*listenv;
 
 	data->i = 1;
-	while (data->i < ft_strrlen(data->env))
+	while (data->i <= ft_strrlen(data->env))
 	{
 		aux = data->listenv;
 		while (aux)
@@ -96,15 +96,26 @@ static void	order_export(t_data *data)
 static void	export_var(t_data *data, char *str)
 {
 	int		flag;
+	char	*aux;
 
+	data->i = 0;
+	while (str[data->i] && str[data->i] != '=')
+		data->i++;
+	aux = ft_substr(str, 0, data->i);
 	flag = 1;
-	if (check_new_var(data, str, &flag))
+	if (check_new_var(data, str, aux, &flag))
+	{
+		if (aux)
+			free (aux);
 		return ;
+	}
 	if (flag)
 		add_var_env(data, str);
 	if (!flag)
 		replace_var(data, str);
 	add_var_list(data, str);
+	if (aux)
+		free (aux);
 }
 
 void	export_built(t_data *data, char **cmd)
