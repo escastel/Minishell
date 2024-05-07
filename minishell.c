@@ -6,16 +6,16 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:18:40 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 18:03:24 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:36:25 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_leaks(void)
+/* void	ft_leaks(void)
 {
 	system("leaks -q minishell");
-}
+} */
 
 int	error_msg(char	*str)
 {
@@ -47,7 +47,6 @@ int	main(int argc, char **argv, char **env)
 {
 	t_data	*data;
 
-	atexit(ft_leaks);
 	(void)argv;
 	if (argc != 1)
 		return (error_msg("Error:\n This program does not need arguments\n"));
