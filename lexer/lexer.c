@@ -6,13 +6,13 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:38:48 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/06 17:31:15 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:24:18 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	clean_prompt(char ***prompt)
+static void	clean_prompt(char ***prompt, char **tmp)
 {
 	char	**aux;
 	int		i;
@@ -29,6 +29,8 @@ static void	clean_prompt(char ***prompt)
 		}
 		free (aux);
 	}
+	if (*tmp)
+		free (*tmp);
 }
 
 static int	tokens(t_data *data, char **line, char **tmp)
@@ -89,19 +91,19 @@ int	lexer(t_data *data, char *line)
 	{
 		if (ft_take_first_word(data, &line, &tmp) == 1)
 		{
-			clean_prompt(&data->prompt);
+			clean_prompt(&data->prompt, &tmp);
 			return (1);
 		}
 		if (tmp && ft_strncmp(tmp, "", ft_strlen(tmp)))
 			data->prompt[data->i] = ft_strdup(tmp);
 		else
 		{
-			clean_prompt(&data->prompt);
-			if (tmp)
-				free (tmp);
+			clean_prompt(&data->prompt, &tmp);
 			return (1);
 		}
-		free (tmp);
+		if (tmp)
+			free (tmp);
+		tmp = NULL;
 		data->i++;
 	}
 	return (0);
