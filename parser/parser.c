@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 10:56:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/07 11:20:10 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:05:32 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void	ft_noduler(t_data *data)
 			ft_noduler_pipe(data, &aux, &j, &i);
 		else
 			ft_nodule_2(data, aux, &i, &j);
-		if (((t_cmds *)aux->content)->infile == -1)
-			return (free (data->prompt));
+/* 		if (((t_cmds *)aux->content)->infile == -1)
+			return (free (data->prompt)); */
 	}
 	free (data->prompt);
 	return ;

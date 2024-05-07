@@ -6,7 +6,7 @@
 /*   By: lcuevas- <lcuevas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/07 11:26:57 by lcuevas-         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:59:51 by lcuevas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ static int	ft_execute_one(t_data *data, t_list *cmd)
 {
 	pid_t	pid;
 
-	ft_child_redir(data, cmd);
+	if (!((t_cmds *)cmd->content)->full_cmd[0] || ((t_cmds *)
+			cmd->content)->infile == -1)
+		return (0);
 	if ((builtins_control(data,
 				((t_cmds *)data->cmd->content)->full_cmd, 0)) == 1)
 		return (0);
@@ -62,6 +64,9 @@ static int	ft_execute_one(t_data *data, t_list *cmd)
 
 static int	ft_execute_pipe(t_data *data, t_list *cmd)
 {
+	if (!((t_cmds *)cmd->content)->full_cmd[0] || ((t_cmds *)
+			cmd->content)->infile == -1)
+		return (1);
 	if (builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 1) == 0)
 		ft_execute(data, cmd, 1);
 	else if (builtins_control(data, ((t_cmds *)cmd->content)->full_cmd, 1) == 1)
@@ -73,16 +78,16 @@ void	executer(t_data *data)
 {
 	t_list	*aux;
 
-	if (!((t_cmds *)data->cmd->content)->full_cmd[0] || ((t_cmds *)
-			data->cmd->content)->infile == -1) //este es el parche, creo que funciona
-		return ;
 	data->fdin = dup(STDIN_FILENO);
 	data->fdout = dup(STDOUT_FILENO);
 	aux = data->cmd;
 	signal(SIGQUIT, handler);
 	g_signal = 0;
 	if (aux->next == NULL)
+	{
+		ft_child_redir(data, data->cmd);
 		data->status = ft_execute_one(data, aux);
+	}
 	else
 	{
 		while (aux)
