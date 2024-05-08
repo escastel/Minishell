@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:39:00 by escastel          #+#    #+#             */
-/*   Updated: 2024/05/02 19:27:11 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:53:35 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ static void	heredoc_control(t_cmds *cmd, char *limit)
 
 void	heredoc(t_data *data, t_cmds *cmd, int i)
 {
+	g_signal = 2;
 	if (data->prompt[i])
 		heredoc_control(cmd, data->prompt[i]);
-	else
-		return ;
 }

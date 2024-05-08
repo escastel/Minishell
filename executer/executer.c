@@ -6,7 +6,7 @@
 /*   By: escastel <escastel@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:24:36 by lcuevas-          #+#    #+#             */
-/*   Updated: 2024/05/07 15:06:25 by escastel         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:04:54 by escastel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,4 @@ void	executer(t_data *data)
 	dup2(data->fdin, STDIN_FILENO);
 	dup2(data->fdout, STDOUT_FILENO);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handler);
 }
